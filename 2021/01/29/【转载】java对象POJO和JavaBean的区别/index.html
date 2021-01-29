@@ -9,7 +9,7 @@
     
     <title>
         
-            论文阅读-有害域名发现论文调研 |
+            【转载】java：java对象POJO和JavaBean的区别 |
         
         JOY&#39;s Blog
     </title>
@@ -147,7 +147,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">论文阅读-有害域名发现论文调研</span>
+            <span class="title-hover-animation">【转载】java：java对象POJO和JavaBean的区别</span>
         </div>
 
         
@@ -165,31 +165,9 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-01-17 16:42:04
+        <i class="fas fa-edit"></i>&nbsp;2021-01-29 14:40:27
     </span>
     
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/%E8%AE%BA%E6%96%87%E8%B0%83%E7%A0%94/">论文调研</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -208,75 +186,24 @@
         
 
         <div class="article-content markdown-body">
-            <p>有害域名发现相关领域论文阅读及调研总结。</p>
-<a id="more"></a>
-
-<h3 id="加密场景相关"><a href="#加密场景相关" class="headerlink" title="加密场景相关"></a>加密场景相关</h3><h4 id="证书"><a href="#证书" class="headerlink" title="证书"></a>证书</h4><p><font color=#CD6155><strong>工作较少，集中于有害证书识别，主要挖掘证书内容特征（如CN字段等）</strong></font></p>
-<p>关键词：certificate website; certificate malicious; <del>certificate url(无结果)</del>; <del>certificate domian(无相关结果)</del></p>
-<table>
-<thead>
-<tr>
-<th>题目</th>
-<th>时间</th>
-<th>等级</th>
-<th>数据</th>
-<th>特点</th>
-<th>略读</th>
-<th>精读</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Discovering HTTPSified  Phishing Websites Using the TLS Certificates Footprints.</td>
-<td>2020</td>
-<td>None</td>
-<td>CT log</td>
-<td>Common name</td>
-<td></td>
-<td>√</td>
-<td><strong>字符特征。</strong>对证书中的CN字段进行聚类，提取命名模式，基于文本匹配识别可能用用于钓鱼网站的证书。(S&amp;P workshop)</td>
-</tr>
-<tr>
-<td>Phish-Hook: Detecting  Phishing Certificates Using Certificate Transparency  Logs.</td>
-<td>2019</td>
-<td>C</td>
-<td>CT log</td>
-<td></td>
-<td>√</td>
-<td></td>
-<td>采用机器学习方法基于CTlog数据对证书进行5-level风险分类。特征包括：和可疑字符的相似度、域名嵌套长度、子域中包含顶级域字符串等、域名随机性、特殊字符的数量等8个特征+经典机器学习算法。标签采用公开数据集。<br />和Hunting[2018]的区别在于数据，采用的CTlog数据，不需要下载Cert（但是采用的特征本质上没有什么差别，大部分是基于CN字段）</td>
-</tr>
-<tr>
-<td>Certified Phishing: Taking a  Look at Public Key Certificates of Phishing Websites</td>
-<td>2019</td>
-<td>C</td>
-<td>公开黑白名单：alexa , phish  tank</td>
-<td>测量分析</td>
-<td>√</td>
-<td></td>
-<td>Q1:钓鱼网站和良性网站证书之间是否有普遍存在的差别？<br />Q2：钓鱼网站和模仿的目标网站的证书间是否有差别<br />特征：证书种类分布Q1，签发机构分Q1布，具体的target网站证书信息比较<br />结论：没有明显的证据表明钓鱼网站会复制目标网站证书的信息，但是可能存在target infrastucture滥用的情况。<br /><strong>仅从证书中提供的信息难以区分恶意和正常域名（攻击者能够获取被入侵服务器的证书）</strong>。（soups）</td>
-</tr>
-<tr>
-<td>Hunting Malicious TLS Certificates  with Deep Neural Networks.</td>
-<td>2018</td>
-<td>None</td>
-<td></td>
-<td>DL</td>
-<td>√</td>
-<td></td>
-<td>基于证书内容进行分类模型训练，<br />特征包括证书内subject字段、issuer字段和其他提取字段；模型包括lstm分析文本信息和全连接网络提取普通特征信息的融合网络模型<br />(AISec)</td>
-</tr>
-<tr>
-<td>Beyond the lock icon:  real-time detection of phishing websites using public  key certificates.</td>
-<td>2015</td>
-<td>None</td>
-<td></td>
-<td>ML</td>
-<td></td>
-<td></td>
-<td>提取42中机器学习特征，采用经典ML模型进行训练。</td>
-</tr>
-</tbody></table>
+            <p>原文： <a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/224489dfdec8" >https://www.jianshu.com/p/224489dfdec8<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="POJO"><a href="#POJO" class="headerlink" title="POJO"></a>POJO</h1><p>“Plain Ordinary Java Object”，简单普通的java对象。主要用来指代那些没有遵循特定的java对象模型，约定或者框架的对象。</p>
+<p>POJO的内在含义是指那些:<br> 有一些private的参数作为对象的属性，然后针对每一个参数定义get和set方法访问的接口。<br> 没有从任何类继承、也没有实现任何接口，更没有被其它框架侵入的java对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicInfoVo</span> &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String orderId;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Integer uid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getOrderId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> orderId;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrderId</span><span class="params">(String orderId)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.orderId = orderId;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">getUid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> uid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUid</span><span class="params">(Integer uid)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.uid = uid;</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h1><p>JavaBean 是一种JAVA语言写成的可重用组件。JavaBean符合一定规范编写的Java类，不是一种技术，而是一种规范。大家针对这种规范，总结了很多开发技巧、工具函数。符合这种规范的类，可以被其它的程序员或者框架使用。它的方法命名，构造及行为必须符合特定的约定：</p>
+<ol>
+<li>所有属性为private。</li>
+<li>这个类必须有一个公共的缺省构造函数。即是提供无参数的构造器。</li>
+<li>这个类的属性使用getter和setter来访问，其他方法遵从标准命名规范。</li>
+<li>这个类应是可序列化的。实现serializable接口。</li>
+</ol>
+<p>因为这些要求主要是靠约定而不是靠实现接口，所以许多开发者把JavaBean看作遵从特定命名约定的POJO。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span>&#123;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//实现serializable接口。  </span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span> String name;  </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> age;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">//无参构造器  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">UserInfo</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">      </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> name;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.name = name;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> age;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.age = age;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">//javabean当中可以有其它的方法  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">userInfoPrint</span><span class="params">()</span></span>&#123;  </span><br><span class="line">    System.out.println(<span class="string">&quot;&quot;</span>);  </span><br><span class="line">&#125;  &#125;  </span><br></pre></td></tr></table></figure>
+<h1 id="两者有什么区别"><a href="#两者有什么区别" class="headerlink" title="两者有什么区别"></a>两者有什么区别</h1><ol>
+<li>POJO其实是比javabean更纯净的简单类或接口。POJO严格地遵守简单对象的概念，而一些JavaBean中往往会封装一些简单逻辑。</li>
+<li>POJO主要用于数据的临时传递，它只能装载数据， 作为数据存储的载体，而不具有业务逻辑处理的能力。</li>
+<li>Javabean虽然数据的获取与POJO一样，但是javabean当中可以有其它的方法。</li>
+</ol>
 
         </div>
 
@@ -329,29 +256,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-1-07-An-End-to-End-Large-Scale-Measurement-of-DNS-over-Encryption-How-Far-Have-We-Come/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">论文笔记 1-07 An End-to-End Large-Scale Measurement of DNS-over-Encryption: How Far Have We Come?</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/01/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-1-06-Multi-Class-Imbalanced-Graph-Convolutional-Network-Learning/"
+                           href="/2021/01/29/Flink%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E6%B5%81%E5%A4%84%E7%90%86API/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">论文笔记 1-06 Multi-Class Imbalanced Graph Convolutional Network Learning</span>
+                                <span class="post-nav-title-item">Flink快速上手（三）：流处理API</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -476,7 +388,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E5%9C%BA%E6%99%AF%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">加密场景相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6"><span class="nav-number">1.1.</span> <span class="nav-text">证书</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#POJO"><span class="nav-number">1.</span> <span class="nav-text">POJO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaBean"><span class="nav-number">2.</span> <span class="nav-text">JavaBean</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E8%80%85%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">两者有什么区别</span></a></li></ol>
     </div>
 </div>
         </aside>
