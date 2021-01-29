@@ -224,14 +224,14 @@
 </ul>
 </li>
 </ul>
-<h3 id="任务提交流程"><a href="#任务提交流程" class="headerlink" title="任务提交流程"></a>任务提交流程</h3><img src="../images/Flink快速上手（二）：运行时架构/image-20210128152505563.png" alt="image-20210128152505563" style="zoom:80%;" />
+<h3 id="任务提交流程"><a href="#任务提交流程" class="headerlink" title="任务提交流程"></a>任务提交流程</h3><img src="/images/Flink快速上手（二）：运行时架构/image-20210128152505563.png" alt="image-20210128152505563" style="zoom:80%;" />
 
 <ul>
 <li>资源分配平台模式下，需要多少资源就启动多少资源</li>
 </ul>
-<img src="../images/Flink快速上手（二）：运行时架构/image-20210128152930628.png" alt="image-20210128152930628" style="zoom:80%;" />
+<img src="/images/Flink快速上手（二）：运行时架构/image-20210128152930628.png" alt="image-20210128152930628" style="zoom:80%;" />
 
-<h3 id="任务调度原理"><a href="#任务调度原理" class="headerlink" title="任务调度原理"></a>任务调度原理</h3><img src="../images/Flink快速上手（二）：运行时架构/image-20210128153540447.png" alt="image-20210128153540447" style="zoom:80%;" />
+<h3 id="任务调度原理"><a href="#任务调度原理" class="headerlink" title="任务调度原理"></a>任务调度原理</h3><img src="/images/Flink快速上手（二）：运行时架构/image-20210128153540447.png" alt="image-20210128153540447" style="zoom:80%;" />
 
 <ul>
 <li>三个问题？<ul>
@@ -256,16 +256,16 @@
 <li><p>同一个子任务的不同并行任务必须分配到不同的slot中。</p>
 </li>
 <li><p>如果没有特别设置，具<strong>有先后执行顺序的子任务会共享同一个slot</strong>。如下图，source和map被合并为同一个任务了（合并任务策略不详），和后续的子任务keyby默认会共享slot，这样做的原因是：</p>
-<img src="../images/Flink快速上手（二）：运行时架构/image-20210128170925680.png" alt="image-20210128170925680" style="zoom: 50%;" />
+<img src="/images/Flink快速上手（二）：运行时架构/image-20210128170925680.png" alt="image-20210128170925680" style="zoom: 50%;" />
 
 <p>1）虽然不同子任务的并行度可能不同（sink的并行度为1），但是可以保证至少在一个slot中形成一个任务的pipline，提高<strong>健壮性</strong>，</p>
 <p>2）如果不共享，如下图，不同子任务消耗资源能力不同，导致<strong>资源分配不均</strong>。（sink较keyby分配的slot空闲的多）</p>
-<img src="../images/Flink快速上手（二）：运行时架构/image-20210128171341054.png" alt="image-20210128171341054" style="zoom: 50%;" />
+<img src="/images/Flink快速上手（二）：运行时架构/image-20210128171341054.png" alt="image-20210128171341054" style="zoom: 50%;" />
 </li>
 <li><p>如果需要强制某两个slot不在同一个slot中，通过<code>.slotSharingGroup(&quot;groupname&quot;)</code> 设置共享slot的子任务组。比如把sink设为”red“，keyby设为”green“，那么就不存在共享行为。</p>
 </li>
 <li><p>一般情况下，即没有设置slot共享分组时，job所占用的slot个数和最大并行度的子任务设置的并行度一致。如下图，该job共有16个子任务，但是占用slot为4个，因为默认子任务间slot共享。</p>
-<img src="../images/Flink快速上手（二）：运行时架构/image-20210128172041077.png" alt="image-20210128172041077" style="zoom: 50%;" />
+<img src="/images/Flink快速上手（二）：运行时架构/image-20210128172041077.png" alt="image-20210128172041077" style="zoom: 50%;" />
 
 </li>
 </ol>
@@ -273,7 +273,7 @@
 <li><p>程序会被映射为<strong>逻辑数据流</strong>：包括三大块：Source、transform、sink，每一个Dataflow以一个或多个sources开始以一个或多个sinks结束。类似任意的<strong>有向无环图（DAG）</strong></p>
 </li>
 <li><p>Streamgraph(客户端上的图) -&gt; jobGraph(合并任务) -&gt; ExecutionGraph(JM做转化) -&gt; 物理执行图</p>
-<img src="../images/Flink快速上手（二）：运行时架构/image-20210128173439856.png" alt="image-20210128173439856" style="zoom:80%;" />
+<img src="/images/Flink快速上手（二）：运行时架构/image-20210128173439856.png" alt="image-20210128173439856" style="zoom:80%;" />
 
 <ul>
 <li>client上生成StreamGraph，其中keyby只是分区，所以不作为一个任务，而是map之后直接进行按key的聚合计算（sum）</li>
@@ -289,13 +289,13 @@
 <li>One-to-one：可以维护分区及元素的顺序，如map、filter、filtermap，类似于 spark 中的<strong>窄依赖</strong></li>
 <li>redistrbution：存在重分区过程，eyBy() 基于 hashCode 重分区、broadcast 和 rebalance(轮询) 会随机重新分区，这些算子都会引起 redistribute 过程，而 redistribute 过程就类似于 Spark 中的 shuffle 过程。类似于 spark 中的<strong>宽依赖</strong></li>
 </ul>
-<p><img src="../images/Flink%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9E%B6%E6%9E%84/image-20210128174940908.png" alt="image-20210128174940908"></p>
+<p><img src="/images/Flink%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9E%B6%E6%9E%84/image-20210128174940908.png" alt="image-20210128174940908"></p>
 </li>
 <li><p>任务链（opetator chains）</p>
 <p>在特定条件下为减少本地通信的开销，<strong>将满足条件的两个或多个算子通过本地转发的方式进行连接</strong>。即，满足<strong>并行度相同的one-to-one操作的两个相连的算子</strong>可以连在一起作为一个task。如下图中，满足合并条件的为keyagg和sink。</p>
 </li>
 </ul>
-<img src="../images/Flink快速上手（二）：运行时架构/image-20210128180545901.png" alt="image-20210128180545901" style="zoom:67%;" />
+<img src="/images/Flink快速上手（二）：运行时架构/image-20210128180545901.png" alt="image-20210128180545901" style="zoom:67%;" />
 
 <ul>
 <li>扩展：<ul>
