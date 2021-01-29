@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            读书笔记-《图解HTTP》 |
+        
+        Yinjiangyi’s blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Yinjiangyi’s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">读书笔记-《图解HTTP》</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-01-01 13:52:53
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/HTTPS/">HTTPS</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HTTP/">HTTP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>《图解http》的阅读过程主要内容笔记。<a id="more"></a></p>
+<h1 id="第一章-了解web及网络基础"><a href="#第一章-了解web及网络基础" class="headerlink" title="第一章 了解web及网络基础"></a>第一章 了解web及网络基础</h1><ul>
+<li>HTTP的诞生背景和演进过程</li>
+<li>TCP/IP协议族基础</li>
+<li>与HTTP密切相关的IP，TCP和DNS协议<ul>
+<li>负责传输的ip协议</li>
+<li>确保可靠性的tcp协议</li>
+<li>负责域名解析的DNS服务</li>
+</ul>
+</li>
+<li>URL和URI</li>
+</ul>
+<h1 id="第二章-简单的HTTP协议"><a href="#第二章-简单的HTTP协议" class="headerlink" title="第二章 简单的HTTP协议"></a>第二章 简单的HTTP协议</h1><ul>
+<li><p>HTTP协议用于<strong>客户端和服务端</strong>之间的通信</p>
+</li>
+<li><p>通过请求和响应交换达成通信</p>
+</li>
+<li><p>HTTP是<strong>不保存状态/无状态</strong>的协议</p>
+<ul>
+<li><p>所谓<strong>不保存状态</strong>是指协议对发送过的请求或响应都不做持久化处理，有新的请求就有新的响应</p>
+</li>
+<li><p><strong>原因</strong>是为了更快的处理大量事务，但同时导致用户使用问题，比如用户跳转后无法保持登录状态</p>
+</li>
+<li><p>引入cookie技术，可以管理状态。</p>
+<p>服务器端发送的响应报文内有一个叫Set-Cookie的首部字段信息，客户端会保存下来，当下次客户端在往该服务器发送请求时，请求报文中会加入Cookie值。</p>
+</li>
+</ul>
+</li>
+<li><p>HTTP方法</p>
+<ul>
+<li><p><strong>GET</strong>获取资源</p>
+</li>
+<li><p><strong>POST</strong>传输实体主体</p>
+</li>
+<li><p><strong>PUT</strong>传输文件（不带验证机制，存在安全性问题，一般web不采用，当<strong>配合 Web 应用程序的验证机制</strong>或<strong>遵守 REST 标准</strong>时还是有可能会开放使用的。）</p>
+</li>
+<li><p><strong>HEAD</strong>获得报文首部（不返回报文主体，用于确认URI有效性和资源更新时间等）</p>
+</li>
+<li><p><strong>DELETE</strong>删除文件（同PUT存在安全性问题）</p>
+</li>
+<li><p><strong>OPTION</strong>询问支持的方法</p>
+</li>
+<li><p><strong>TRACE</strong>追踪路径，将之前的请求通信回环给客户端。发送请求时，在 Max-Forwards首部字段中填入数值，每经过一个服务器端就将该数字减 1，当数值刚好减到 0 时，就停止继续传输，最后接收到请求的服务器端则返回状态码 200OK 的响应。（容易引发跨站追踪Cross-site Tracking，不常用）        </p>
+</li>
+<li><p><strong>CONNECT</strong>要求<strong>隧道协议连接代理</strong>服务器进行TCP通信，主要使用SSL和TLS协议把通信内容加密后经网络隧道传输</p>
+</li>
+</ul>
+</li>
+<li><p>持久连接节省通信量</p>
+<ul>
+<li><p>HTTP协议的初始版本中，每进行一次HTTP通信就要断开一次TCP连接。</p>
+<p>持久连接：建立一次连接后可以进行多次请求和响应的交互（HTTP/1.1版本默认）</p>
+</li>
+<li><p>Piplining：持久连接使得多数请求以管线化方式发送成为可能。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="第三章-HTTP报文内信息"><a href="#第三章-HTTP报文内信息" class="headerlink" title="第三章 HTTP报文内信息"></a>第三章 HTTP报文内信息</h1><h3 id="3-1-报文结构"><a href="#3-1-报文结构" class="headerlink" title="3.1 报文结构"></a>3.1 报文结构</h3><ul>
+<li><p>HTTP报文由<strong>报文首部、CR+LF、报文主体</strong>构成</p>
+<ul>
+<li><p>请求报文：报文首部包括–<strong>请求行、请求首部字段、通用首部字段和实体首部字段</strong></p>
+<ul>
+<li><p>请求行：方法、URI、HTTP版本</p>
+</li>
+<li><p>请求首部字段：</p>
+<img src="/images/《图解HTTP》笔记/image-20210101140905350.png" alt="image-20210101140905350" style="zoom:75%;" />
+</li>
+</ul>
+</li>
+<li><p>响应报文：报文首部包括–<strong>状态行、响应首部字段、通用首部字段和实体首部字段</strong></p>
+<ul>
+<li><p>状态行：状态码、原因短语、http版本</p>
+</li>
+<li><p>响应首部字段</p>
+<img src="/images/《图解HTTP》笔记/image-20210101140915475.png" alt="image-20210101140915475" style="zoom:75%;" />
+
+<p>​                </p>
+</li>
+</ul>
+</li>
+<li><p>通用首部字段</p>
+<img src="/images/《图解HTTP》笔记/image-20210101140934991.png" alt="image-20210101140934991" style="zoom:75%"/>
+</li>
+<li><p>实体首部字段</p>
+<img src="/images/《图解HTTP》笔记/image-20210101140934991.png" alt="image-20210101140934991" style="zoom:75%" />
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-报文编码"><a href="#3-2-报文编码" class="headerlink" title="3.2 报文编码"></a>3.2 报文编码</h3><ul>
+<li><p><strong><em>实体主体</em></strong>和**<em>报文主体**</em>（报文结构的一部分）的区别：</p>
+<p>原文：</p>
+<blockquote>
+<p>报文(<strong>message</strong>)</p>
+<p>是 HTTP 通信中的基本单位，由 8 位组字节流(octet sequence， 其中 octet 为 8 个比特)组成，通过 HTTP 通信传输。</p>
+<p>实体(<strong>entity</strong>) 作为请求或响应的有效载荷数据(补充项)被传输，其内容由实</p>
+<p>体首部和实体主体组成。<br>HTTP 报文的主体用于传输请求或响应的实体主体。</p>
+<p>通常，报文主体等于实体主体。只有当传输中进行编码操作时，实体 主体的内容发生变化，才导致它和报文主体产生差异。</p>
+<p>报文和实体这两个术语在之后会经常出现，请事先理解两者的差异。</p>
+</blockquote>
+<p>理解：</p>
+<p>未编码的原始数据是实体（网页中的文本、图片等数据载体）主体，当不进行编码传输时，报文主体和实体主体等价，而原始数据经过编码再传输时，报文主体就不再是实体主体了，而是实体首部+实体主体的编码数据</p>
+</li>
+<li><p>内容编码</p>
+<p>为了提高传输效率，服务器对实体进行编码，客户端进行解码复原。</p>
+<p>常用的编码格式：gzip（GNU zip）、compress（UNIX系统的标准压缩）、deflate（zlib）、identity（不编码）</p>
+</li>
+<li><p>分割发送 Chuncked transferred coding</p>
+<p>实体的最后一块会用“0（CR+LF）”来标记</p>
+</li>
+</ul>
+<h3 id="3-3-发送多种数据的多部分对象集合"><a href="#3-3-发送多种数据的多部分对象集合" class="headerlink" title="3.3 发送多种数据的多部分对象集合"></a>3.3 发送多种数据的多部分对象集合</h3><p>发送邮件时可以添加多种类型的附件，是因为采用的MIME扩展机制。<br>HTTP中也采纳了多部分对象集合，发送的一份报文主体可以含有多类型实体。通常是在图片或文本的上传中使用。<code>RFC2046</code></p>
+<ul>
+<li><p>多部分对象集合包含的对象如下：</p>
+<ul>
+<li>multipart/form-data Web表单文件上传时使用</li>
+<li>multipart/byteranges 状态码为206的响应报文中包含多个范围的内容时使用</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart&#x2F;form-data; boundary&#x3D;AaB03x</span><br><span class="line"></span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;field1&quot;</span><br><span class="line"></span><br><span class="line">Joe Blow</span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;pics&quot;; filename&#x3D;&quot;file1.txt&quot; Content-Type: text&#x2F;plain</span><br><span class="line"></span><br><span class="line">...(file1.txt的数据)... </span><br><span class="line">--AaB03x--</span><br></pre></td></tr></table></figure>
+<p>  这里boundary是划分各类实体的边界标识符，结束时在标识符后加<code>--</code></p>
+<h3 id="3-4-获取部分内容的范围请求（中断恢复下载）"><a href="#3-4-获取部分内容的范围请求（中断恢复下载）" class="headerlink" title="3.4 获取部分内容的范围请求（中断恢复下载）"></a>3.4 获取部分内容的范围请求（中断恢复下载）</h3><p>实现该功能需要指定下载的实体范围。用首部字段Range指定资源的byte范围。指定形式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Range: bytes&#x3D;5001-10000</span><br><span class="line">----</span><br><span class="line">Range: bytes&#x3D;-3000, 5000-7000</span><br></pre></td></tr></table></figure>
+<p>对于多范围要求的请求报文，响应返回状态码为206的报文，响应报文中标明multipart/byteranges。</p>
+<h3 id="3-5-内容协商"><a href="#3-5-内容协商" class="headerlink" title="3.5 内容协商"></a>3.5 内容协商</h3><p>内容协商机制是指客户端和服务端就响应的资源内容进行交涉，返回最合适的资源。判断基准为请求报文中部分首部字段：Accept, Accept-Charset, Accept-Encoding, Accept-Language, Content-Language</p>
+<p>内容协商技术有三钟类型：服务器驱动、客户端驱动和透明协商</p>
+<h1 id="第七章-确保Web安全的HTTPS"><a href="#第七章-确保Web安全的HTTPS" class="headerlink" title="第七章 确保Web安全的HTTPS"></a>第七章 确保Web安全的HTTPS</h1><h3 id="7-1-HTTP安全性问题："><a href="#7-1-HTTP安全性问题：" class="headerlink" title="7.1 HTTP安全性问题："></a>7.1 HTTP安全性问题：</h3><ul>
+<li>通信使用明文可能会被窃听<ul>
+<li>TCP/IP是可能被窃听的网络</li>
+<li>加密处理防止被窃听<ul>
+<li>通信的加密：SSL/TLS建立安全通信线路</li>
+<li>内容的加密：不同于 SSL 或 TLS 将整个通信线路加密 处理，所以内容仍有被篡改的风险。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不验证通信方身份就可能遭遇伪装 -&gt; 证书</li>
+<li>无法证明报文完整性<ul>
+<li>中间人攻击（MITM, man-in-the-middle）</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-2-HTTPS-HTTP-加密-认证-完整性保护"><a href="#7-2-HTTPS-HTTP-加密-认证-完整性保护" class="headerlink" title="7.2 HTTPS = HTTP+加密+认证+完整性保护"></a>7.2 HTTPS = HTTP+加密+认证+完整性保护</h3><p><font color=#CD6155 ><strong>HTTPS不是应用层的新协议，只是HTTP通信接口部分用SSL和TLS协议代替</strong></font>。通常情况下HTTP直接和TCP通信，使用SSL是，则先和SSL通信，在由SSL和TCP通信。其他应用层协议都可以配合SSL使用。</p>
+<ul>
+<li><p>对称加密：只要拿到密钥，任何人都能破解密码，无法保证安全的转交密钥。</p>
+<p>非对称加密：发送者用对方的公钥加密，接受方用自己的私钥解密。公钥可以公开，处理速度慢。</p>
+</li>
+</ul>
+<ul>
+<li>HTTPS采用<font color=#CD6155><strong>对称和非对称加密算法并用</strong></font>的加密机制。交换秘钥环节使用公开密钥加密方式，安全交换共享密钥后，通信采用共享密钥加密（高效）</li>
+<li>如何证明服务器发送来的公钥就是靠谱的，没有被替换的 -&gt; 数字证书认证机构（CA）<ol>
+<li>服务器把自己的公开密钥登录至数字证书认证机构CA</li>
+<li>CA用自己的私钥向服务器的公开密码署数字签名并颁发公钥证书</li>
+<li>客户端拿到服务器的公钥证书后，使用数字证书认证机构的公开密钥，向数字证书认证机构验证公钥证书上的数字签名，以确认服务器的公开密钥的真实性</li>
+<li>使用服务器的公开密钥对报文加密后发送</li>
+</ol>
+</li>
+</ul>
+<h4 id="HTTPS通信机制"><a href="#HTTPS通信机制" class="headerlink" title="HTTPS通信机制"></a>HTTPS通信机制</h4><ul>
+<li><p>详细过程</p>
+<blockquote>
+<p>步骤 <strong>1</strong>: 客户端通过发送 Client Hello 报文开始 SSL 通信。报文中包 含客户端支持的 SSL 的指定版本、加密组件(Cipher Suite)列表(所 使用的加密算法及密钥长度等)。</p>
+<p>步骤 <strong>2</strong>: 服务器可进行 SSL 通信时，会以 Server Hello 报文作为应答。和客户端一样，在报文中包含 SSL 版本以及加密组件。服务器的 加密组件内容是从接收到的客户端加密组件内筛选出来的。</p>
+<p>步骤  <strong>3</strong>: 之后服务器发送 Certificate 报文。报文中包含公开密钥证 书。</p>
+<p>步骤  <strong>4</strong>: 最后服务器发送 Server Hello Done 报文通知客户端，最初阶段的 SSL 握手协商部分结束。</p>
+<p>步骤 <strong>5</strong>: SSL 第一次握手结束之后，客户端以 Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 Pre-master secret 的随机密码串。该报文已用步骤 3 中的公开密钥进行加密。</p>
+<p>步骤 <strong>6</strong>: 接着客户端继续发送 Change Cipher Spec 报文。该报文会提 示服务器，在此报文之后的通信会采用 Pre-master secret 密钥加密。</p>
+<p>步骤 <strong>7</strong>: 客户端发送 Finished 报文。该报文包含连接至今全部报文的 整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确 解密该报文作为判定标准。</p>
+<p>步骤 <strong>8</strong>: 服务器同样发送 Change Cipher Spec 报文。 步骤 <strong>9</strong>: 服务器同样发送 Finished 报文。</p>
+<p>步骤 <strong>10</strong>: 服务器和客户端的 Finished 报文交换完毕之后，SSL 连接就算建立完成。当然，通信会受到 SSL 的保护。从此处开始进行应用 层协议的通信，即发送 HTTP 请求。</p>
+<p>步骤 <strong>11</strong>: 应用层协议通信，即发送 HTTP 响应。</p>
+<p>步骤 <strong>12</strong>: 最后由客户端断开连接。断开连接时，发送 close_notify 报文。上图做了一些省略，这步之后再发送 TCP FIN 报文来关闭与 TCP 的通信。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E7%AC%94%E8%AE%B0/image-20210105104233304.png" alt="image-20210105104233304"></p>
+<ul>
+<li><p>SSL和TLS</p>
+<p>当前主流版本为SSL 3.0 和TLS1.0</p>
+</li>
+</ul>
+<h1 id="第八章-确认访问用户身份的认证"><a href="#第八章-确认访问用户身份的认证" class="headerlink" title="第八章 确认访问用户身份的认证"></a>第八章 确认访问用户身份的认证</h1><h3 id="8-1-BASIC认证"><a href="#8-1-BASIC认证" class="headerlink" title="8.1 BASIC认证"></a>8.1 BASIC认证</h3><p>服务器收到客户端请求后，返回401告知用户需要进行认证；客户端将ID和密码发送给服务器，具体内容为：ID和psd由：连接，经过base64编码，写入首部字段authorization。</p>
+<p><strong>HTTP/1.0，非加密模式，任何人获取到编码字符串不需要附加信息即可解码，安全性极差。</strong></p>
+<h3 id="8-2-DIGEST认证"><a href="#8-2-DIGEST认证" class="headerlink" title="8.2 DIGEST认证"></a>8.2 DIGEST认证</h3><img src="/images/《图解HTTP》笔记/image-20210106095159217.png" alt="image-20210106095159217" style="zoom: 67%;" />
+
+<center style="color:#C0C0C0;text-decoration:underline">DIGEST认证步骤</center>
+
+<p><strong>basic和digest的区别：</strong></p>
+<ul>
+<li><p>basic将”ID:psd“打包并采用base64编码（可直解码）</p>
+</li>
+<li><p>digest<strong>不以明文发送密码</strong>，服务器响应返回随机字符串nonce，客户端发送响应摘要HA1=MD5(username:realm:password),HA2=MD5(method:digestURI)<br>使用MD5加密达成不可逆。</p>
+</li>
+</ul>
+<p>参数细节参考 <a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/18fb07f2f65e" >https://www.jianshu.com/p/18fb07f2f65e<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>username: 用户名（网站定义）<br>password: 密码<br>realm:　服务器返回的realm,一般是域名<br>method: 请求的方法<br>nonce: 服务器发给客户端的随机的字符串<br>nc(nonceCount):请求的次数，用于标记，计数，防止重放攻击<br>cnonce(clinetNonce): 客户端发送给服务器的随机字符串<br>qop: 保护质量参数,一般是auth,或auth-int,这会影响摘要的算法<br>uri: 请求的uri(只是ｐａｔｈ)<br>response:　客户端根据算法算出的摘要值</p>
+<p><strong>digest的算法：</strong></p>
+<p>A1 = username:realm:password<br>A2 = mthod:uri</p>
+<p>HA1 = MD5(A1)<br>如果 qop 值为“auth”或未指定，那么 HA2 为<br>HA2 = MD5(A2)=MD5(method:uri)<br>如果 qop 值为“auth-int”，那么 HA2 为<br>HA2 = MD5(A2)=MD5(method:uri:MD5(entityBody))</p>
+<p>如果 qop 值为“auth”或“auth-int”，那么如下计算 response：<br>response = MD5(HA1:nonce:nc:cnonce:qop:HA2)</p>
+<p>如果 qop 未指定，那么如下计算 response：<br>response = MD5(HA1:nonce:HA2)<br>上面的算法，是不是把你绕晕了，下面，用实例介绍一下，便于你的理解</p>
+</blockquote>
+<p>python实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPDigestAuth</span><br><span class="line">url = <span class="string">&#x27;http://httpbin.org/digest-auth/auth/user/pass&#x27;</span></span><br><span class="line">response = requests.get(url, auth=HTTPDigestAuth(<span class="string">&#x27;user&#x27;</span>, <span class="string">&#x27;pass&#x27;</span>))```</span><br><span class="line"><span class="comment"># 上面获取请求的内容，可以使用response.content，response.text等等</span></span><br></pre></td></tr></table></figure>
+<h3 id="8-3-SSL客户端认证"><a href="#8-3-SSL客户端认证" class="headerlink" title="8.3 SSL客户端认证"></a>8.3 SSL客户端认证</h3><p>用户ID和密码被盗的情况下，basic和digest失效，需要通过客户端认证阻止冒用行为。</p>
+<p>认证方式：双因素认证：SSL客户端证书 +表单认证</p>
+<p>为达到SSL客户端认证的目的，需要事先将客户端证书分发给客户端，且客户端必须安装此证书。</p>
+<p>步骤一：接收到需要认证资源的请求，服务器会发送Certificate Request 报文，要求客户端提供客户端证书。</p>
+<p>步骤二：用户选择将发送的客户端证书后，客户端会把客户端证书信息已Client Certificate报文方式发送个服务器。</p>
+<p>步骤三：服务器验证客户端证书验证通过后方可领取证书内容客户端的公开密钥，然后开始HTTPS加密通信。</p>
+<h3 id="8-4-基于表单认证"><a href="#8-4-基于表单认证" class="headerlink" title="8.4 基于表单认证"></a>8.4 基于表单认证</h3><p><strong>不是HTTP协议中定义的</strong>，但因为方便灵活使用较为广泛。用户根据web应用程序的实际要求的用户界面及认证方式提供认证信息。</p>
+<ul>
+<li><p><strong>Session管理及Cookie应用</strong></p>
+<p>因为HTTP的无状态特性，基于表单认证过的状态无法保留。所以使用Cookie来管理会话（Session）。Cookie中包含用于识别用户的SessionID，和用户的认证状态绑定后被记录在服务器端。SessionID一般是难以推测的字符串</p>
+</li>
+</ul>
+<blockquote>
+<p><font color=#CD6155><strong>Q</strong></font><strong>一个疑问</strong></p>
+<p>原文中提到：</p>
+<blockquote>
+<p>如果 Session ID 被第三方盗走，对方就可以伪装成你的身份进 行恶意操作了。因此必须防止 Session ID 被盗，或被猜出。为了做到 这点，Session ID 应使用难以推测的字符串，且服务器端也需要进行 有效期的管理，保证其安全性。</p>
+</blockquote>
+<p>但是TLS中client hello报文中session id字段不是可以直接从流量中获取吗？</p>
+<p>详细内容待了解</p>
+</blockquote>
+<h1 id="第九章-基于HTTP的功能追加协议"><a href="#第九章-基于HTTP的功能追加协议" class="headerlink" title="第九章 基于HTTP的功能追加协议"></a>第九章 基于HTTP的功能追加协议</h1><h3 id="9-2-消除HTTP瓶颈的SPDY"><a href="#9-2-消除HTTP瓶颈的SPDY" class="headerlink" title="9.2 消除HTTP瓶颈的SPDY"></a>9.2 消除HTTP瓶颈的SPDY</h3><p>SPDY（发音speedy），google，2010， 解决性能瓶颈，缩短页面加载时间 <a class="link"   target="_blank" rel="noopener" href="http://www.chromium.org/spdy/" >http://www.chromium.org/spdy/<i class="fas fa-external-link-alt"></i></a></p>
+<ul>
+<li>一条连接上只可发送一个请求</li>
+<li>请求只能从客户端开始</li>
+<li>首部未经压缩就发送，首部信息越多延迟越大</li>
+<li>互相发送相同的首部浪费资源</li>
+<li>可任意选择数据压缩格式。非强制压缩发送。</li>
+</ul>
+<p>解决：</p>
+<ul>
+<li>Ajax（Asynchronous javascript and xml，异步js和xml技术）<ul>
+<li>有效利用js和DOM（document object model）达到局部页面替换加载的异步通信手段。</li>
+<li>核心技术是名为XMLHttpRequest的API，通过js脚本调用能和服务器进行http通信，从已加载完毕的web页面上发起请求，只更新局部页面。</li>
+<li>缺点：会产生大量重复请求，未解决http本身问题</li>
+</ul>
+</li>
+<li>Comet<ul>
+<li>收到更新请求，先将响应至于挂起状态，一旦sever由内容更新，直接对客户端返回响应。这是一种通过<strong>延时应答</strong>，模拟服务器推送的功能。</li>
+<li>做到了实时更新，但连接持续时间边长，消耗资源，且未解决http问题</li>
+</ul>
+</li>
+</ul>
+<p><strong>SPDY</strong></p>
+<ul>
+<li><p>在TCP/IP的应用层和传输层之间加会话层。同时规定使用SSL</p>
+<img src="/images/《图解HTTP》笔记/image-20210106115743469.png" alt="image-20210106115743469" style="zoom: 67%;" />
+</li>
+<li><p>功能：</p>
+<ul>
+<li>多路复用流</li>
+<li>赋予请求优先级</li>
+<li>压缩首部</li>
+<li>推送功能，服务器主动向用户推送</li>
+<li>服务器提示功能：主动提示客户端所需的资源</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-3-浏览器-服务器全双工通信协议WebSocket"><a href="#9-3-浏览器-服务器全双工通信协议WebSocket" class="headerlink" title="9.3 浏览器-服务器全双工通信协议WebSocket"></a>9.3 浏览器-服务器全双工通信协议WebSocket</h3><p>WebSocket是Web浏览器和Web服务器之间全双工通信标准。由于是建立在HTTP基础上的协议，发起方仍是客户端。一旦连接诶连接建立，通信过程中可互相发送任意格式的数据。</p>
+<p><strong>主要特点：</strong></p>
+<ul>
+<li><p>推送功能</p>
+</li>
+<li><p>减少通信量</p>
+<ul>
+<li><p>为了实现WebSocket通信，<strong>在HTTP连接建立之后</strong>，需要完成一次握手。</p>
+<ul>
+<li><p>握手-请求</p>
+<p>HTTP的upgrade首部字段，用户告知协议发生变化</p>
+<p><img src="/images/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E7%AC%94%E8%AE%B0/image-20210106140420372.png" alt="image-20210106140420372"></p>
+</li>
+<li><p>握手-响应</p>
+<p>对于之前的请求，返回状态吗101 switching protocols响应</p>
+<p><img src="/images/%E3%80%8A%E5%9B%BE%E8%A7%A3HTTP%E3%80%8B%E7%AC%94%E8%AE%B0/image-20210106140602140.png" alt="image-20210106140602140">、</p>
+</li>
+</ul>
+<p>成功握手后，确立websocket连接，通信时不再使用HTTP的数据帧，采用WebSocket独立的数据帧。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>WebSocket API</strong></p>
+<blockquote>
+<p>JavaScript 可调用“The WebSocket API”(<a class="link"   target="_blank" rel="noopener" href="http://www.w3.org/TR/websockets/%EF%BC%8C%E7%94%B1" >http://www.w3.org/TR/websockets/，由<i class="fas fa-external-link-alt"></i></a> W3C 标准制定)内 提供的 WebSocket 程序接口，以实现 WebSocket 协议下全双工通 信。</p>
+<p>以下为调用 WebSocket API，每 50ms 发送一次数据的实例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">&#x27;ws://game.example.com:12010&#x27;</span>)</span><br><span class="line">socket.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (socket.bufferedAmount == <span class="number">0</span>)</span><br><span class="line">      socket.send(getUpdateData()); &#125;, <span class="number">50</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="9-4-HTTP2"><a href="#9-4-HTTP2" class="headerlink" title="9.4 HTTP2"></a>9.4 HTTP2</h3><p>单独整理</p>
+<h1 id="第十章-构建Web内容的技术"><a href="#第十章-构建Web内容的技术" class="headerlink" title="第十章 构建Web内容的技术"></a>第十章 构建Web内容的技术</h1><ul>
+<li><p>DOM</p>
+</li>
+<li><p>Web应用</p>
+</li>
+<li><p>CGI</p>
+</li>
+<li><p>XML</p>
+</li>
+<li><p>Servlet</p>
+</li>
+<li><p>HTML &amp; CSS &amp; JavaScript</p>
+<p><strong>HTML</strong> 定义了网页的内容；<strong>CSS</strong> 描述了网页的布局；<strong>JavaScript</strong> 网页的行为</p>
+<p>HTML定义了一套语法规则，来告诉浏览器如何把一个丰富多彩的页面显示出来。网页中不但包含文字，还有图片、视频、Flash小游戏，有复杂的排版、动画效果。HTML文档就是一系列的Tag组成，最外层的Tag是<code>&lt;html&gt;</code>。规范的HTML也包含<code>&lt;head&gt;...&lt;/head&gt;</code>和<code>&lt;body&gt;...&lt;/body&gt;</code>（注意不要和HTTP的Header、Body搞混了），由于HTML是富文档模型，所以，还有一系列的Tag用来表示链接、图片、表格、表单等等。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>CSS是Cascading Style Sheets（层叠样式表）的简称，CSS用来控制HTML里的所有元素如何展现，比如，给标题元素<code>&lt;h1&gt;</code>加一个样式，变成48号字体，灰色，带阴影：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    h1 &#123;</span><br><span class="line"><span class="css">      <span class="selector-tag">color</span>: <span class="selector-id">#333333</span>;</span></span><br><span class="line">      font-size: 48px;</span><br><span class="line"><span class="css">      <span class="selector-tag">text-shadow</span>: 3<span class="selector-tag">px</span> 3<span class="selector-tag">px</span> 3<span class="selector-tag">px</span> <span class="selector-id">#666666</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JavaScript虽然名称有个Java，但它和Java没有关系。JavaScript是为了让HTML具有交互性而作为脚本语言添加的，JavaScript既可以内嵌到HTML中，也可以从外部链接到HTML中。如果我们希望当用户点击标题时把标题变成红色，就必须通过JavaScript来实现。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    h1 &#123;</span><br><span class="line"><span class="css">      <span class="selector-tag">color</span>: <span class="selector-id">#333333</span>;</span></span><br><span class="line">      font-size: 48px;</span><br><span class="line"><span class="css">      <span class="selector-tag">text-shadow</span>: 3<span class="selector-tag">px</span> 3<span class="selector-tag">px</span> 3<span class="selector-tag">px</span> <span class="selector-id">#666666</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">document</span>.getElementsByTagName(<span class="string">&#x27;h1&#x27;</span>)[<span class="number">0</span>].style.color = <span class="string">&#x27;#ff0000&#x27;</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">onclick</span>=<span class="string">&quot;change()&quot;</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="第十章-Web的攻击技术"><a href="#第十章-Web的攻击技术" class="headerlink" title="第十章 Web的攻击技术"></a>第十章 Web的攻击技术</h1></li>
+</ul>
+<h3 id="10-1-针对Web的攻击技术"><a href="#10-1-针对Web的攻击技术" class="headerlink" title="10.1 针对Web的攻击技术"></a>10.1 针对Web的攻击技术</h3><ul>
+<li><p>在客户端篡改请求。</p>
+<p>在http请求报文内加载攻击代码，就能发起对web应用的攻击。通过URL查询字段或表单、HTTP首部、Cookie等途径</p>
+</li>
+<li><p>针对web应用的攻击模式</p>
+<ul>
+<li><p>主动攻击：攻击者通过直接访问web应用，把攻击代码传入，针对服务器上的资源。如<font color=CD6155><strong>SQL注入和OS命令注入</strong></font></p>
+</li>
+<li><p>被动攻击：</p>
+<p>利用圈套策略执行攻击代码。攻击者不直接对目标web应用访问发起攻击。</p>
+<img src="/images/《图解HTTP》笔记/image-20210113104843747.png" alt="image-20210113104843747" style="zoom:80%;" />
+
+<img src="/images/《图解HTTP》笔记/image-20210113104905000.png" alt="image-20210113104905000" style="zoom: 67%;" />
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="10-2-因输出值转义不完全引发的安全漏洞"><a href="#10-2-因输出值转义不完全引发的安全漏洞" class="headerlink" title="10.2 因输出值转义不完全引发的安全漏洞"></a>10.2 因输出值转义不完全引发的安全漏洞</h3><ul>
+<li><p>跨站脚本攻击XSS</p>
+<p>web网站注册用户的浏览器内，运行非法的HTML标签或JavaScript进行的一种攻击。</p>
+</li>
+<li><p>SQL注入攻击</p>
+<p>SQL 注入是攻击者将 SQL 语句改变成开发者意想不到的形式以 达到破坏结构的攻击。</p>
+<img src="/images/《图解HTTP》笔记/image-20210113111432351.png" alt="image-20210113111432351" style="zoom:67%;" />
+</li>
+<li><p>OS命令注入</p>
+<p>类似Sql注入，通过web应用，实行非法的操作系统命令。</p>
+</li>
+<li><p>HTTP首部注入</p>
+<p>通过在某些响应首部字段需要处理输出 值的地方，插入换行发动攻击。</p>
+</li>
+<li><p>邮件首部注入</p>
+</li>
+<li><p>目录遍历攻击</p>
+</li>
+<li><p>远程文件包含漏洞</p>
+</li>
+</ul>
+<h3 id="10-3-因设置或设计上的缺陷引发的安全漏洞"><a href="#10-3-因设置或设计上的缺陷引发的安全漏洞" class="headerlink" title="10.3 因设置或设计上的缺陷引发的安全漏洞"></a>10.3 因设置或设计上的缺陷引发的安全漏洞</h3><ul>
+<li>强制浏览</li>
+<li>不正确的错误消息处理</li>
+<li>开放重定向</li>
+</ul>
+<h3 id="10-4-因会话管理疏忽引发的安全漏洞"><a href="#10-4-因会话管理疏忽引发的安全漏洞" class="headerlink" title="10.4 因会话管理疏忽引发的安全漏洞"></a>10.4 因会话管理疏忽引发的安全漏洞</h3><ul>
+<li><p>会话劫持。攻击者获得会话id，伪装用户进行会话</p>
+</li>
+<li><p>会话固定攻击</p>
+</li>
+<li><p>跨站点请求伪造</p>
+<h3 id="10-5-其他安全漏洞"><a href="#10-5-其他安全漏洞" class="headerlink" title="10.5 其他安全漏洞"></a>10.5 其他安全漏洞</h3></li>
+<li><p>加密漏洞</p>
+</li>
+<li><p>点击劫持</p>
+</li>
+<li><p>DoS攻击/DDos攻击</p>
+</li>
+<li><p>后门程序</p>
+</li>
+</ul>
+<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
+<li>RESTFUL标准</li>
+<li>Cross-site Tracking攻击</li>
+<li>代理&amp;网关&amp;隧道</li>
+<li>http会话管理</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：读书笔记-《图解HTTP》</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-01-01 13:52:53</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/01/01/读书笔记-《图解HTTP》/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/01/02/2021%E5%B9%B4%E5%88%9D%E8%AE%A1%E5%88%92/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">2021年初计划</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E4%BA%86%E8%A7%A3web%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">第一章 了解web及网络基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%AE%80%E5%8D%95%E7%9A%84HTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">第二章 简单的HTTP协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-HTTP%E6%8A%A5%E6%96%87%E5%86%85%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">第三章 HTTP报文内信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 报文结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8A%A5%E6%96%87%E7%BC%96%E7%A0%81"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 报文编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%8F%91%E9%80%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%9A%E9%83%A8%E5%88%86%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.3 发送多种数据的多部分对象集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E8%8E%B7%E5%8F%96%E9%83%A8%E5%88%86%E5%86%85%E5%AE%B9%E7%9A%84%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82%EF%BC%88%E4%B8%AD%E6%96%AD%E6%81%A2%E5%A4%8D%E4%B8%8B%E8%BD%BD%EF%BC%89"><span class="nav-number">3.0.4.</span> <span class="nav-text">3.4 获取部分内容的范围请求（中断恢复下载）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86"><span class="nav-number">3.0.5.</span> <span class="nav-text">3.5 内容协商</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%A1%AE%E4%BF%9DWeb%E5%AE%89%E5%85%A8%E7%9A%84HTTPS"><span class="nav-number">4.</span> <span class="nav-text">第七章 确保Web安全的HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-HTTP%E5%AE%89%E5%85%A8%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">4.0.1.</span> <span class="nav-text">7.1 HTTP安全性问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-HTTPS-HTTP-%E5%8A%A0%E5%AF%86-%E8%AE%A4%E8%AF%81-%E5%AE%8C%E6%95%B4%E6%80%A7%E4%BF%9D%E6%8A%A4"><span class="nav-number">4.0.2.</span> <span class="nav-text">7.2 HTTPS &#x3D; HTTP+加密+认证+完整性保护</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="nav-number">4.0.2.1.</span> <span class="nav-text">HTTPS通信机制</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E7%A1%AE%E8%AE%A4%E8%AE%BF%E9%97%AE%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E7%9A%84%E8%AE%A4%E8%AF%81"><span class="nav-number">5.</span> <span class="nav-text">第八章 确认访问用户身份的认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-BASIC%E8%AE%A4%E8%AF%81"><span class="nav-number">5.0.1.</span> <span class="nav-text">8.1 BASIC认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-DIGEST%E8%AE%A4%E8%AF%81"><span class="nav-number">5.0.2.</span> <span class="nav-text">8.2 DIGEST认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-SSL%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81"><span class="nav-number">5.0.3.</span> <span class="nav-text">8.3 SSL客户端认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-%E5%9F%BA%E4%BA%8E%E8%A1%A8%E5%8D%95%E8%AE%A4%E8%AF%81"><span class="nav-number">5.0.4.</span> <span class="nav-text">8.4 基于表单认证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E5%9F%BA%E4%BA%8EHTTP%E7%9A%84%E5%8A%9F%E8%83%BD%E8%BF%BD%E5%8A%A0%E5%8D%8F%E8%AE%AE"><span class="nav-number">6.</span> <span class="nav-text">第九章 基于HTTP的功能追加协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-%E6%B6%88%E9%99%A4HTTP%E7%93%B6%E9%A2%88%E7%9A%84SPDY"><span class="nav-number">6.0.1.</span> <span class="nav-text">9.2 消除HTTP瓶颈的SPDY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-%E6%B5%8F%E8%A7%88%E5%99%A8-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A8%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AEWebSocket"><span class="nav-number">6.0.2.</span> <span class="nav-text">9.3 浏览器-服务器全双工通信协议WebSocket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-HTTP2"><span class="nav-number">6.0.3.</span> <span class="nav-text">9.4 HTTP2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-%E6%9E%84%E5%BB%BAWeb%E5%86%85%E5%AE%B9%E7%9A%84%E6%8A%80%E6%9C%AF"><span class="nav-number">7.</span> <span class="nav-text">第十章 构建Web内容的技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-Web%E7%9A%84%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF"><span class="nav-number">8.</span> <span class="nav-text">第十章 Web的攻击技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-%E9%92%88%E5%AF%B9Web%E7%9A%84%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF"><span class="nav-number">8.0.1.</span> <span class="nav-text">10.1 针对Web的攻击技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-%E5%9B%A0%E8%BE%93%E5%87%BA%E5%80%BC%E8%BD%AC%E4%B9%89%E4%B8%8D%E5%AE%8C%E5%85%A8%E5%BC%95%E5%8F%91%E7%9A%84%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E"><span class="nav-number">8.0.2.</span> <span class="nav-text">10.2 因输出值转义不完全引发的安全漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-%E5%9B%A0%E8%AE%BE%E7%BD%AE%E6%88%96%E8%AE%BE%E8%AE%A1%E4%B8%8A%E7%9A%84%E7%BC%BA%E9%99%B7%E5%BC%95%E5%8F%91%E7%9A%84%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E"><span class="nav-number">8.0.3.</span> <span class="nav-text">10.3 因设置或设计上的缺陷引发的安全漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-%E5%9B%A0%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E7%96%8F%E5%BF%BD%E5%BC%95%E5%8F%91%E7%9A%84%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E"><span class="nav-number">8.0.4.</span> <span class="nav-text">10.4 因会话管理疏忽引发的安全漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-5-%E5%85%B6%E4%BB%96%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E"><span class="nav-number">8.0.5.</span> <span class="nav-text">10.5 其他安全漏洞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TODO"><span class="nav-number">9.</span> <span class="nav-text">TODO</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>

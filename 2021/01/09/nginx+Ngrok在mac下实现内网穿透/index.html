@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            nginx+Ngrok在mac下实现内网穿透 |
+        
+        Yinjiangyi’s blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Yinjiangyi’s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">nginx+Ngrok在mac下实现内网穿透</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-01-09 12:51:07
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/web%E6%9C%8D%E5%8A%A1/">web服务</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>参考：<br><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/wcwnina/p/8728391.html" >https://www.cnblogs.com/wcwnina/p/8728391.html<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h1><h2 id="产生"><a href="#产生" class="headerlink" title="产生"></a>产生</h2><p>Nginx和Apache一样，都是一种<strong>web服务器软件</strong>。基于REST架构风格，以统一URI或URL作为沟通依据，通过HTTP协议提供各种网络服务。但<strong>Apche</strong>发展较早，虽然作为世界第一大服务器软件，具有<strong>稳定、开源、跨平台</strong>的优点，但是他被设计为一个<strong>重量级的不支持高并发的服务器</strong>。数以万计的并发访问会导致服务器消耗大量内存。操作系统对其进行进程或线程间的切换也消耗了大量的CPU资源，导致HTTP请求的平均响应速度降低。</p>
+<p><strong>因此轻量级高并发的服务器Nginx应运而生。</strong></p>
+<p>Nginx由俄罗斯工程师采用C语言开发，具有以下<strong>特点</strong>：</p>
+<ol>
+<li>Nginx使用基于<strong>事件驱动架构</strong>，使得其可以支持数以百万级别的TCP连接<br>（<a class="link"   target="_blank" rel="noopener" href="https://developer.ibm.com/zh/technologies/messaging/articles/advantages-of-an-event-driven-architecture/" >事件驱动架构<i class="fas fa-external-link-alt"></i></a>：是指<strong>松散耦合</strong>的<strong>微服务系统</strong>）</li>
+<li>高度的模块化和自由软件许可证使得第三方模块层出不穷</li>
+<li>跨平台服务器，可以运行在Linux，Windows，FreeBSD，Solaris，AIX，Mac OS等操作系统上</li>
+<li>极大的稳定性</li>
+</ol>
+<h1 id="Nginx-安装与配置"><a href="#Nginx-安装与配置" class="headerlink" title="Nginx 安装与配置"></a>Nginx 安装与配置</h1><ul>
+<li><p>安装</p>
+<p><code> yum install nginx</code></p>
+</li>
+<li><p>配置文件解读 <a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74256946" >https://zhuanlan.zhihu.com/p/74256946<i class="fas fa-external-link-alt"></i></a></p>
+<ul>
+<li>文件结构：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">events &#123;</span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    ...</span><br><span class="line">    server &#123;</span><br><span class="line">        ....</span><br><span class="line">        location &#123;</span><br><span class="line">            root html;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>nginx配置指令分为<strong>指令块</strong>和<strong>单个指令</strong>（如root html）</p>
+<ul>
+<li>全局配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">user nginx;</span><br><span class="line">worker_processes auto;</span><br><span class="line">error_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log;</span><br><span class="line">pid &#x2F;run&#x2F;nginx.pid;</span><br><span class="line"></span><br><span class="line"># Load dynamic modules. See &#x2F;usr&#x2F;share&#x2F;doc&#x2F;nginx&#x2F;README.dynamic.</span><br><span class="line">include &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;modules&#x2F;*.conf;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 1024;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>user</code>：指定nginx的工作进程的用户及用户组，默认是nobody用户<br><code>worker_processes</code>:指定工作进程的个数，默认是1个。具体可以根据服务器cpu数量进行设置，比如cpu有4个，可以设置为4。如果不知道cpu的数量，可以设置为auto。nginx会自动判断服务器的cpu个数，并设置相应的进程数。<br><code>error_log</code>:设置nginx的错误日志路径，并设置相应的输出级别。如果编译时没有指定编译调试模块，那么 info就是最详细的输出模式了。如果有编译debug模块，那么debug时最为详细的输出模式。这里设置为默认就好了。<br><code>pid</code>: 指定nginx进程pid的文件路径。<br><code>events </code> :这个指令块用来设置工作进程的工作模式以及每个进程的连接上限。<br>-<code>use</code> :用来指定nginx的工作模式，通常选择epoll，除了epoll，还有select,poll。<br>-<code>worker_connections</code>:定义每个工作进程的最大连接数，默认是1024。客户端最大连接数，就要考虑有几个工作进程了，两者相乘就是的。当nginx作反向代理时，需要除以2.</p>
+</li>
+<li><p>修改端口号和html目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       128 default_server;</span><br><span class="line">    listen       [::]:128 default_server;</span><br><span class="line">    server_name  _;</span><br><span class="line">    # root         &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html;</span><br><span class="line">    root         &#x2F;root&#x2F;CyberNarrator&#x2F;ShowCyberNarrator;</span><br><span class="line">  </span><br><span class="line">    # Load configuration files for the default server block.</span><br><span class="line">    include &#x2F;etc&#x2F;nginx&#x2F;default.d&#x2F;*.conf;</span><br><span class="line">  </span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        autoindex on; # 显示目录</span><br><span class="line">        autoindex_exact_size on;</span><br><span class="line">        autoindex_localtime on;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    error_page 404 &#x2F;404.html;</span><br><span class="line">    location &#x3D; &#x2F;404.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    error_page 500 502 503 504 &#x2F;50x.html;</span><br><span class="line">    location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启nginx服务<code>nginx service start</code> 后，访问192.168.40.154:128出现403 forbedden</p>
+<p>原因：Web目录/root/CyberNarrator/ShowCyberNarrator权限问题，修改为777也没有解决。将web目录改为home下目录/home/cyber_narrator/show_maltego成功。</p>
+<h2 id="基于Nginx在mac上搭建本地文件服务器"><a href="#基于Nginx在mac上搭建本地文件服务器" class="headerlink" title="基于Nginx在mac上搭建本地文件服务器"></a>基于Nginx在mac上搭建本地文件服务器</h2><p>在服务器上尝试成功后，实现在mac上搭建文件服务器</p>
+</li>
+<li><p><code>brew install nginx</code> 安装nginx，发现已经安装过，不知道啥时候安装的。</p>
+</li>
+<li><p>运行nginx <code>nginx</code> 提示端口被占用</p>
+</li>
+<li><p>查看端口 占用情况 <code>lsof -i: 8080</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COMMAND   PID USER   FD   TYPE             DEVICE SIZE&#x2F;OFF NODE NAME</span><br><span class="line">nginx   40125  joy    6u  IPv4 0xd9490f7db5cbf449      0t0  TCP *:http-alt (LISTEN)</span><br><span class="line">nginx   40126  joy    6u  IPv4 0xd9490f7db5cbf449      0t0  TCP *:http-alt (LISTEN)</span><br></pre></td></tr></table></figure></li>
+<li><p>如果需要杀掉进程，输入 <code>kill -9 pid </code> 或 <code>kill-9 name</code></p>
+</li>
+<li><p>修改nginx.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     listen       8080;</span><br><span class="line">     server_name  localhost;</span><br><span class="line">     root &#x2F;Users&#x2F;joy&#x2F;work&#x2F;iie&#x2F;project&#x2F;cyber_narrator&#x2F;MALTEGO&#x2F;html;</span><br><span class="line">     location &#x2F; &#123;</span><br><span class="line">         autoindex on; </span><br><span class="line">         autoindex_exact_size on;</span><br><span class="line">         autoindex_localtime on;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>保存配置文件，<code>nginx</code> 运行，<code>nginx -s reload</code> 重新加载配置文件</p>
+</li>
+<li><p>访问 <a class="link"   target="_blank" rel="noopener" href="http://localhost:8080/transforms/" >http://localhost:8080/transforms/<i class="fas fa-external-link-alt"></i></a> 即出现web root目录下transform文件夹的文件。</p>
+</li>
+</ul>
+<h2 id="Ngrok实现内网穿透"><a href="#Ngrok实现内网穿透" class="headerlink" title="Ngrok实现内网穿透"></a>Ngrok实现内网穿透</h2><p><a class="link"   target="_blank" rel="noopener" href="https://learnku.com/articles/36129" >Ngrok<i class="fas fa-external-link-alt"></i></a>是一个<strong>反向代理</strong>，内网穿透工具</p>
+<ul>
+<li><p>注册账号 </p>
+</li>
+<li><p>下载安装包</p>
+</li>
+<li><p><a class="link"   target="_blank" rel="noopener" href="https://dashboard.ngrok.com/get-started/setup" >配置authtoken<i class="fas fa-external-link-alt"></i></a></p>
+<p><code>./ngrok authtoken 1muCRyfXzexS8Ui5RWIi4pvUNvR_2rGsMdvDwQpKcwS1iTpAo</code></p>
+</li>
+<li><p>运行命令</p>
+<p>ngrok http -host-header=shop.test -region us 8080</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Session Status                online                                                                                  </span><br><span class="line">Account                       yinjiangyi (Plan: Free)                                                                 </span><br><span class="line">Version                       2.3.35                                                                                  </span><br><span class="line">Region                        United States (us)                                                                      </span><br><span class="line">Web Interface                 http:&#x2F;&#x2F;127.0.0.1:4040                                                                   </span><br><span class="line">Forwarding                    http:&#x2F;&#x2F;08112e20c814.ngrok.io -&gt; http:&#x2F;&#x2F;localhost:8080                                   </span><br><span class="line">Forwarding                    https:&#x2F;&#x2F;08112e20c814.ngrok.io -&gt; http:&#x2F;&#x2F;localhost:8080                                  </span><br><span class="line">                                                                                                                      </span><br><span class="line">Connections                   ttl     opn     rt1     rt5     p50     p90                                             </span><br><span class="line">                              3       0       0.00    0.00    0.00    0.01  </span><br></pre></td></tr></table></figure>
+<p>这里forwarding表示分配的域名，<strong>免费账号每次分配的域名无法固定，关闭后再次运行代理服务后域名改变</strong>。配置完成后，就可以实现外网访问服务。</p>
+</li>
+</ul>
+<hr>
+<p>以下记录我在服务器上做了什么，以防后续产生问题有迹可循：：</p>
+<ul>
+<li>安装nginx，搭建文件服务器，web目录为/home/cyber_narrator/show_maltego</li>
+<li>添加python3环境，<ul>
+<li>home目录下新建yjy目录</li>
+<li>安装目录/usr/local/python3  <strong>没有动现有的python2环境</strong></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：nginx+Ngrok在mac下实现内网穿透</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-01-09 12:51:07</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/01/09/nginx+Ngrok在mac下实现内网穿透/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/01/11/%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0maltego-TDS-transform/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">内网实现maltego-TDS-transform</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/01/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%201-03%20Discovering%20HTTPSified%20Phishing%20Websites%20Using%20the%20TLS%20Certificates%20Footprints/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">论文笔记 1-03 Discovering HTTPSified Phishing Websites Using the TLS Certificates Footprints</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Nginx介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F"><span class="nav-number">1.1.</span> <span class="nav-text">产生</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Nginx 安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ENginx%E5%9C%A8mac%E4%B8%8A%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">基于Nginx在mac上搭建本地文件服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ngrok%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F"><span class="nav-number">2.2.</span> <span class="nav-text">Ngrok实现内网穿透</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>

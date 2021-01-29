@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            论文笔记 1-02 Mis-shapes, Mistakes, Misfits:An Analysis of Domain Classification Services |
+        
+        Yinjiangyi’s blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Yinjiangyi’s blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">论文笔记 1-02 Mis-shapes, Mistakes, Misfits:An Analysis of Domain Classification Services</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-01-05 15:57:45
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p><strong>Mis-shapes, Mistakes, Misfits: An Analysis of Domain Classification Services</strong></p>
+<p>ICM CCF-B(测量顶会) 2020</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><p>对2019年top venues发表的论文中常用的域名分类服务</p>
+<ul>
+<li>进行分析和测量， 包括覆盖度、准确度、方法和调用特征、人为因素引入等具体情况和对工作成果可能产生影响的分析。</li>
+<li>在三类域名上做了casestudy，对标签准确度进行了具体评估。</li>
+<li>为需要域名分类标注的工作提出建议，和未来方向分析</li>
+</ul>
+<h2 id="内容亮点"><a href="#内容亮点" class="headerlink" title="内容亮点"></a>内容亮点</h2><p>测量分析部分，结论比较全面但比较细碎，大部分是直觉能get到的观点，相比较来看，第七章的讨论内容和第八章的未来工作分析的内容更有启发。服务选择时可以参考相关评测结论。</p>
+<h2 id="工作帮助"><a href="#工作帮助" class="headerlink" title="工作帮助"></a>工作帮助</h2><ul>
+<li><p>快速进行论文检索。近一年+四个领域顶会+丰富关键词检索+过滤 = 论文列表</p>
+<blockquote>
+<p>i) network measurements (IMC, PAM, TMA, CoNEXT, SIGCOMM); </p>
+<p>ii) security and privacy (CCS, NDSS, S&amp;P, USENIX Security, PETS); </p>
+<p>iii) Web (WWW). </p>
+<p>The keywords used are ”domain classification services“, “website classification”, “website categorization”, “domain categorization”, “categorization service”, “website category”, “domain category”, “category of the website”, and “category of the domain”, <strong>in singular and in plural</strong>, and <strong>also using British English spelling</strong>.</p>
+</blockquote>
+</li>
+<li><p>大量域名分类服务信息</p>
+</li>
+<li><p>数据分析角度精准，可视化图设计效果好</p>
+</li>
+</ul>
+<h2 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h2><h3 id="2-USAGE-IN-ACADEMIC-STUDIES"><a href="#2-USAGE-IN-ACADEMIC-STUDIES" class="headerlink" title="2 USAGE IN ACADEMIC STUDIES"></a>2 USAGE IN ACADEMIC STUDIES</h3><ul>
+<li>从2019年顶会中搜索相关领域论文共1014篇，其中共有26篇采用了至少一种域名分类服务，24篇基于分类服务对工作效果进行验证</li>
+<li>其中WWW和IMC收录了最多（9篇）</li>
+<li>VirusTotal最受欢迎（12篇），其次是Alexa（7篇）。</li>
+</ul>
+<h3 id="3-METHODOLOGY-OF-DOMAIN-CLASSIFICATION-SERVICES"><a href="#3-METHODOLOGY-OF-DOMAIN-CLASSIFICATION-SERVICES" class="headerlink" title="3 METHODOLOGY OF DOMAIN CLASSIFICATION SERVICES"></a>3 METHODOLOGY OF DOMAIN CLASSIFICATION SERVICES</h3><p>分类服务不同的使用特性会对在学术工作中对覆盖率和准确度造成影响。</p>
+<img src="/images/Misfits/image-20210105163618292.png" alt="image-20210105163618292" style="zoom:50%;" />
+
+<ul>
+<li>The granularity of input provided to the classifier affects the correctness of the classification</li>
+<li>The outputs affect the utility of the data to a study’s purpose. 多标签输出提高准确率</li>
+<li>The provider’s intended purpose for a service (e.g., content filtering, threat protection, marketing or discovery of relevant content) influences the used taxonomy. </li>
+<li>The ability to update classification results affects both coverage and accuracy. </li>
+</ul>
+<h3 id="4-DOMAIN-LABELING-QUALITY"><a href="#4-DOMAIN-LABELING-QUALITY" class="headerlink" title="4 DOMAIN LABELING QUALITY"></a>4 DOMAIN LABELING QUALITY</h3><h4 id="4-1覆盖率"><a href="#4-1覆盖率" class="headerlink" title="4.1覆盖率"></a>4.1覆盖率</h4><ul>
+<li><p>交集覆盖率</p>
+<img src="/images/Misfits/image-20210105171538204.png" alt="image-20210105171538204" style="zoom:50%;" />
+
+<ul>
+<li>McAfee和Foriguard的覆盖率最高90%以上，得益于机器学习分类算法的应用</li>
+</ul>
+</li>
+<li><p>importance of being popular</p>
+<p>不常见的网站覆盖率差别明显</p>
+<img src="/images/Misfits/image-20210105174548376.png" alt="image-20210105174548376" style="zoom:50%;" />
+</li>
+<li><p>通过virustotal 查询和直接查询两种方式的查询结果相差很大。</p>
+</li>
+</ul>
+<h4 id="4-2-Label-within-services"><a href="#4-2-Label-within-services" class="headerlink" title="4.2 Label within services"></a>4.2 Label within services</h4><ul>
+<li>面向市场的服务（webshrinker, alexa）标签类别更丰富</li>
+<li>每种服务都有unique obs，融合使用的难度较大</li>
+<li>有的服务采用层次标签系统，但是标签规模的缩小难度还是很大（有些标签中附带了语言属性）</li>
+<li>服务的文档不可信，不能反映真实的标签系统。（细小的句法差异记为不同标签等问题）</li>
+</ul>
+<img src="/images/Misfits/image-20210106144316268.png" alt="image-20210106144316268" style="zoom:50%;" />
+
+<ul>
+<li>多标签情况复杂：各服务多标签占比差别很大，多标签的标签个数差别很大</li>
+</ul>
+<h4 id="4-3-Label-across-services"><a href="#4-3-Label-across-services" class="headerlink" title="4.3 Label across services"></a>4.3 Label across services</h4><ul>
+<li>计算service之间的互信息，分配label的相似程度</li>
+<li>整体互信息值较低</li>
+</ul>
+<img src="/images/Misfits/image-20210106152459284.png" alt="image-20210106152459284"  />
+
+<ul>
+<li>one fixed set of domains corresponds to largely varying sets of labels that cannot trivially be combined into one category</li>
+<li> labels are dis- tributed unevenly across pairs of providers:</li>
+</ul>
+<img src="/images/Misfits/image-20210106153922788.png" alt="image-20210106153922788" style="zoom: 50%;" />
+
+<blockquote>
+<p>We find that commonly used domain classification services exhibit traits that affect their suitability, both for technical solutions as well as for research. <strong>Only a few services attain a level of coverage</strong> that is sufficient to cover non-popular or non-base domains. Services may return multiple or undocumented labels, <strong>requiring careful data processing and even manual validation</strong>. <strong>Breaking down multi-labeled classification</strong> may ease the label comparison between services as well as improve the interpretation of the results. However, it may also bias the results, overestimating the presence of labels that do not provide information about the real purpose of the service. <strong>The large diversity in labels, both within and across services</strong>, may harm their accurate and tractable interpretation. Efforts to combine labels from multiple services to achieve a higher agreement on label accuracy might be thwarted by labeling inconsistencies. <strong>The labeling updates may also have an impact</strong> on accuracy and timeliness. Researchers should be aware of these phenomena and renew their dataset to reduce possible misclassifications, especially in treating malicious services. In summary, sound deployment and usage of domain classification services requires a thorough understanding of the (desired) characteristics and resulting biases to select the most appropriate sources.</p>
+</blockquote>
+<h3 id="5-Human-perception"><a href="#5-Human-perception" class="headerlink" title="5 Human perception"></a>5 Human perception</h3><h4 id="5-1-Labeling-dynamics"><a href="#5-1-Labeling-dynamics" class="headerlink" title="5.1 Labeling dynamics"></a>5.1 Labeling dynamics</h4><p>OpenDNS基于志愿用户进行域名标注。用户提交labels，这个提交内容会受到同意票和反对票，收到足够票数后审核人（moderator）同意或者驳回提交的label决定。整个过程是有历史记录的，基于记录数据进行分析。</p>
+<ul>
+<li>参与打标和评审的大部分只有少量贡献。</li>
+<li>大量通过申请的标签出现在早期。</li>
+</ul>
+<h4 id="5-2-Labeling-dis-agreements"><a href="#5-2-Labeling-dis-agreements" class="headerlink" title="5.2 Labeling (dis-)agreements"></a>5.2 Labeling (dis-)agreements</h4><h4 id="5-4-Is-labeling-domains-a-trivial-process"><a href="#5-4-Is-labeling-domains-a-trivial-process" class="headerlink" title="5.4 Is labeling domains a trivial process?"></a>5.4 Is labeling domains a trivial process?</h4><h3 id="6-Case-Study"><a href="#6-Case-Study" class="headerlink" title="6 Case Study"></a>6 Case Study</h3><img src="/images/Misfits/image-20210106180341709.png" alt="image-20210106180341709" style="zoom:67%;" />
+
+<ul>
+<li>Any指对应服务成功打上标签的比例，related表示打出的标签和对应真实类别相关的比例</li>
+</ul>
+<h3 id="7-Discussion"><a href="#7-Discussion" class="headerlink" title="7 Discussion"></a>7 Discussion</h3><ul>
+<li><p>准确率不足</p>
+<p>1）覆盖率差别大 2）准确率受分类体系影响大 3）协同难度大</p>
+<ul>
+<li>对于目标化明确的任务场景，通用分类服务可用性不足，建议使用人工标注数据集</li>
+<li>终端用户和研究人员要考虑误差的影响，可能导致系统误杀过漏报。</li>
+<li>学术论文中，考虑label的重要性，是要获取一个模糊的背景信息即可，还是要完全依赖数据进行工作</li>
+</ul>
+</li>
+<li><p>服务偏差</p>
+<ul>
+<li>服务目标会导致偏差。过滤服务可能对恶意域名有更好表现，面向市场和发现的服务能够对受欢迎的网站提供更细粒度的分类。</li>
+<li>标签来源会导致偏差。通过模型分类的服务，分类质量受训练集的影响，人工打标服务在维护环节和主观判断中引入偏差</li>
+<li>使用者需要通过认真阅读说明文档，实验观测标签分布，人工查看标签质量等工作，了解可能存在的偏差对服务进行选择</li>
+</ul>
+</li>
+<li><p>不一致问题</p>
+<ul>
+<li>使用域名服务的工作中要对结果进行谨慎的解释。<ul>
+<li>是否多标签，具备子标签，更新情况；标签粒度和确切含义的说明</li>
+<li>认真确认分类体系是否和说明文档的不同之处</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>多分类器结果的聚合</p>
+<p>挑战：</p>
+<ul>
+<li><p>无法实现提高覆盖率的目标</p>
+<blockquote>
+<p>This analysis suggests that considering the union of two services does not necessarily increase the global coverage when their in- tersection is already high. For example, the union coverage for FortiGuard and McAfee increases slightly to over 98%. However, as we will discuss in § 7, the combination of labels from multiple services is non-trivial due to largely disjoint taxonomies. As a result, unless the objective of unifying providers is offering complemen- tary perspectives, it might not necessarily benefit coverage.</p>
+</blockquote>
+</li>
+<li><p>服务目标不同，标签体系不同，聚合难度很大</p>
+</li>
+<li><p>对不同分类结果的判定很难</p>
+</li>
+</ul>
+</li>
+<li><p>Limitation and future work</p>
+<ul>
+<li><p>缺乏ground truth，无法对单个服务质量进行评估，给出服务选择的明确指导</p>
+</li>
+<li><p>通过比较分析服务间差别，但是无法了解标签语义内容。</p>
+<blockquote>
+<p><strong>Require developing a new taxonomy to which all labels across all services need to be translated,</strong> similar to how AVClass [95] automatically annotates malware samples with one semantically-equivalent label generated from multiple antivirus labels.</p>
+<p>This translation could occur manually, which may be more accurate, but comes at a higher maintenance cost when taxonomies change or an additional service is to be integrated. Alternatively, this taxonomy development <strong>could be (partially) automated through methods such as label normalization, heuristics [96],</strong> determining strongly coupled label pairs between services, or a semantic interpretation of existing labels through natural language processing.</p>
+</blockquote>
+</li>
+<li><p>没有在case study之上，对标签进行广泛的准确性评估，”even if all services agree on a label, it might still be wrong. “ ，需要自主开发的分类器提供可信服务</p>
+<blockquote>
+<p>such a classifier would need to rely on <strong>automated methods, based on those developed in the state of the art, such as topic modeling</strong> [97]. Potential sources of ground truth are human-developed directories such as DMOZ and Curlie (as used in previous work [4, 98–100]) or the categorization of pages on Wikipedia (idem [101]). </p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-Related-work"><a href="#8-Related-work" class="headerlink" title="8 Related work"></a>8 Related work</h3><ul>
+<li>Web classification 网站分类</li>
+<li>Internet measurement research methodology 测量相关数据集分析</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：论文笔记 1-02 Mis-shapes, Mistakes, Misfits:An Analysis of Domain Classification Services</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-01-05 15:57:45</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/01/05/论文笔记 1-02/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/01/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-%E7%A0%94%E7%A9%B6%E7%9A%84%E7%82%B9%E5%8F%8A%E6%84%9F%E5%85%B4%E8%B6%A3%E6%96%B9%E5%90%91%E8%AE%B0%E5%BD%95/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">论文阅读-研究的点及感兴趣方向记录</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/01/04/%E8%AE%BA%E6%96%87%E6%95%B0%E6%8D%AE-%E5%9F%9F%E5%90%8D%E6%A0%87%E6%B3%A8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E8%B0%83%E7%A0%94/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">论文数据-域名标注数据集构造方法调研</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE"><span class="nav-number">2.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E4%BA%AE%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">内容亮点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%B8%AE%E5%8A%A9"><span class="nav-number">4.</span> <span class="nav-text">工作帮助</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%85%E8%AF%BB"><span class="nav-number">5.</span> <span class="nav-text">阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-USAGE-IN-ACADEMIC-STUDIES"><span class="nav-number">5.1.</span> <span class="nav-text">2 USAGE IN ACADEMIC STUDIES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-METHODOLOGY-OF-DOMAIN-CLASSIFICATION-SERVICES"><span class="nav-number">5.2.</span> <span class="nav-text">3 METHODOLOGY OF DOMAIN CLASSIFICATION SERVICES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-DOMAIN-LABELING-QUALITY"><span class="nav-number">5.3.</span> <span class="nav-text">4 DOMAIN LABELING QUALITY</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1%E8%A6%86%E7%9B%96%E7%8E%87"><span class="nav-number">5.3.1.</span> <span class="nav-text">4.1覆盖率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Label-within-services"><span class="nav-number">5.3.2.</span> <span class="nav-text">4.2 Label within services</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-Label-across-services"><span class="nav-number">5.3.3.</span> <span class="nav-text">4.3 Label across services</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Human-perception"><span class="nav-number">5.4.</span> <span class="nav-text">5 Human perception</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-Labeling-dynamics"><span class="nav-number">5.4.1.</span> <span class="nav-text">5.1 Labeling dynamics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-Labeling-dis-agreements"><span class="nav-number">5.4.2.</span> <span class="nav-text">5.2 Labeling (dis-)agreements</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-Is-labeling-domains-a-trivial-process"><span class="nav-number">5.4.3.</span> <span class="nav-text">5.4 Is labeling domains a trivial process?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Case-Study"><span class="nav-number">5.5.</span> <span class="nav-text">6 Case Study</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Discussion"><span class="nav-number">5.6.</span> <span class="nav-text">7 Discussion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Related-work"><span class="nav-number">5.7.</span> <span class="nav-text">8 Related work</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
