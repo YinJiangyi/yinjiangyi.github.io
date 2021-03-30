@@ -9,7 +9,7 @@
     
     <title>
         
-            Linux常用命令 |
+            深度学习推荐系统实战 |
         
         JOY&#39;s Blog
     </title>
@@ -147,7 +147,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Linux常用命令</span>
+            <span class="title-hover-animation">深度学习推荐系统实战</span>
         </div>
 
         
@@ -165,20 +165,9 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-01-26 15:57:51
+        <i class="fas fa-edit"></i>&nbsp;2021-03-08 10:14:42
     </span>
     
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -197,37 +186,34 @@
         
 
         <div class="article-content markdown-body">
-            <ul>
-<li><p>wget</p>
-<p>使用wget下载单个文件<br> <code>wget http://www.centos.bz/download?id=1</code></p>
-<p>使用wget -O下载并以不同的文件名保存<br><code>wget -O wordpress.zip http://www.centos.bz/download.php?id=1080</code></p>
-<p>使用wget -b后台下载<br><code>wget -b http://cn.wordpress.org/wordpress-3.1-zh_CN.zip</code><br><code>tail -f wget-log</code> 查看下载进度</p>
-</li>
-<li><p>docker</p>
-<p><code>docker ps -a</code> 查看容器是否运行</p>
-<p><code>docker exec -it 容器id bash</code> 进入容器</p>
-<p><code>docker start/stop 容器id</code> </p>
-<p><code>docker images</code> 查看本地已有的所有镜像</p>
-</li>
-<li><p>mysql </p>
-<p><code>mydql -uroot -p</code> 登录数据库</p>
-</li>
-<li><p>后台进程</p>
-<p><code>nohup  command &amp;</code>   eg: 后台运行命令command</p>
-<p><code>jobs -l</code> 查看当前终端运行的后台进程（终端关闭过的后台进程显示不出）</p>
-<p><code>ps -ef</code>  搭配 <code>grep 关键字</code> 查找机器后台运行的相关程序，eg: ps -ef | grep “Query”<br><img src="../images/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/image-20210302164116894.png" alt="image-20210302164116894"></p>
-<p><code>kill -9 进程号</code> 关闭进程</p>
-</li>
-<li><p>文件权限</p>
-<img src="../images/Linux常用命令/file-permissions-rwx.jpg" alt="file-permissions-rwx" style="zoom: 50%;" />
+            <p>[toc]</p>
+<h1 id="基础架构篇"><a href="#基础架构篇" class="headerlink" title="基础架构篇"></a>基础架构篇</h1><h3 id="1-1-深度学习推荐系统的经典技术架构长啥样？"><a href="#1-1-深度学习推荐系统的经典技术架构长啥样？" class="headerlink" title="1-1 深度学习推荐系统的经典技术架构长啥样？"></a>1-1 深度学习推荐系统的经典技术架构长啥样？</h3><h4 id="1-推荐系统解决的根本问题是什么"><a href="#1-推荐系统解决的根本问题是什么" class="headerlink" title="1. 推荐系统解决的根本问题是什么"></a>1. 推荐系统解决的根本问题是什么</h4><p>在“信息过载”的情况下，用户如何高效获取感兴趣的信息：</p>
+<p>对于某个用户U（User），在特定场景C（Context）下，针对海量的“物品”信息构建一个函数 ，预测用户对特定候选物品I（Item）的喜好程度，再根据喜好程度对所有候选物品进行排序，生成推荐列表的问题。</p>
+<h4 id="2-深度学习推荐系统的技术架构"><a href="#2-深度学习推荐系统的技术架构" class="headerlink" title="2. 深度学习推荐系统的技术架构"></a>2. 深度学习推荐系统的技术架构</h4><p>需要解决的问题有两类：数据部分、模型部分</p>
+<img src="/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98-%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E7%AF%87/a87530cf45fb76480bf5b60b9feb60c1.jpg" alt="a87530cf45fb76480bf5b60b9feb60c1" style="zoom: 40%;" />
 
-<img src="../images/Linux常用命令/rwx-standard-unix-permission-bits.png" alt="rwx-standard-unix-permission-bits" style="zoom: 75%;" />
+<h3 id="1-2-Sparrow-RecSys"><a href="#1-2-Sparrow-RecSys" class="headerlink" title="1-2 Sparrow RecSys"></a>1-2 Sparrow RecSys</h3><p>功能：首页、详情页、推荐页</p>
+<p>数据来源：movilens的1000部电影，包括基本信息、打分、外部链接</p>
+<p>架构图：</p>
+<img src="/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98-%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E7%AF%87/8cee6a7eeebda9745bfbe1b6yy18c59e.jpg" alt="8cee6a7eeebda9745bfbe1b6yy18c59e" style="zoom:30%;" />
 
-<p>常用编码：777、754、755</p>
-<p><code>chmod 777 file </code>  把file的操作权限设置为777全部用户可读可写可执行</p>
-<p><code>chmod -R a+wr file</code> 将目录file下和所有子目录的所有用户增加读和写权限</p>
-</li>
+<h1 id="特征工程篇"><a href="#特征工程篇" class="headerlink" title="特征工程篇"></a>特征工程篇</h1><h3 id="2-1-原则"><a href="#2-1-原则" class="headerlink" title="2-1 原则"></a>2-1 原则</h3><ul>
+<li>尽可能地让特征工程抽取出的一组特征，能够保留推荐环境及用户行为过程中的所有“有用“信息，并且尽量摒弃冗余信息。</li>
+<li>在已有的、可获得的数据基础上，“尽量”保留有用信息是现实中构建特征工程的原则。</li>
 </ul>
+<p>常用特征：用户行为数据；用户关系数据；属性、标签类数据；内容类数据；场景信息（上下文信息）</p>
+<h3 id="2-2-Spark特征处理"><a href="#2-2-Spark特征处理" class="headerlink" title="2-2 Spark特征处理"></a>2-2 Spark特征处理</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>Spark 是一个分布式计算平台。所谓分布式，指的是计算节点之间不共享内存，需要通过网络通信的方式交换数据。Spark 最典型的应用方式就是建立在大量廉价的计算节点上，这些节点可以是廉价主机，也可以是虚拟的 Docker Container（Docker 容器）。</p>
+<h4 id="工作方式"><a href="#工作方式" class="headerlink" title="工作方式"></a>工作方式</h4><img src="/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98-%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E7%AF%87/4ae1153e4daee39985c357ed796eca9b.jpeg" alt="4ae1153e4daee39985c357ed796eca9b" style="zoom:50%;" />
+
+<p>在 Spark 平台上处理任务的时候，会将这个任务拆解成一个子任务 DAG（Directed Acyclic Graph，有向无环图），再根据 DAG 决定程序各步骤执行的方法。</p>
+<img src="/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98-%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E7%AF%87/01524cdf0ff7f64bcf86c656dd5470fd.jpeg" alt="01524cdf0ff7f64bcf86c656dd5470fd" style="zoom:50%;" />
+
+<p>最关键的过程是我们要理解哪些是可以纯并行处理的部分，哪些是必须 shuffle（混洗）和 reduce 的部分。</p>
+<p>shuffle 指的是所有 partition 的数据必须进行洗牌后才能得到下一步的数据，最典型的操作就是图 2 中的 groupByKey 操作和 join 操作。以 join 操作为例，我们必须对 textFile 数据和 hadoopFile 数据做全量的匹配才可以得到 join 后的 dataframe（Spark 保存数据的结构）。而 groupByKey 操作则需要对数据中所有相同的 key 进行合并，也需要全局的 shuffle 才能完成。与之相比，map、filter 等操作仅需要逐条地进行数据处理和转换，不需要进行数据间的操作，因此各 partition 之间可以完全并行处理。shuffle 操作需要在不同计算节点之间进行数据交换，非常消耗计算、通信及存储资源，因此 shuffle 操作是 spark 程序应该尽量避免的。</p>
+<img src="/images/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/6e50b4010c27fac81acb0b230516e113-20210316160135239.jpeg" alt="6e50b4010c27fac81acb0b230516e113" style="zoom:50%;" />
+
+<p>​                                                            <font color = "grey">图3 被shuffle操作分割的DAG stages</font></p>
+<p>Stage 内部数据高效并行计算，Stage 边界处进行消耗资源的 shuffle 操作或者最终的 reduce 操作。</p>
 
         </div>
 
@@ -235,11 +221,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：Linux常用命令</li>
+        <li>本文标题：深度学习推荐系统实战</li>
         <li>本文作者：可爱的小富婆</li>
-        <li>创建时间：2021-01-26 15:57:51</li>
+        <li>创建时间：2021-03-08 10:14:42</li>
         <li>
-            本文链接：yinjiangyi.git.io2021/01/26/Linux常用命令/
+            本文链接：yinjiangyi.git.io2021/03/08/深度学习推荐系统实战/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -253,29 +239,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/01/28/Flink%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AE%80%E4%BB%8B%E3%80%81%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Flink快速上手（一）：简介、安装与部署</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/01/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-1-08-GraphGAN-Graph-Representation-Learning-with-Generative-Adversarial-Nets/"
+                           href="/2021/03/05/WebSKT%E9%A1%B9%E7%9B%AE%E6%8A%80%E8%83%BD%E7%A7%AF%E7%B4%AF%E6%80%BB%E7%BB%93/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">论文笔记 1-08 GraphGAN: Graph Representation Learning with Generative Adversarial Nets</span>
+                                <span class="post-nav-title-item">WebSKT项目技能积累总结</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -400,7 +371,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">基础架构篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%8F%E5%85%B8%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E9%95%BF%E5%95%A5%E6%A0%B7%EF%BC%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">1-1 深度学习推荐系统的经典技术架构长啥样？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B9%E6%9C%AC%E9%97%AE%E9%A2%98%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">1. 推荐系统解决的根本问题是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">2. 深度学习推荐系统的技术架构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Sparrow-RecSys"><span class="nav-number">1.0.2.</span> <span class="nav-text">1-2 Sparrow RecSys</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">特征工程篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%8E%9F%E5%88%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">2-1 原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Spark%E7%89%B9%E5%BE%81%E5%A4%84%E7%90%86"><span class="nav-number">2.0.2.</span> <span class="nav-text">2-2 Spark特征处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">工作方式</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
 </div>
         </aside>

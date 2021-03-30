@@ -9,7 +9,7 @@
     
     <title>
         
-            Linux常用命令 |
+            WebSKT项目技能积累总结 |
         
         JOY&#39;s Blog
     </title>
@@ -147,7 +147,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Linux常用命令</span>
+            <span class="title-hover-animation">WebSKT项目技能积累总结</span>
         </div>
 
         
@@ -165,20 +165,9 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-01-26 15:57:51
+        <i class="fas fa-edit"></i>&nbsp;2021-03-05 14:00:28
     </span>
     
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -198,34 +187,59 @@
 
         <div class="article-content markdown-body">
             <ul>
-<li><p>wget</p>
-<p>使用wget下载单个文件<br> <code>wget http://www.centos.bz/download?id=1</code></p>
-<p>使用wget -O下载并以不同的文件名保存<br><code>wget -O wordpress.zip http://www.centos.bz/download.php?id=1080</code></p>
-<p>使用wget -b后台下载<br><code>wget -b http://cn.wordpress.org/wordpress-3.1-zh_CN.zip</code><br><code>tail -f wget-log</code> 查看下载进度</p>
-</li>
-<li><p>docker</p>
-<p><code>docker ps -a</code> 查看容器是否运行</p>
-<p><code>docker exec -it 容器id bash</code> 进入容器</p>
-<p><code>docker start/stop 容器id</code> </p>
-<p><code>docker images</code> 查看本地已有的所有镜像</p>
-</li>
-<li><p>mysql </p>
-<p><code>mydql -uroot -p</code> 登录数据库</p>
-</li>
-<li><p>后台进程</p>
-<p><code>nohup  command &amp;</code>   eg: 后台运行命令command</p>
-<p><code>jobs -l</code> 查看当前终端运行的后台进程（终端关闭过的后台进程显示不出）</p>
-<p><code>ps -ef</code>  搭配 <code>grep 关键字</code> 查找机器后台运行的相关程序，eg: ps -ef | grep “Query”<br><img src="../images/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/image-20210302164116894.png" alt="image-20210302164116894"></p>
-<p><code>kill -9 进程号</code> 关闭进程</p>
-</li>
-<li><p>文件权限</p>
-<img src="../images/Linux常用命令/file-permissions-rwx.jpg" alt="file-permissions-rwx" style="zoom: 50%;" />
+<li><p>docker&amp;宿主机交互</p>
+<ul>
+<li><p>宿主机上非root用户无法操作docker：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[webskt_client@Geedge-CN-API-001 db_sync]$ docker exec mariadb ls</span><br><span class="line">Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/containers/mariadb/json: dial unix /var/run/docker.sock: connect: permission denied</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>解决方法尝试：</p>
+<ul>
+<li><p>创建docker组，将当前用户加入docker组：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Geedge-CN-API-001 db_csv]# groupadd docker</span><br><span class="line">[root@Geedge-CN-API-001 db_csv]# gpasswd -a webskt_client docker</span><br><span class="line">正在将用户“webskt_client”加入到“docker”组中</span><br></pre></td></tr></table></figure></li>
+<li><p>重启docker服务，重启mariadb容器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@Geedge-CN-API-001 db_csv]<span class="comment"># service docker restart</span></span><br><span class="line">Redirecting to /bin/systemctl restart docker.service</span><br><span class="line">[root@Geedge-CN-API-001 db_csv]<span class="comment"># docker ps -a</span></span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">28653f5ad633        mariadb:10.2.26     <span class="string">&quot;docker-entrypoint.s…&quot;</span>   2 weeks ago         Up 7 seconds        0.0.0.0:3306-&gt;3306/tcp   mariadb</span><br><span class="line">[root@Geedge-CN-API-001 db_csv]<span class="comment"># docker restart 28653f5ad633</span></span><br><span class="line">28653f5ad633</span><br></pre></td></tr></table></figure></li>
+<li><p>重新登录用户后成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[WebSKT@Geedge-CN-API-001 db_sync]$ su root </span><br><span class="line">[WebSKT@Geedge-CN-API-001 db_sync]$ su webskt_client</span><br><span class="line">[webskt_client@Geedge-CN-API-001 db_sync]$ docker exec mariadb ls</span><br><span class="line">app</span><br><span class="line">bin</span><br><span class="line">boot</span><br><span class="line">database_bak</span><br></pre></td></tr></table></figure>
 
-<img src="../images/Linux常用命令/rwx-standard-unix-permission-bits.png" alt="rwx-standard-unix-permission-bits" style="zoom: 75%;" />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>maraidb/mysql操作</p>
+</li>
+<li><p>java </p>
+<ul>
+<li>jdbc</li>
+<li>timer定时器</li>
+<li>Java后台程序自动关闭原因排查：<ul>
+<li>内存空间不足：java.lang.OutOfMemoryError: Java heap space</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>linux </p>
+<ul>
+<li><p>crontab定时任务</p>
+</li>
+<li><p>shell - 基本语法、传参</p>
+<ul>
+<li><p>关于单双引号的反复嵌套：</p>
+<p>shell脚本编辑：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># csv export</span></span><br><span class="line">docker <span class="built_in">exec</span> <span class="variable">$&#123;DockerName&#125;</span> bash -c <span class="string">&quot;mysql -u<span class="variable">$&#123;User&#125;</span> -p<span class="variable">$&#123;Passwd&#125;</span> -e &#x27;select * from <span class="variable">$&#123;Database&#125;</span>.<span class="variable">$&#123;Table&#125;</span> where create_time &gt;= \&quot;<span class="variable">$StartTime</span>\&quot; and create_time &lt;= \&quot;<span class="variable">$EndTime</span>\&quot; into outfile \&quot;<span class="variable">$&#123;CsvTmp&#125;</span>/<span class="variable">$&#123;CsvFile&#125;</span>\&quot; character set gbk fields terminated by \&quot;,\&quot; optionally enclosed by \&quot;\\\&quot;\&quot; &#x27;&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>常用编码：777、754、755</p>
-<p><code>chmod 777 file </code>  把file的操作权限设置为777全部用户可读可写可执行</p>
-<p><code>chmod -R a+wr file</code> 将目录file下和所有子目录的所有用户增加读和写权限</p>
+<p>实际执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec DockerName bash -c &quot;mysql -uUser -pPasswd -e &#x27;select * from Database.Table where create_time &gt;= &quot;StartTime&quot; and create_time &lt;= &quot;EndTime&quot; into outfile &quot;CsvTmp/CsvFile&quot; character set gbk fields terminated by &quot;,&quot; optionally enclosed by &quot;\&quot;&quot; &#x27;&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>文件权限设置、修改</p>
+</li>
+<li><p>vim 操作</p>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -235,11 +249,11 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>本文标题：Linux常用命令</li>
+        <li>本文标题：WebSKT项目技能积累总结</li>
         <li>本文作者：可爱的小富婆</li>
-        <li>创建时间：2021-01-26 15:57:51</li>
+        <li>创建时间：2021-03-05 14:00:28</li>
         <li>
-            本文链接：yinjiangyi.git.io2021/01/26/Linux常用命令/
+            本文链接：yinjiangyi.git.io2021/03/05/WebSKT项目技能积累总结/
         </li>
         <li>
             版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -256,13 +270,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/01/28/Flink%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AE%80%E4%BB%8B%E3%80%81%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/"
+                           href="/2021/03/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Flink快速上手（一）：简介、安装与部署</span>
+                                <span class="post-nav-title-item">深度学习推荐系统实战</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -272,10 +286,10 @@
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/01/25/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-1-08-GraphGAN-Graph-Representation-Learning-with-Generative-Adversarial-Nets/"
+                           href="/2021/01/29/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91java%E5%AF%B9%E8%B1%A1POJO%E5%92%8CJavaBean%E7%9A%84%E5%8C%BA%E5%88%AB/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">论文笔记 1-08 GraphGAN: Graph Representation Learning with Generative Adversarial Nets</span>
+                                <span class="post-nav-title-item">【转载】java：java对象POJO和JavaBean的区别</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
