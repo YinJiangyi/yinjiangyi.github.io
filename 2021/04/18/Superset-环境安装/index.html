@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            Superset-环境安装 |
+        
+        JOY&#39;s Blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                JOY&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Superset-环境安装</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-18 10:14:01
+    </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>python：3.7</p>
+<p>superset：源码安装最新版1.1.0</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>windows和mac系统亲测有效</p>
+<h4 id="pip方式快速安装"><a href="#pip方式快速安装" class="headerlink" title="pip方式快速安装"></a>pip方式快速安装</h4><ul>
+<li><p>新建conda虚拟环境（主要为了降低试错成本，不影响其他环境）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n superset(环境名) python&#x3D;3.7</span><br><span class="line">conda activate superset</span><br></pre></td></tr></table></figure></li>
+<li><p>虚拟环境中，安装superset</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install apache-superset -i https:&#x2F;&#x2F;pypi.mirrors.ustc.edu.cn&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+<p>安装过程中可能出现的问题：</p>
+<ul>
+<li><p>提示需要Vitual c++ 14.0以上版本，个别依赖库编译失败，无法生成wheel：</p>
+<p>解决：直接下载wheel，pip install wheel文件安装成功后，重新执行</p>
+</li>
+</ul>
+</li>
+<li><p>安装成功后配置</p>
+<p>这一步之后很多博客要求进入superset/bin目录下执行python superset ……命令，可能由于版本问题，并不适用。之后步骤以此为准：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 初始化数据库</span><br><span class="line">superset db upgrade</span><br><span class="line"># 创建管理员用户</span><br><span class="line">superset fab create-admin</span><br><span class="line">(fabmanager create-admin --app superset 命令会出现nontype &quot;au_then&quot;?（记不清了）报错)</span><br><span class="line"># 初始化角色和权限</span><br><span class="line">superset init</span><br></pre></td></tr></table></figure>
+<h4 id="二次开发环境安装"><a href="#二次开发环境安装" class="headerlink" title="二次开发环境安装"></a>二次开发环境安装</h4></li>
+</ul>
+<p>pip安装仅适合使用，不适合二次开发。二次开发需要源码下载</p>
+<ul>
+<li><p>另外新建一份虚拟环境</p>
+</li>
+<li><p>从github上下载源码 </p>
+<p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
+</li>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a class="link"   target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi" >https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fas fa-external-link-alt"></i></a></p>
+<p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
+</li>
+<li><p>（这一步不确定什么用，mac 不需要）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
+<p>删除G:\pyProduct\incubator-superset\superset\static\assets文件<br>输入代码(根据你下载代码的路径而定) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mklink &#x2F;D &quot;D:\incubator-superset\superset\static\assets&quot; &quot;D:\incubator-superset\superset</span><br><span class="line">需要管理员模式运行</span><br></pre></td></tr></table></figure></li>
+<li><p>安装。进入下载好的前端目录 <code>incubator-superset</code> 中</p>
+<p><code>pip install -e .</code></p>
+<p>(新版的superset最外层目录下已经没有requirement.txt了，直接安装就可以)</p>
+<p>这一步出现的无法生成wheel文件问题解决同上</p>
+</li>
+<li><p>创建用户、初始化数据库、用户权限步骤类似</p>
+</li>
+<li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
+<p>报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR in .&#x2F;src&#x2F;visualizations&#x2F;TimeTable&#x2F;TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997" >https://github.com/apache/superset/issues/10997<i class="fas fa-external-link-alt"></i></a></p>
+<p>修改目录下 webpack.config.js 文件：</p>
+<img src="/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png" alt="img" style="zoom:67%;" />
+
+<p>成功！</p>
+</li>
+<li><p>进入前端开发者模式 <code>npm run dev</code></p>
+</li>
+<li><p>目录导入pycharm，配置好编译器就可以进行开发了</p>
+</li>
+</ul>
+<h4 id="无网络环境下基于docker安装和Dashboard迁移"><a href="#无网络环境下基于docker安装和Dashboard迁移" class="headerlink" title="无网络环境下基于docker安装和Dashboard迁移"></a>无网络环境下基于docker安装和Dashboard迁移</h4><p>xj环境superset安装</p>
+<p><strong>1）提前下载源码和docker镜像</strong></p>
+<p>源码直接在github下载</p>
+<p>需要提前下载的镜像：apache/superset, redis, node, post和postgress</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在有网络的机器上进行镜像拉取</span><br><span class="line">docker pull xxx(镜像名)</span><br><span class="line">docker save -o xxx.tar(要保存的压缩包名) xxx(镜像名)</span><br></pre></td></tr></table></figure>
+<p><strong>2）在目标机器上安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将压缩包拷贝到目标机器上</span><br><span class="line">docker load -i xxx.tar(压缩包名)</span><br><span class="line"># 在目标机器上的源码目录下运行，等待容器创建和运行</span><br><span class="line">docker-compose up</span><br><span class="line">或 docker-compose -f docker-compose.yml up</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ul>
+<li><p>安装client_driver时报错 OSError: mysql_config not found</p>
+<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found" >https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>Ok, well, first of all, let me check if I am on the same page as you:</p>
+<ul>
+<li>You installed python</li>
+<li>You did <code>brew install mysql</code></li>
+<li>You did <code>export PATH=$PATH:/usr/local/mysql/bin</code></li>
+<li>And finally, you did <code>pip install MySQL-Python</code> (or <code>pip3 install mysqlclient</code> if using python 3)</li>
+</ul>
+</blockquote>
+</li>
+<li><p>pip 方式安装好之后，clickhouse连接总是出问题：</p>
+<ul>
+<li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
+<li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
+</ul>
+<p>终于在<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A" >https://github.com/apache/superset/issues/9719找到解决办法：<i class="fas fa-external-link-alt"></i></a></p>
+<p>这位朋友和我的情况也一样</p>
+<img src="/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png" alt="image-20210415104252896" style="zoom:80%;" />
+
+<p>解决：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall infi.clickhouse_orm</span><br><span class="line">pip install infi.clickhouse_orm&#x3D;&#x3D;1.0.4</span><br></pre></td></tr></table></figure></li>
+<li><p>如果出现pip install 安装过程中build wheel失败，直接下载对应库的wheel包进行单独pip install 即可。</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Superset-环境安装</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-04-18 10:14:01</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/04/18/Superset-环境安装/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Linux服务器安装Python3</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Mac下hadoop部署与操作</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">二次开发环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85%E5%92%8CDashboard%E8%BF%81%E7%A7%BB"><span class="nav-number">2.3.</span> <span class="nav-text">无网络环境下基于docker安装和Dashboard迁移</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">遇到的问题</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>

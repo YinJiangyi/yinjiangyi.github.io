@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            Mac下hadoop部署与操作 |
+        
+        JOY&#39;s Blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                JOY&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Mac下hadoop部署与操作</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-03-30 18:41:13
+    </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>部署：</p>
+<p><a class="link"   target="_blank" rel="noopener" href="http://codingxiaxw.cn/2016/12/06/59-mac-hadoop/" >http://codingxiaxw.cn/2016/12/06/59-mac-hadoop/<i class="fas fa-external-link-alt"></i></a></p>
+<p>其他问题：</p>
+<p>1） hadoop下载速度太慢，切换国内镜像无效。<br>采用手动下载方式 <a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/107469378" >https://zhuanlan.zhihu.com/p/107469378<i class="fas fa-external-link-alt"></i></a></p>
+<p>2） 启动hadoop权限问题：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(base) MacBook-Pro:sbin joy$ ./start-dfs.sh </span><br><span class="line">Starting namenodes on [localhost]</span><br><span class="line">localhost: joy@localhost: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">Starting datanodes</span><br><span class="line">localhost: joy@localhost: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">Starting secondary namenodes [account.jetbrains.com]</span><br><span class="line">account.jetbrains.com: Warning: Permanently added &#x27;account.jetbrains.com,0.0.0.0&#x27; (ECDSA) to the list of known hosts.</span><br><span class="line">account.jetbrains.com: joy@account.jetbrains.com: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">2021-03-30 18:38:31,682 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br></pre></td></tr></table></figure>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/zhangvalue/article/details/103748438" >https://blog.csdn.net/zhangvalue/article/details/103748438<i class="fas fa-external-link-alt"></i></a></p>
+<p>3）按照<a class="link"   target="_blank" rel="noopener" href="http://codingxiaxw.cn/2016/12/07/60-mac-spark/%E5%86%85%E5%AE%B9%E8%BF%9B%E8%A1%8Cspark%E5%AE%89%E8%A3%85%E6%97%B6%EF%BC%8C%E7%94%B1%E4%BA%8E%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%8C%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%EF%BC%8C%E5%8F%91%E7%8E%B0scala%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%B8%B8%EF%BC%8Cspark%E5%91%BD%E4%BB%A4%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C%EF%BC%9A" >http://codingxiaxw.cn/2016/12/07/60-mac-spark/内容进行spark安装时，由于下载速度问题，手动下载安装包进行安装，发现scala使用正常，spark命令无法正常运行：<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MacBook-Pro:conf joy$ scala</span><br><span class="line">Welcome to Scala 2.13.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_271).</span><br><span class="line">Type in expressions for evaluation. Or try :help.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(base) MacBook-Pro:conf joy$ spark-shell</span><br><span class="line">-bash: spark-shell: command not found</span><br></pre></td></tr></table></figure>
+<p><strong>问题排查：主要原因在于scala下载后用homebrew安装，spark没有经过brew安装，建立软连接</strong></p>
+<p>homebrew进行Scala安装时，手动下载安装包之后，按照2）解决方案进行后续安装操作，brew将scala自动安装在/usr/local/Cellar下，然后自动建立软连接到/usr/local/bin/目录下（安装时使用-v命令可查看详细过程）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">(base) MacBook-Pro:~ joy$ brew reinstall scala -v</span><br><span class="line">rm /usr/local/bin/fsc</span><br><span class="line">rm /usr/local/bin/scala</span><br><span class="line">rm /usr/local/bin/scalac</span><br><span class="line">rm /usr/local/bin/scaladoc</span><br><span class="line">rm /usr/local/bin/scalap</span><br><span class="line">rm /usr/local/share/doc/scala</span><br><span class="line">rm /usr/local/share/man/man1/fsc.1</span><br><span class="line">rm /usr/local/share/man/man1/scala.1</span><br><span class="line">rm /usr/local/share/man/man1/scalac.1</span><br><span class="line">rm /usr/local/share/man/man1/scaladoc.1</span><br><span class="line">rm /usr/local/share/man/man1/scalap.1</span><br><span class="line">==&gt; Downloading https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz</span><br><span class="line">/usr/bin/curl --disable --globoff --show-error --user-agent Homebrew/3.0.10-42-ge5bda4e\ \(Macintosh\;\ Intel\ Mac\ OS\ X\ 10.15.7\)\ curl/7.64.1 --header Accept-Language:\ en --retry 3 --location --silent --head --request GET https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz</span><br><span class="line">Already downloaded: /Users/joy/Library/Caches/Homebrew/downloads/f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz</span><br><span class="line">==&gt; Verifying checksum for &#x27;f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz&#x27;</span><br><span class="line">==&gt; Reinstalling scala </span><br><span class="line">/usr/bin/sandbox-exec -f /private/tmp/homebrew20210331-48919-1kaua9k.sb nice ruby -W1 -- /usr/local/Homebrew/Library/Homebrew/build.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/scala.rb --verbose</span><br><span class="line">tar xof /Users/joy/Library/Caches/Homebrew/downloads/f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz -C /private/tmp/d20210331-48920-5yc016</span><br><span class="line">cp -pR /private/tmp/d20210331-48920-5yc016/scala-2.13.5/. /private/tmp/scala-20210331-48920-3r6y9a/scala-2.13.5</span><br><span class="line">chmod -Rf +w /private/tmp/d20210331-48920-5yc016</span><br><span class="line">==&gt; Cleaning</span><br><span class="line">==&gt; Finishing up</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/fsc fsc</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scala scala</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scalac scalac</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scaladoc scaladoc</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scalap scalap</span><br><span class="line">ln -s ../../Cellar/scala/2.13.5/share/doc/scala scala</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/fsc.1 fsc.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scala.1 scala.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scalac.1 scalac.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scaladoc.1 scaladoc.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scalap.1 scalap.1</span><br><span class="line">/usr/bin/sandbox-exec -f /private/tmp/homebrew20210331-48976-3t2vk6.sb nice ruby -W1 -I $LOAD_PATH -- /usr/local/Homebrew/Library/Homebrew/postinstall.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/scala.rb</span><br><span class="line">==&gt; Caveats</span><br><span class="line">To use with IntelliJ, set the Scala home to:</span><br><span class="line">  /usr/local/opt/scala/idea</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/scala/2.13.5: 43 files, 23.4MB, built in 14 seconds</span><br></pre></td></tr></table></figure>
+<p>而homebrew无法下载正确版本的spark，因此手动下载后，安装博客步骤进行安装，手动解压安装在/usr/loacal，配置时无脑copy</p>
+<img src="/images/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/image-20210331150851400.png" alt="image-20210331150851400" style="zoom:80%;" />
+
+<p>其中scala_home路径应该为实际路径：brew自动安装后建立软连接的 <code>/usr/local/scala/bin</code> 而不是 <code>/usr/local/scala</code>。</p>
+<p><strong>解决一：</strong>保持sparka安装在/usr/local目录下，修改conf中的scala home路径</p>
+<p>上图修改为如下后，重新运行spark-shell命令成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export SCALA_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;scala</span><br><span class="line">export SPARK_MASTER_IP&#x3D;localhost</span><br><span class="line">export SPARK_WORKER_MEMORY&#x3D;4g</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">MacBook-Pro:conf joy$ spark-shell</span><br><span class="line">21/03/31 15:00:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Using Spark&#x27;s default log4j profile: org/apache/spark/log4j-defaults.properties</span><br><span class="line">Setting default log level to &quot;WARN&quot;.</span><br><span class="line">To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</span><br><span class="line">Spark context Web UI available at http://192.168.36.116:4040</span><br><span class="line">Spark context available as &#x27;sc&#x27; (master = local[*], app id = local-1617174045126).</span><br><span class="line">Spark session available as &#x27;spark&#x27;.</span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  &#x27;_/</span><br><span class="line">   /___/ .__/\_,_/_/ /_/\_\   version 3.1.1</span><br><span class="line">      /_/</span><br><span class="line">         </span><br><span class="line">Using Scala version 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_271)</span><br><span class="line">Type in expressions to have them evaluated.</span><br><span class="line">Type :help for more information.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+<p><strong>解决二（理论上可行）：</strong>想要和brew安装方式对齐，将spark移动到/usr/local/Cellar下，按brew安装的方式重新建立软连接至/usr/local/bin</p>
+<p>首先，将解压后的spark包移动到Cellar目录下，修改文件格式，和其他安装包保持一致，即Cellar/spark/3.1.1/</p>
+<p>然后<code>brew link spark</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Error: Could not symlink sbin/start-all.sh</span><br><span class="line">Target /usr/local/sbin/start-all.sh</span><br><span class="line">is a symlink belonging to hadoop. You can unlink it:</span><br><span class="line">  brew unlink hadoop</span><br></pre></td></tr></table></figure>
+<p>提示/usr/local/bin里已经有一个名为 ’start-all.sh‘ 的同名脚本了。也就是hadoop和spark里有脚本名重复了，所以方便起见，采用了第一种解决方案，但是为了/usr/local目录的整洁性，如果可以，还是优先用brew安装，或者靠齐安装目录格式比较好。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Mac下hadoop部署与操作</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-03-30 18:41:13</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/03/30/Mac下hadoop部署与操作/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/04/18/Superset-%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Superset-环境安装</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/03/08/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E6%88%98/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">深度学习推荐系统实战</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>

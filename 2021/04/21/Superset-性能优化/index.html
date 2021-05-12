@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            Superset 性能优化 |
+        
+        JOY&#39;s Blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                JOY&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Superset 性能优化</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-21 10:56:56
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/superset/">superset</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="Caching配置"><a href="#Caching配置" class="headerlink" title="Caching配置"></a>Caching配置</h3><p>官方文档：<a class="link"   target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/cache" >https://superset.apache.org/docs/installation/cache<i class="fas fa-external-link-alt"></i></a></p>
+<p>参考：<a class="link"   target="_blank" rel="noopener" href="https://yorke.gitbooks.io/superset-note/content/chapter1.html" >https://yorke.gitbooks.io/superset-note/content/chapter1.html<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="使用-Redis-做-Superset-的缓存"><a href="#使用-Redis-做-Superset-的缓存" class="headerlink" title="使用 Redis 做 Superset 的缓存"></a>使用 Redis 做 Superset 的缓存</h4><p>配置 Superset 的缓存后端，只需在其配置文件中提供一个 <code>CACHE_CONFIG</code> 常量即可。</p>
+<p>而对于 Redis，我们还需要一个运行一个 Redis 服务，以及安装一个 redis-py 库（Redis 的 Python 接口）。</p>
+<h5 id="安装-Redis"><a href="#安装-Redis" class="headerlink" title="安装 Redis"></a>安装 Redis</h5><p>当前 Redis 最新版为 3.2.8，在 <code>/opt/</code> 目录下安装并启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;</span><br><span class="line">wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-3.2.8.tar.gz</span><br><span class="line">tar xzvf redis-3.2.8.tar.gz</span><br><span class="line">cd redis-3.2.8&#x2F;</span><br><span class="line">make</span><br><span class="line">cd src&#x2F;</span><br><span class="line">.&#x2F;redis-server</span><br></pre></td></tr></table></figure>
+<p>make时报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">……</span><br><span class="line">server.c: 在函数‘hasActiveChildProcess’中:</span><br><span class="line">server.c:1476:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘allPersistenceDisabled’中:</span><br><span class="line">server.c:1482:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘writeCommandsDeniedByDiskError’中:</span><br><span class="line">server.c:3747:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘iAmMaster’中:</span><br><span class="line">server.c:4914:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">make[1]: *** [server.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis/redis-6.0.0/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+<p> 解决： <a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242" >https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242<i class="fas fa-external-link-alt"></i></a></p>
+<p>升级gcc版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 redis-6.0.5]# gcc -v                             # 查看gcc版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install centos-release-scl  # 升级到9.1版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils</span><br><span class="line">[root@hadoop01 redis-6.0.5]# scl enable devtoolset-9 bash</span><br><span class="line">以上为临时启用，如果要长期使用gcc 9.1的话：</span><br><span class="line">[root@hadoop01 redis-6.0.5]# echo &quot;source &#x2F;opt&#x2F;rh&#x2F;devtoolset-9&#x2F;enable&quot; &gt;&gt;&#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="安装-redis-py"><a href="#安装-redis-py" class="headerlink" title="安装 redis-py"></a>安装 redis-py</h5><p>在 Superset 所在虚拟环境中安装 redis-py：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install redis</span><br></pre></td></tr></table></figure>
+<h5 id="配置使用-Redis-做缓存"><a href="#配置使用-Redis-做缓存" class="headerlink" title="配置使用 Redis 做缓存"></a>配置使用 Redis 做缓存</h5><p>在 Superset 的 config.py 中，做如下配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line">...</span><br><span class="line">CACHE_DEFAULT_TIMEOUT = <span class="number">500</span> <span class="comment"># 默认超时时间</span></span><br><span class="line">CACHE_CONFIG = &#123;</span><br><span class="line">    <span class="string">&#x27;CACHE_TYPE&#x27;</span>: <span class="string">&#x27;redis&#x27;</span>, <span class="comment"># 使用 Redis</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_HOST&#x27;</span>: <span class="string">&#x27;localhost&#x27;</span>, <span class="comment"># 配置域名</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_PORT&#x27;</span>: <span class="number">6379</span>, <span class="comment"># 配置端口号</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_URL&#x27;</span>: <span class="string">&#x27;redis://localhost:6379&#x27;</span> <span class="comment"># 配置 URL</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><p>重新启动 Superset</p>
+<p>打开任意 Dashboard，观察后台打印情况：</p>
+<p>配置成功！</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Superset 性能优化</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-04-21 10:56:56</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/04/21/Superset-性能优化/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Superset 上手记录</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">Caching配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A-Superset-%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.1.</span> <span class="nav-text">使用 Redis 做 Superset 的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Redis"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-redis-py"><span class="nav-number">1.1.2.</span> <span class="nav-text">安装 redis-py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A%E7%BC%93%E5%AD%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">配置使用 Redis 做缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.4.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
