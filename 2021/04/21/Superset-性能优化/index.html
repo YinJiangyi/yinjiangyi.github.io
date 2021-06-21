@@ -19,7 +19,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"再不学人就要废了==、"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
   </script>
 <meta name="generator" content="Hexo 5.3.0"></head>
@@ -208,16 +208,22 @@
 <p> 解决： <a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242" >https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242<i class="fas fa-external-link-alt"></i></a></p>
 <p>升级gcc版本：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 redis-6.0.5]# gcc -v                             # 查看gcc版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install centos-release-scl  # 升级到9.1版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils</span><br><span class="line">[root@hadoop01 redis-6.0.5]# scl enable devtoolset-9 bash</span><br><span class="line">以上为临时启用，如果要长期使用gcc 9.1的话：</span><br><span class="line">[root@hadoop01 redis-6.0.5]# echo &quot;source &#x2F;opt&#x2F;rh&#x2F;devtoolset-9&#x2F;enable&quot; &gt;&gt;&#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
-
-
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-12 redis-6.0.0]# redis-cli</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<p>启动成功，查看进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-12 redis-6.0.0]# ps -ef | grep redis</span><br><span class="line">root     17215 11601  0 16:14 pts&#x2F;5    00:00:00 .&#x2F;src&#x2F;redis-server *:6379 [cluster]</span><br></pre></td></tr></table></figure>
+<p>这里主机号应该是*而不是127.0.0.1，否则外部机器无法连接redis服务。</p>
+<p>如果为127.0.0.1，修改redis.conf文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1&gt;注释掉bind</span><br><span class="line">#bind 127.0.0.1</span><br><span class="line">2&gt;默认不是守护进程方式运行，这里可以修改</span><br><span class="line">daemonize no</span><br><span class="line">3&gt;禁用保护模式</span><br><span class="line">protected-mode no</span><br></pre></td></tr></table></figure>
+<p>启动Redis时指明配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server ..&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
 <h5 id="安装-redis-py"><a href="#安装-redis-py" class="headerlink" title="安装 redis-py"></a>安装 redis-py</h5><p>在 Superset 所在虚拟环境中安装 redis-py：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install redis</span><br></pre></td></tr></table></figure>
 <h5 id="配置使用-Redis-做缓存"><a href="#配置使用-Redis-做缓存" class="headerlink" title="配置使用 Redis 做缓存"></a>配置使用 Redis 做缓存</h5><p>在 Superset 的 config.py 中，做如下配置：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line">...</span><br><span class="line">CACHE_DEFAULT_TIMEOUT = <span class="number">500</span> <span class="comment"># 默认超时时间</span></span><br><span class="line">CACHE_CONFIG = &#123;</span><br><span class="line">    <span class="string">&#x27;CACHE_TYPE&#x27;</span>: <span class="string">&#x27;redis&#x27;</span>, <span class="comment"># 使用 Redis</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_HOST&#x27;</span>: <span class="string">&#x27;localhost&#x27;</span>, <span class="comment"># 配置域名</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_PORT&#x27;</span>: <span class="number">6379</span>, <span class="comment"># 配置端口号</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_URL&#x27;</span>: <span class="string">&#x27;redis://localhost:6379&#x27;</span> <span class="comment"># 配置 URL</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><p>重新启动 Superset</p>
-<p>打开任意 Dashboard，观察后台打印情况：</p>
+<p>重新启动 Superset</p>
+<p>打开任意 Dashboard，观察后台打印情况</p>
 <p>配置成功！</p>
-
+<h5 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h5>
         </div>
 
         
@@ -241,6 +247,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/05/12/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B05-01-Following-Passive-DNS-Traces-to-Detect-Stealthy-Malicious-Domains-Via-Graph-Inference/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">论文阅读笔记5-01 Following Passive DNS Traces to Detect Stealthy Malicious Domains Via Graph Inference</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -272,37 +293,35 @@
         </div>
 
         <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2020</span>&nbsp;-&nbsp;
-            
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
-        </div>
-        
+            .footer {
+  font-size: 1rem;
+  color: var(--third-text-color);
 
-    </div>
-</footer>
+
+  a {
+    color: var(--third-text-color);
+
+
+    &:hover {
+      color: var(--primary-color);
+
+    }
+  }
+
+  .info-container {
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  .info-item {
+    margin: 5px 0;
+  }
+
+  .icon-animate {
+    animation: icon-animate 1.2s ease-in-out infinite;
+  }
+
+}
 
         </div>
     </div>
@@ -374,7 +393,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">Caching配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A-Superset-%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.1.</span> <span class="nav-text">使用 Redis 做 Superset 的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Redis"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-redis-py"><span class="nav-number">1.1.2.</span> <span class="nav-text">安装 redis-py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A%E7%BC%93%E5%AD%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">配置使用 Redis 做缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.4.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">Caching配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A-Superset-%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.1.</span> <span class="nav-text">使用 Redis 做 Superset 的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Redis"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-redis-py"><span class="nav-number">1.1.3.</span> <span class="nav-text">安装 redis-py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A%E7%BC%93%E5%AD%98"><span class="nav-number">1.1.4.</span> <span class="nav-text">配置使用 Redis 做缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.5.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
         </aside>
