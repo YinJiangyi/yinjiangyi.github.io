@@ -187,9 +187,9 @@
 
         <div class="article-content markdown-body">
             <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>阮一峰 <a class="link"   target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/06/dns.html" >http://www.ruanyifeng.com/blog/2016/06/dns.html<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="一、DNS"><a href="#一、DNS" class="headerlink" title="一、DNS"></a>一、DNS</h2><p>DNS （Domain Name System 的缩写）的作用非常简单，就是根据域名查出IP地址。你可以把它想象成一本巨大的电话本。</p>
+<h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>DNS （Domain Name System 的缩写）的作用非常简单，就是根据域名查出IP地址。你可以把它想象成一本巨大的电话本。</p>
 <p>举例来说，如果你要访问域名<code>math.stackexchange.com</code>，首先要通过DNS查出它的IP地址是<code>151.101.129.69</code>。</p>
-<h2 id="二、解析过程"><a href="#二、解析过程" class="headerlink" title="二、解析过程"></a>二、解析过程</h2><h3 id="递归查询和迭代查询"><a href="#递归查询和迭代查询" class="headerlink" title="递归查询和迭代查询"></a>递归查询和迭代查询</h3><p>困惑已久的递归查询和迭代查询，看一次忘一次。</p>
+<h3 id="解析过程"><a href="#解析过程" class="headerlink" title="解析过程"></a>解析过程</h3><h4 id="递归查询和迭代查询"><a href="#递归查询和迭代查询" class="headerlink" title="递归查询和迭代查询"></a>递归查询和迭代查询</h4><p>困惑已久的递归查询和迭代查询，看一次忘一次。</p>
 <ul>
 <li>字面理解：递归和迭代的区别。递归被用来描述以自相似方法重复事务的过程，在方法上显示为A调用A；迭代 重复反馈过程，每次迭代的结果为下一次迭代的初始值，在方法上显示为A调用B。</li>
 <li>在DNS查询过程中<ul>
@@ -199,7 +199,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="具体解析流程"><a href="#具体解析流程" class="headerlink" title="具体解析流程"></a>具体解析流程</h3><p>场景：用户在浏览器输入网址：clondant.blog.51cto.com，其解析过程如下：</p>
+<h4 id="具体解析流程"><a href="#具体解析流程" class="headerlink" title="具体解析流程"></a>具体解析流程</h4><p>场景：用户在浏览器输入网址：clondant.blog.51cto.com，其解析过程如下：</p>
 <p><strong>第1步：</strong>浏览器将会检查缓存中有没有这个域名对应的解析过的IP地址，如果有该解析过程将会结束。</p>
 <p><strong>第2步：</strong>如果用户的浏览器中缓存中没有，操作系统会先检查自己本地的hosts文件是否有这个网址映射关系，如果有，就先调用这个IP地址映射关系，完成域名解析。</p>
 <p><strong>第3步：</strong>如果hosts里没有这个域名的映射，则查找本地DNS解析器缓存，是否有这个网址映射关系或缓存信息，如果有，直接返回给浏览器，完成域名解析。</p>
@@ -207,7 +207,7 @@
 <p><strong>第5步：</strong>如果本地DNS服务器无法查询到，则根据本地DNS服务器设置的转发器进行查询；</p>
 <p><strong>未用转发模式</strong>：<strong>本地DNS就把请求发至根DNS进行</strong>（迭代）查询**，根DNS服务器收到请求后会判断这个域名(.com)是谁来授权管理，并会返回一个负责该顶级域名服务器的一个IP。本地DNS服务器收 到IP信息后，将会联系负责.com域的这台服务器。这台负责.com域的服务器收到请求后，如果自己无法解析，它就会找一个管理.com域的下一级 DNS服务器地址给本地DNS服务器。当本地DNS服务器收到这个地址后，就会找域名域服务器，重复上面的动作，进行查询，直至找到域名对应的主机。</p>
 <p><strong>使用转发模式：</strong>此DNS服务器就会把请求转发至上一级DNS服务器，由上一级服务器进行解析，上一级服务器如果不能解析，或找根DNS或把转请求转至 上上级，以此循环。不管是本地DNS服务器用是是转发，还是根提示，最后都是把结果返回给本地DNS服务器，由此DNS服务器再返回给客户机。</p>
-<h3 id="dig命令查看解析流程"><a href="#dig命令查看解析流程" class="headerlink" title="dig命令查看解析流程"></a>dig命令查看解析流程</h3><p>工具软件<code>dig</code>可以显示整个查询过程。</p>
+<h4 id="dig命令查看解析流程"><a href="#dig命令查看解析流程" class="headerlink" title="dig命令查看解析流程"></a>dig命令查看解析流程</h4><p>工具软件<code>dig</code>可以显示整个查询过程。</p>
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dig math.stackexchange.com</span><br></pre></td></tr></table></figure>
 <p>上面的命令会输出六段信息。</p>
@@ -234,7 +234,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ dig +short math.stackexchange.com</span><br><span class="line"></span><br><span class="line">151.101.129.69</span><br><span class="line">151.101.65.69</span><br><span class="line">151.101.193.69</span><br><span class="line">151.101.1.69</span><br></pre></td></tr></table></figure>
 <p>上面命令只返回<code>math.stackexchange.com</code>对应的4个IP地址（即<code>A</code>记录）。</p>
 </blockquote>
-<h2 id="三、DNS服务器"><a href="#三、DNS服务器" class="headerlink" title="三、DNS服务器"></a>三、DNS服务器</h2><p>下面我们根据前面这个例子，一步步还原，本机到底怎么得到域名<code>math.stackexchange.com</code>的IP地址。</p>
+<h3 id="DNS服务器"><a href="#DNS服务器" class="headerlink" title="DNS服务器"></a>DNS服务器</h3><p>下面我们根据前面这个例子，一步步还原，本机到底怎么得到域名<code>math.stackexchange.com</code>的IP地址。</p>
 <p>首先，本机一定要知道DNS服务器的IP地址，否则上不了网。通过DNS服务器，才能知道某个域名的IP地址到底是什么。</p>
 <p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94DNS%E7%AF%87/bg2016061507.jpg" alt="img"></p>
 <p>DNS服务器的IP地址，有可能是动态的，每次上网时由网关分配，这叫做DHCP机制；也有可能是事先指定的固定地址。Linux系统里面，DNS服务器的IP地址保存在<code>/etc/resolv.conf</code>文件。</p>
@@ -244,7 +244,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dig @4.2.2.2 math.stackexchange.com</span><br></pre></td></tr></table></figure>
 <p>上面命令指定向DNS服务器<code>4.2.2.2</code>查询。</p>
 </blockquote>
-<h2 id="四、域名的层级"><a href="#四、域名的层级" class="headerlink" title="四、域名的层级"></a>四、域名的层级</h2><p>DNS服务器怎么会知道每个域名的IP地址呢？答案是分级查询。</p>
+<h3 id="域名的层级"><a href="#域名的层级" class="headerlink" title="域名的层级"></a>域名的层级</h3><p>DNS服务器怎么会知道每个域名的IP地址呢？答案是分级查询。</p>
 <p>请仔细看前面的例子，每个域名的尾部都多了一个点。</p>
 <p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94DNS%E7%AF%87/bg2016061503.png" alt="img"></p>
 <p>比如，域名<code>math.stackexchange.com</code>显示为<code>math.stackexchange.com.</code>。<strong>这不是疏忽，而是所有域名的尾部，实际上都有一个根域名。</strong></p>
@@ -254,7 +254,7 @@
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">主机名.次级域名.顶级域名.根域名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 即</span></span><br><span class="line"></span><br><span class="line">host.sld.tld.root</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="五、根域名服务器"><a href="#五、根域名服务器" class="headerlink" title="五、根域名服务器"></a>五、根域名服务器</h2><p>DNS服务器根据域名的层级，进行分级查询。</p>
+<h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p>DNS服务器根据域名的层级，进行分级查询。</p>
 <p>需要明确的是，每一级域名都有自己的NS记录，NS记录指向该级域名的域名服务器。这些服务器知道下一级域名的各种记录。</p>
 <p>所谓”分级查询”，就是从根域名开始，依次查询每一级域名的NS记录，直到查到最终的IP地址，过程大致如下。</p>
 <blockquote>
@@ -270,7 +270,7 @@
 <p>上面列表中，列出了根域名（<code>.root</code>）的三条NS记录<code>A.ROOT-SERVERS.NET</code>、<code>B.ROOT-SERVERS.NET</code>和<code>C.ROOT-SERVERS.NET</code>，以及它们的IP地址（即<code>A</code>记录）<code>198.41.0.4</code>、<code>192.228.79.201</code>、<code>192.33.4.12</code>。</p>
 <p>另外，可以看到所有记录的TTL值是3600000秒，相当于1000小时。也就是说，每1000小时才查询一次根域名服务器的列表。</p>
 <p>目前，世界上一共有十三组根域名服务器，从<code>A.ROOT-SERVERS.NET</code>一直到<code>M.ROOT-SERVERS.NET</code>。</p>
-<h2 id="六、分级查询的实例"><a href="#六、分级查询的实例" class="headerlink" title="六、分级查询的实例"></a>六、分级查询的实例</h2><p><code>dig</code>命令的<code>+trace</code>参数可以显示DNS的整个分级查询过程。</p>
+<h3 id="分级查询的实例"><a href="#分级查询的实例" class="headerlink" title="分级查询的实例"></a>分级查询的实例</h3><p><code>dig</code>命令的<code>+trace</code>参数可以显示DNS的整个分级查询过程。</p>
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dig +trace math.stackexchange.com</span><br></pre></td></tr></table></figure>
 <p>上面命令的第一段列出根域名<code>.</code>的所有NS记录，即所有根域名服务器。</p>
@@ -286,7 +286,7 @@
 <p>然后，DNS服务器向上面这四台NS服务器查询<code>math.stackexchange.com</code>的主机名。</p>
 <p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94DNS%E7%AF%87/bg2016061512.png" alt="img"></p>
 <p>上面结果显示，<code>math.stackexchange.com</code>有4条<code>A</code>记录，即这四个IP地址都可以访问到网站。并且还显示，最先返回结果的NS服务器是<code>ns-463.awsdns-57.com</code>，IP地址为<code>205.251.193.207</code>。</p>
-<h2 id="七、NS-记录的查询"><a href="#七、NS-记录的查询" class="headerlink" title="七、NS 记录的查询"></a>七、NS 记录的查询</h2><p><code>dig</code>命令可以单独查看每一级域名的NS记录。</p>
+<h3 id="NS-记录的查询"><a href="#NS-记录的查询" class="headerlink" title="NS 记录的查询"></a>NS 记录的查询</h3><p><code>dig</code>命令可以单独查看每一级域名的NS记录。</p>
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ dig ns com</span><br><span class="line">$ dig ns stackexchange.com</span><br></pre></td></tr></table></figure>
 <p><code>+short</code>参数可以显示简化的结果。</p>
@@ -294,7 +294,7 @@
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ dig +short ns com</span><br><span class="line">$ dig +short ns stackexchange.com</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="八、DNS的记录类型"><a href="#八、DNS的记录类型" class="headerlink" title="八、DNS的记录类型"></a>八、DNS的记录类型</h2><p>域名与IP之间的对应关系，称为”记录”（record）。根据使用场景，”记录”可以分成不同的类型（type），前面已经看到了有<code>A</code>记录和<code>NS</code>记录。</p>
+<h3 id="DNS的记录类型"><a href="#DNS的记录类型" class="headerlink" title="DNS的记录类型"></a>DNS的记录类型</h3><p>域名与IP之间的对应关系，称为”记录”（record）。根据使用场景，”记录”可以分成不同的类型（type），前面已经看到了有<code>A</code>记录和<code>NS</code>记录。</p>
 <p>常见的DNS记录类型如下。</p>
 <blockquote>
 <p>（1） <code>A</code>：地址记录（Address），返回域名指向的IP地址。</p>
@@ -320,7 +320,7 @@
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ dig a github.com</span><br><span class="line">$ dig ns github.com</span><br><span class="line">$ dig mx github.com</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="九、其他DNS工具"><a href="#九、其他DNS工具" class="headerlink" title="九、其他DNS工具"></a>九、其他DNS工具</h2><p>除了<code>dig</code>，还有一些其他小工具也可以使用。</p>
+<h3 id="其他DNS工具"><a href="#其他DNS工具" class="headerlink" title="其他DNS工具"></a>其他DNS工具</h3><p>除了<code>dig</code>，还有一些其他小工具也可以使用。</p>
 <p><strong>（1）host 命令</strong></p>
 <p><code>host</code>命令可以看作<code>dig</code>命令的简化版本，返回当前请求域名的各种记录。</p>
 <blockquote>
@@ -338,8 +338,12 @@
 </blockquote>
 <p><code>whois</code>命令用来查看域名的注册情况。</p>
 <blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ whois github.com</span><br></pre></td></tr></table></figure></blockquote>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ whois github.com</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="DNSSEC"><a href="#DNSSEC" class="headerlink" title="DNSSEC"></a>DNSSEC</h2><p>ICANN文档 <a class="link"   target="_blank" rel="noopener" href="https://www.icann.org/zh/system/files/files/octo-006-24jul20-zh.pdf" >https://www.icann.org/zh/system/files/files/octo-006-24jul20-zh.pdf<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="运作方式"><a href="#运作方式" class="headerlink" title="运作方式"></a>运作方式</h3><p>注册人签名</p>
+<p>“注册人”是指有权控制域名相关信息（即，名称转换为地址的映射以及其他数据）的个人或 组织。DNSSEC 准许<strong>注册人对他们存放在 DNS 中的信息进行数字签名</strong>，这样一来，<strong>客户端（例 如，您的 Web 浏览器）就能够验证它们收到的 DNS 查询请求的应答结果与签名时的内容相比是 否发生了修改。</strong> 2010 年，ICANN 针对 DNS 的顶层（即“根”）实施 DNSSEC 签名，从而极大地推动了 DNSSEC 在全球范围内的部署。然而，即使在十年后的今天，DNSSEC 的部署仍然滞后。 </p>
+<h2 id="DoH"><a href="#DoH" class="headerlink" title="DoH"></a>DoH</h2><h2 id="DoT"><a href="#DoT" class="headerlink" title="DoT"></a>DoT</h2>
         </div>
 
         
@@ -363,6 +367,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/06/22/test/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">test</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -496,7 +515,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81DNS"><span class="nav-number"></span> <span class="nav-text">一、DNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="nav-number"></span> <span class="nav-text">二、解析过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.</span> <span class="nav-text">递归查询和迭代查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">具体解析流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dig%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8B%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">dig命令查看解析流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">三、DNS服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9F%9F%E5%90%8D%E7%9A%84%E5%B1%82%E7%BA%A7"><span class="nav-number"></span> <span class="nav-text">四、域名的层级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A0%B9%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">五、根域名服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%88%86%E7%BA%A7%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="nav-number"></span> <span class="nav-text">六、分级查询的实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81NS-%E8%AE%B0%E5%BD%95%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-number"></span> <span class="nav-text">七、NS 记录的查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81DNS%E7%9A%84%E8%AE%B0%E5%BD%95%E7%B1%BB%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">八、DNS的记录类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%85%B6%E4%BB%96DNS%E5%B7%A5%E5%85%B7"><span class="nav-number"></span> <span class="nav-text">九、其他DNS工具</span></a>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS"><span class="nav-number"></span> <span class="nav-text">DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">解析过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2%E5%92%8C%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.1.</span> <span class="nav-text">递归查询和迭代查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">具体解析流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dig%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8B%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">dig命令查看解析流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">DNS服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E7%9A%84%E5%B1%82%E7%BA%A7"><span class="nav-number">3.</span> <span class="nav-text">域名的层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">根域名服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BA%A7%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">分级查询的实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NS-%E8%AE%B0%E5%BD%95%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">6.</span> <span class="nav-text">NS 记录的查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E7%9A%84%E8%AE%B0%E5%BD%95%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">DNS的记录类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96DNS%E5%B7%A5%E5%85%B7"><span class="nav-number">8.</span> <span class="nav-text">其他DNS工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNSSEC"><span class="nav-number"></span> <span class="nav-text">DNSSEC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">运作方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DoH"><span class="nav-number"></span> <span class="nav-text">DoH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DoT"><span class="nav-number"></span> <span class="nav-text">DoT</span></a>
     </div>
 </div>
         </aside>
