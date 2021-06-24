@@ -79,15 +79,19 @@ RDD 弹性分布式数据集
 - 函数是作用在每一个partition(split)上的
 - RDD之间是由一系列的依赖关系
 - 分区器是作用在（K，V）格式的RDD上 （optional）
-- RDD提供一系列最佳的计算位置（optional）
+- RDD提供一系列最佳的计算位置（optional）![image-20210624204727728](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png)
 
-### 源码介绍
+### WordCount程序编写
 
-![image-20210624204727728](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png)
+- 导入源码方便经常查看
 
+- 三段式代码：
 
+  a. 环境构建SparkConf(设置相关配置信息)--SparkContext；
 
+  b. spark处理逻辑；
 
+  c. 关闭SparkContext
 
 
 
