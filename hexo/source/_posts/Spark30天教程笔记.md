@@ -55,17 +55,16 @@ Combiner：在map阶段的reduce，减少**网络IO**的开销（只有求最大
 
 ## spark 运行模式
 
-- local：多用于本地测试，如在idea中写程序测试
+local：多用于本地测试，如在idea中写程序测试
+standalone：spark自带资源调度框架
 
-- standalone：spark自带资源调度框架
+> 调度的对象包括**资源和任务**两方面
 
-  - 调度的对象包括**资源和任务**两方面
+yarn：Hadoop生态圈的一个资源调度框架
 
-- yarn：Hadoop生态圈的一个资源调度框架
+> 如果要基于Yarn进行资源调度，必须实现ApplicationMaster接口，spark实现了这个接口，所以可以基于Yarn来进行资源调度。
 
-  如果要基于Yarn进行资源调度，必须实现ApplicationMaster接口，spark实现了这个接口，所以可以基于Yarn来进行资源调度。
-
-- mesos：也是资源调度框架。
+mesos：也是资源调度框架。
 
 # 002_Spark核心RDD
 
@@ -75,39 +74,48 @@ RDD 弹性分布式数据集
 
 ### 五大属性
 
-- RDD是由一系列的partition组成的
-- 函数是作用在每一个partition(split)上的
-- RDD之间是由一系列的依赖关系
-- 分区器是作用在（K，V）格式的RDD上 （optional）
-- RDD提供一系列最佳的计算位置（optional）![image-20210624204727728](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png)
+1) RDD是由一系列的partition组成的
+2) 函数是作用在每一个partition(split)上的
+3) RDD之间有一系列的依赖关系
+4) 分区器是作用在（K，V）格式的RDD上 （optional）
+5) RDD提供一系列最佳的计算位置（optional）
+
+源码介绍原文：![image-20210624204727728](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png)
 
 ### WordCount程序编写
 
 - 导入源码方便经常查看
-
 - 三段式代码：
-
-  a. 环境构建SparkConf(设置相关配置信息)--SparkContext；
-
+a. 环境构建SparkConf(设置相关配置信息)--SparkContext；
   b. spark处理逻辑；
+c. 关闭SparkContext
 
-  c. 关闭SparkContext
+### 总结整理
 
+spark读取文件是使用sparkContext对象调用textFile方法，实际上底层和MR读取hdfs文件的方式是一样的，读取之前先要进行partition切片，默认情况下partition的大小和block块大小相同。另外都是行读取器，是以行为单位进行读取的。
 
+#### RDD的分布式体现在哪里？
+RDD是由一系列partition组成，partition是分布在不同的计算节点上的。
 
+#### RDD的弹性体现在哪里？
+RDD由一系列partition组成，partition的大小和数量都是可以改变的。默认情况下partition的个数和block块的个数相同。
 
+- **block和partition的关联和区别**
 
+  block是hdfs分布式存储的最小单元，类似存放文件的盒子，但是一个盒子的内容只可能来自同一个文件。假设block设置为128M，你的文件是250M，那么这份文件占3个block（128+128+2）。这样的设计虽然会有一部分磁盘空间的浪费，但是整齐的block大小，便于快速找到、读取对应的内容。（p.s. 考虑到hdfs冗余设计，默认三份拷贝，实际上3*3=9个block的物理空间。）
 
+  partition是spark的弹性分布式数据集RDD的最小单元，RDD是由多个partition组成。partition 是指的spark在计算过程中，生成的数据在计算空间内最小单元，同一份数据（RDD）的partition 大小不一，数量不定，是根据application里的算子和最初读入的数据分块数量决定的，这也是为什么叫“弹性分布式”数据集的原因之一。
 
+  > **总结：**
+  > ***block位于存储空间、partition 位于计算空间，***
+  > ***block的大小是固定的、partition 大小是不固定的，***
+  > ***block是有冗余的、不会轻易丢失，partition（RDD）没有冗余设计、丢失之后重新计算得到***
 
+#### RDD的容错体现在哪里？
+（容错也是弹性体现的一个方面）
+RDD之间存在依赖关系，子RDD可以找对应的父RDD然后通过一系列计算再得出相应的结果。如果计算过程中某一个rdd挂掉了，不需要从头开始重新计算。
 
-
-
-
-
-
-
-
+> `虽然从代码上看，RDD像是存储数据的结构，但实际上RDD是一个抽象的概念，存储的是计算逻辑，并不存储物理数据。`
 
 
 
