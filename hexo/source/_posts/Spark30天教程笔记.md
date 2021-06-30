@@ -149,13 +149,13 @@ RDD之间存在依赖关系，子RDD可以找对应的父RDD然后通过一系�
 
 （具体使用见代码 ）
 
-### Transformations
+### 转换算子/Transformations
 
 懒加载执行
 
 rdd->rdd
 
-### Actions
+### 触发算子/Actions
 
 rdd->其他
 
@@ -163,9 +163,85 @@ launch a job to return a value to the user program
 
 所有的action类的算子作为计算的触发条件。
 
+### 持久化算子/控制算子
 
+将rdd持久化，持久化的单位是partition
 
+控制算子有三种：cache，persist，checkpoint
+其中cache是persist中的一个，类似first和take中的一个
 
+（代码演示）
+
+#### cache算子
+
+![image-20210630221616093](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630221616093.png)如上图，原来的代码逻辑wordcount是rdd3->rdd4，后来加了rdd5，这时rdd5的操作触发后不是直接从rdd3过来的，而是从txt文件读取开始，所以这个时候需要对rdd3进行持久化（cache)
+
+#### persist算子
+
+可以指定持久化的级别。最常用memory_only和memory_and_disk
+
+#### cache和persist联系和区别
+
+- cache和persist的注意事项
+
+  1. 都是懒执行，必须有一个触发算子；
+  2. 但不能紧跟action算子，只能下一行，编译不会通过
+  3. 返回值可以赋值给一个变量，在其他job中直接使用这个变量就是使用持久化之后的数据。持久化的单位是partition。
+
+- cache和persist的区别
+
+  cache调用persist，默认storageLevel是memory_only，而persist可以指定level参数
+
+- storageLevel：
+  	最常用的两个：
+
+  ​	memory_only，性能最高
+  ​	memory_and_disk（解决oom）
+
+  ​	性能依次往下选择：memory，ser，disk
+
+  > ser序列化参数：放内存或放磁盘时字节数会小一些，可更大程度避免oom或者频繁的gc）
+
+  > 源码storageLevel中，**带_2后缀（存副本）的选项一般不选。**
+  >
+  > 这涉及持久化算子的两个功能：1）性能调优 2）持久化容错
+  >
+  > ​	其中cache和persist是为了性能调优，所以主要选择memory
+
+#### checkpoint算子
+
+主要作用是容错，将rdd直接持久化到磁盘。
+
+源码查看：
+
+```java
+/**
+ * Mark this RDD for checkpointing. It will be saved to a file inside the checkpoint
+ * directory set with SparkContext.setCheckpointDir() and all references to its parent
+ * RDDs will be removed. This function must be called before any job has been
+ * executed on this RDD. It is strongly recommended that this RDD is persisted in
+ * memory, otherwise saving it on a file will require recomputation.
+ */
+def checkpoint(): Unit = {
+  rdd.checkpoint()
+}
+```
+
+这里表示，需要在context中进行checkpoint路径设置setCheckpointDir。
+
+执行原理：
+
+1. 当rdd的job执行完毕之后，会从finalrdd从后往前回溯。
+2. 当回溯到某一个rdd调用了checkpiont方法，会对当前的rdd做一个标记
+3. spark框架会**自动启动一个新的job**，重新计算这个rdd的数据，将数据持久化到hdfs上。
+
+使用checkpoint常用的优化手段：**对rdd执行checkpoint之前，最好对这个rdd先执行cache**，这样新启动job只需要将内存中的数据拷贝到hdfs中就可以了，省去了重新计算的步骤。
+
+> 有诸多不变，逻辑和数据都保留下来了，如果代码改变了会造成问题。
+
+#### pipeline
+
+![image-20210630230624396](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630230624396.png)
 
 
 
