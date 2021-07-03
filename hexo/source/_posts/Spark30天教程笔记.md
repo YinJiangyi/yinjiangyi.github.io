@@ -1,6 +1,6 @@
 ---
 title: Spark30天教程笔记
-typora-root-url: ../../source
+typora-root-url: ..
 date: 2021-06-23 22:24:06
 tags: spark
 categories: 大数据
@@ -80,7 +80,7 @@ RDD 弹性分布式数据集
 4) 分区器是作用在（K，V）格式的RDD上 （optional）
 5) RDD提供一系列最佳的计算位置（optional）
 
-源码介绍原文：![image-20210624204727728](../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png)
+源码介绍原文：![image-20210624204727728](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png)
 
 ### WordCount程序编写
 
@@ -174,7 +174,7 @@ launch a job to return a value to the user program
 
 #### cache算子
 
-![image-20210630221616093](../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630221616093.png)
+![image-20210630221616093](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630221616093.png)
 
 如上图，原来的代码逻辑wordcount是rdd3->rdd4，后来加了rdd5，这时rdd5的操作触发后不是直接从rdd3过来的，而是从txt文件读取开始，所以这个时候需要对rdd3进行持久化（cache)
 
@@ -243,11 +243,11 @@ def checkpoint(): Unit = {
 
 #### pipeline
 
-![image-20210630230624396](../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630230624396.png)
+![image-20210630230624396](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630230624396.png)
 
 # 复习day1
 
-![spark](../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/spark.png)
+![spark](/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/spark.png)
 
 # 003 Standalone模式
 
