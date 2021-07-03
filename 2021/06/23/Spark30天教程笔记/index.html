@@ -253,7 +253,7 @@
 <li>分区器是作用在（K，V）格式的RDD上 （optional）</li>
 <li>RDD提供一系列最佳的计算位置（optional）</li>
 </ol>
-<p>源码介绍原文：<img src="../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png" alt="image-20210624204727728"></p>
+<p>源码介绍原文：<img src="/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210624204727728-1624538851306.png" alt="image-20210624204727728"></p>
 <h3 id="WordCount程序编写"><a href="#WordCount程序编写" class="headerlink" title="WordCount程序编写"></a>WordCount程序编写</h3><ul>
 <li>导入源码方便经常查看</li>
 <li>三段式代码：<br>a. 环境构建SparkConf(设置相关配置信息)–SparkContext；<br>b. spark处理逻辑；<br>c. 关闭SparkContext</li>
@@ -313,7 +313,7 @@
 <h3 id="持久化算子-控制算子"><a href="#持久化算子-控制算子" class="headerlink" title="持久化算子/控制算子"></a>持久化算子/控制算子</h3><p>将rdd持久化，持久化的单位是partition</p>
 <p>控制算子有三种：cache，persist，checkpoint<br>其中cache是persist中的一个，类似first和take中的一个</p>
 <p>（代码演示）</p>
-<h4 id="cache算子"><a href="#cache算子" class="headerlink" title="cache算子"></a>cache算子</h4><p><img src="../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630221616093.png" alt="image-20210630221616093"></p>
+<h4 id="cache算子"><a href="#cache算子" class="headerlink" title="cache算子"></a>cache算子</h4><p><img src="/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630221616093.png" alt="image-20210630221616093"></p>
 <p>如上图，原来的代码逻辑wordcount是rdd3-&gt;rdd4，后来加了rdd5，这时rdd5的操作触发后不是直接从rdd3过来的，而是从txt文件读取开始，所以这个时候需要对rdd3进行持久化（cache)</p>
 <h4 id="persist算子"><a href="#persist算子" class="headerlink" title="persist算子"></a>persist算子</h4><p>可以指定持久化的级别。最常用memory_only和memory_and_disk</p>
 <h4 id="cache和persist联系和区别"><a href="#cache和persist联系和区别" class="headerlink" title="cache和persist联系和区别"></a>cache和persist联系和区别</h4><ul>
@@ -356,8 +356,8 @@
 <blockquote>
 <p>有诸多不变，逻辑和数据都保留下来了，如果代码改变了会造成问题。</p>
 </blockquote>
-<h4 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h4><p><img src="../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630230624396.png" alt="image-20210630230624396"></p>
-<h1 id="复习day1"><a href="#复习day1" class="headerlink" title="复习day1"></a>复习day1</h1><p><img src="../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/spark.png" alt="spark"></p>
+<h4 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h4><p><img src="/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/image-20210630230624396.png" alt="image-20210630230624396"></p>
+<h1 id="复习day1"><a href="#复习day1" class="headerlink" title="复习day1"></a>复习day1</h1><p><img src="/images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/spark.png" alt="spark"></p>
 <h1 id="003-Standalone模式"><a href="#003-Standalone模式" class="headerlink" title="003 Standalone模式"></a>003 Standalone模式</h1><h2 id="standalone模式集群搭建"><a href="#standalone模式集群搭建" class="headerlink" title="standalone模式集群搭建"></a>standalone模式集群搭建</h2><p>Window 10 </p>
 <ul>
 <li>Vmware安装</li>
