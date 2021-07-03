@@ -186,7 +186,7 @@
         
 
         <div class="article-content markdown-body">
-            <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>阮一峰 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/06/dns.html">http://www.ruanyifeng.com/blog/2016/06/dns.html</a></p>
+            <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>阮一峰 <a class="link"   target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/06/dns.html" >http://www.ruanyifeng.com/blog/2016/06/dns.html<i class="fas fa-external-link-alt"></i></a></p>
 <h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>DNS （Domain Name System 的缩写）的作用非常简单，就是根据域名查出IP地址。你可以把它想象成一本巨大的电话本。</p>
 <p>举例来说，如果你要访问域名<code>math.stackexchange.com</code>，首先要通过DNS查出它的IP地址是<code>151.101.129.69</code>。</p>
 <h3 id="解析过程"><a href="#解析过程" class="headerlink" title="解析过程"></a>解析过程</h3><h4 id="递归查询和迭代查询"><a href="#递归查询和迭代查询" class="headerlink" title="递归查询和迭代查询"></a>递归查询和迭代查询</h4><p>困惑已久的递归查询和迭代查询，看一次忘一次。</p>
@@ -265,7 +265,7 @@
 </ol>
 </blockquote>
 <p>仔细看上面的过程，你可能发现了，没有提到DNS服务器怎么知道”根域名服务器”的IP地址。回答是”根域名服务器”的NS记录和IP地址一般是不会变化的，所以内置在DNS服务器里面。</p>
-<p>下面是内置的根域名服务器IP地址的一个<a target="_blank" rel="noopener" href="http://www.cyberciti.biz/faq/unix-linux-update-root-hints-data-file/">例子</a>。</p>
+<p>下面是内置的根域名服务器IP地址的一个<a class="link"   target="_blank" rel="noopener" href="http://www.cyberciti.biz/faq/unix-linux-update-root-hints-data-file/" >例子<i class="fas fa-external-link-alt"></i></a>。</p>
 <p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94DNS%E7%AF%87/bg2016061508.png" alt="img"></p>
 <p>上面列表中，列出了根域名（<code>.root</code>）的三条NS记录<code>A.ROOT-SERVERS.NET</code>、<code>B.ROOT-SERVERS.NET</code>和<code>C.ROOT-SERVERS.NET</code>，以及它们的IP地址（即<code>A</code>记录）<code>198.41.0.4</code>、<code>192.228.79.201</code>、<code>192.33.4.12</code>。</p>
 <p>另外，可以看到所有记录的TTL值是3600000秒，相当于1000小时。也就是说，每1000小时才查询一次根域名服务器的列表。</p>
@@ -340,7 +340,7 @@
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ whois github.com</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="DNSSEC"><a href="#DNSSEC" class="headerlink" title="DNSSEC"></a>DNSSEC</h2><p>ICANN文档 <a target="_blank" rel="noopener" href="https://www.icann.org/zh/system/files/files/octo-006-24jul20-zh.pdf">https://www.icann.org/zh/system/files/files/octo-006-24jul20-zh.pdf</a></p>
+<h2 id="DNSSEC"><a href="#DNSSEC" class="headerlink" title="DNSSEC"></a>DNSSEC</h2><p>ICANN文档 <a class="link"   target="_blank" rel="noopener" href="https://www.icann.org/zh/system/files/files/octo-006-24jul20-zh.pdf" >https://www.icann.org/zh/system/files/files/octo-006-24jul20-zh.pdf<i class="fas fa-external-link-alt"></i></a></p>
 <h3 id="运作方式"><a href="#运作方式" class="headerlink" title="运作方式"></a>运作方式</h3><p>注册人签名</p>
 <p>“注册人”是指有权控制域名相关信息（即，名称转换为地址的映射以及其他数据）的个人或 组织。DNSSEC 准许<strong>注册人对他们存放在 DNS 中的信息进行数字签名</strong>，这样一来，<strong>客户端（例 如，您的 Web 浏览器）就能够验证它们收到的 DNS 查询请求的应答结果与签名时的内容相比是 否发生了修改。</strong> 2010 年，ICANN 针对 DNS 的顶层（即“根”）实施 DNSSEC 签名，从而极大地推动了 DNSSEC 在全球范围内的部署。然而，即使在十年后的今天，DNSSEC 的部署仍然滞后。 </p>
 <h2 id="DoH"><a href="#DoH" class="headerlink" title="DoH"></a>DoH</h2><h2 id="DoT"><a href="#DoT" class="headerlink" title="DoT"></a>DoT</h2>

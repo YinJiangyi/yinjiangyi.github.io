@@ -208,12 +208,12 @@
         
 
         <div class="article-content markdown-body">
-            <p>参考：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wcwnina/p/8728391.html">https://www.cnblogs.com/wcwnina/p/8728391.html</a></p>
+            <p>参考：<br><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/wcwnina/p/8728391.html" >https://www.cnblogs.com/wcwnina/p/8728391.html<i class="fas fa-external-link-alt"></i></a></p>
 <h1 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h1><h2 id="产生"><a href="#产生" class="headerlink" title="产生"></a>产生</h2><p>Nginx和Apache一样，都是一种<strong>web服务器软件</strong>。基于REST架构风格，以统一URI或URL作为沟通依据，通过HTTP协议提供各种网络服务。但<strong>Apche</strong>发展较早，虽然作为世界第一大服务器软件，具有<strong>稳定、开源、跨平台</strong>的优点，但是他被设计为一个<strong>重量级的不支持高并发的服务器</strong>。数以万计的并发访问会导致服务器消耗大量内存。操作系统对其进行进程或线程间的切换也消耗了大量的CPU资源，导致HTTP请求的平均响应速度降低。</p>
 <p><strong>因此轻量级高并发的服务器Nginx应运而生。</strong></p>
 <p>Nginx由俄罗斯工程师采用C语言开发，具有以下<strong>特点</strong>：</p>
 <ol>
-<li>Nginx使用基于<strong>事件驱动架构</strong>，使得其可以支持数以百万级别的TCP连接<br>（<a target="_blank" rel="noopener" href="https://developer.ibm.com/zh/technologies/messaging/articles/advantages-of-an-event-driven-architecture/">事件驱动架构</a>：是指<strong>松散耦合</strong>的<strong>微服务系统</strong>）</li>
+<li>Nginx使用基于<strong>事件驱动架构</strong>，使得其可以支持数以百万级别的TCP连接<br>（<a class="link"   target="_blank" rel="noopener" href="https://developer.ibm.com/zh/technologies/messaging/articles/advantages-of-an-event-driven-architecture/" >事件驱动架构<i class="fas fa-external-link-alt"></i></a>：是指<strong>松散耦合</strong>的<strong>微服务系统</strong>）</li>
 <li>高度的模块化和自由软件许可证使得第三方模块层出不穷</li>
 <li>跨平台服务器，可以运行在Linux，Windows，FreeBSD，Solaris，AIX，Mac OS等操作系统上</li>
 <li>极大的稳定性</li>
@@ -222,7 +222,7 @@
 <li><p>安装</p>
 <p><code> yum install nginx</code></p>
 </li>
-<li><p>配置文件解读 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74256946">https://zhuanlan.zhihu.com/p/74256946</a></p>
+<li><p>配置文件解读 <a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74256946" >https://zhuanlan.zhihu.com/p/74256946<i class="fas fa-external-link-alt"></i></a></p>
 <ul>
 <li>文件结构：</li>
 </ul>
@@ -252,16 +252,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     listen       8080;</span><br><span class="line">     server_name  localhost;</span><br><span class="line">     root &#x2F;Users&#x2F;joy&#x2F;work&#x2F;iie&#x2F;project&#x2F;cyber_narrator&#x2F;MALTEGO&#x2F;html;</span><br><span class="line">     location &#x2F; &#123;</span><br><span class="line">         autoindex on; </span><br><span class="line">         autoindex_exact_size on;</span><br><span class="line">         autoindex_localtime on;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>保存配置文件，<code>nginx</code> 运行，<code>nginx -s reload</code> 重新加载配置文件</p>
 </li>
-<li><p>访问 <a target="_blank" rel="noopener" href="http://localhost:8080/transforms/">http://localhost:8080/transforms/</a> 即出现web root目录下transform文件夹的文件。</p>
+<li><p>访问 <a class="link"   target="_blank" rel="noopener" href="http://localhost:8080/transforms/" >http://localhost:8080/transforms/<i class="fas fa-external-link-alt"></i></a> 即出现web root目录下transform文件夹的文件。</p>
 </li>
 </ul>
-<h2 id="Ngrok实现内网穿透"><a href="#Ngrok实现内网穿透" class="headerlink" title="Ngrok实现内网穿透"></a>Ngrok实现内网穿透</h2><p><a target="_blank" rel="noopener" href="https://learnku.com/articles/36129">Ngrok</a>是一个<strong>反向代理</strong>，内网穿透工具</p>
+<h2 id="Ngrok实现内网穿透"><a href="#Ngrok实现内网穿透" class="headerlink" title="Ngrok实现内网穿透"></a>Ngrok实现内网穿透</h2><p><a class="link"   target="_blank" rel="noopener" href="https://learnku.com/articles/36129" >Ngrok<i class="fas fa-external-link-alt"></i></a>是一个<strong>反向代理</strong>，内网穿透工具</p>
 <ul>
 <li><p>注册账号 </p>
 </li>
 <li><p>下载安装包</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://dashboard.ngrok.com/get-started/setup">配置authtoken</a></p>
+<li><p><a class="link"   target="_blank" rel="noopener" href="https://dashboard.ngrok.com/get-started/setup" >配置authtoken<i class="fas fa-external-link-alt"></i></a></p>
 <p><code>./ngrok authtoken 1muCRyfXzexS8Ui5RWIi4pvUNvR_2rGsMdvDwQpKcwS1iTpAo</code></p>
 </li>
 <li><p>运行命令</p>

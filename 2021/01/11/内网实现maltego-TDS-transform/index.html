@@ -215,7 +215,7 @@
             <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>工作任务：</p>
 <p>将本地数据库中实体关系通过maltego产品界面进行画布探索展示。maltego产品支持自定义local transform（基于给定节点进行关联节点的探索过程），但是local方式的实现需要用户根据设备的具体情况，对python编译器等进行配置，不方便功能共享和展示。</p>
 <p>maltego的另一种transform形式为Transform Distribution Server（TDS），这种方式就是为了解决多人协作情况下的transform开发问题。用户通过简单配置在maltego客户端集成TDS transform组。当执行其中的TDS transform时，客户端发送必要信息（seed, transform name, input entity）请求TDS，TDS执行代理角色，查询对应的transform配置信息，定位到transform代码真正部署的web服务器进行查询。</p>
-<p>Maltego的公共TDS服务器<a target="_blank" rel="noopener" href="https://cetas.paterva.com/TDS/%EF%BC%8C%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E5%8D%B3%E5%8F%AF%E4%BD%BF%E7%94%A8%E3%80%82%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE%E6%97%B6%E4%BB%85%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0seed%E4%BF%A1%E6%81%AF%E3%80%82%E5%9C%A8%E8%87%AA%E5%AE%9A%E4%B9%89transform%E6%97%B6%E9%9C%80%E8%A6%81%E5%A1%AB%E5%86%99transform%E4%BB%A3%E7%A0%81%E6%89%80%E5%9C%A8%E7%9A%84server%E5%9C%B0%E5%9D%80%E3%80%82">https://cetas.paterva.com/TDS/，注册登录即可使用。客户端配置时仅需要添加seed信息。在自定义transform时需要填写transform代码所在的server地址。</a></p>
+<p>Maltego的公共TDS服务器<a class="link"   target="_blank" rel="noopener" href="https://cetas.paterva.com/TDS/%EF%BC%8C%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E5%8D%B3%E5%8F%AF%E4%BD%BF%E7%94%A8%E3%80%82%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE%E6%97%B6%E4%BB%85%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0seed%E4%BF%A1%E6%81%AF%E3%80%82%E5%9C%A8%E8%87%AA%E5%AE%9A%E4%B9%89transform%E6%97%B6%E9%9C%80%E8%A6%81%E5%A1%AB%E5%86%99transform%E4%BB%A3%E7%A0%81%E6%89%80%E5%9C%A8%E7%9A%84server%E5%9C%B0%E5%9D%80%E3%80%82" >https://cetas.paterva.com/TDS/，注册登录即可使用。客户端配置时仅需要添加seed信息。在自定义transform时需要填写transform代码所在的server地址。<i class="fas fa-external-link-alt"></i></a></p>
 <img src="/images/内网实现maltego-TDS-transform/image-20210111171505571.png" alt="image-20210111171505571" style="zoom:50%;" />
 
 
@@ -270,7 +270,7 @@
 <p>cd进项目目录，运行 <code>python project.py runserver</code></p>
 <p><img src="/images/%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0maltego-TDS-transform/image-20210111164604629.png" alt="image-20210111164604629"></p>
 <p>这里列出的就是已经开发好的transforms。</p>
-<p>在transform配置的图中，URL为 <a target="_blank" rel="noopener" href="http://08112e20c814.ngrok.io/run/mailtomail%EF%BC%8C%E5%85%B6%E4%B8%ADhttp://08112e20c814.ngrok.io">http://08112e20c814.ngrok.io/run/mailtomail，其中http://08112e20c814.ngrok.io</a> 是ngrok分配的域名，如果是未经过穿透直接可访问的公网server，这里为<a href="http://server_ip:port，`/run/mailtomail`">http://server_ip:port，`/run/mailtomail`</a> 按transform server urls列表中添加。</p>
+<p>在transform配置的图中，URL为 <a class="link"   target="_blank" rel="noopener" href="http://08112e20c814.ngrok.io/run/mailtomail%EF%BC%8C%E5%85%B6%E4%B8%ADhttp://08112e20c814.ngrok.io" >http://08112e20c814.ngrok.io/run/mailtomail，其中http://08112e20c814.ngrok.io<i class="fas fa-external-link-alt"></i></a> 是ngrok分配的域名，如果是未经过穿透直接可访问的公网server，这里为<a href="http://server_ip:port，`/run/mailtomail`">http://server_ip:port，`/run/mailtomail`</a> 按transform server urls列表中添加。</p>
 </li>
 <li><p>选择input entity。如果是自定义，按照代码中添加的实体ID进行添加（cybernarrator.ClientIP）：</p>
 <p><img src="/images/%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0maltego-TDS-transform/image-20210111165020200.png" alt="image-20210111165020200"></p>

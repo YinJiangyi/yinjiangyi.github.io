@@ -218,14 +218,14 @@
 <p>等待容器下载。下载完毕后找不到文件，未解决……转至install from scratch</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">superset_tests_worker exited with code 127</span><br><span class="line">superset_init exited with code 127</span><br><span class="line">superset_node exited with code 1</span><br><span class="line">superset_worker exited with code 127</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app exited with code 127</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker exited with code 127</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app exited with code 127</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker exited with code 127</span><br></pre></td></tr></table></figure>
 <p>错误原因：官网步骤不详细，需要下载superset镜像，创建superset容器，启动容器</p>
-<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/nikeylee/article/details/115264818%E8%A7%A3%E5%86%B3%EF%BC%8C%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%EF%BC%9A">https://blog.csdn.net/nikeylee/article/details/115264818解决，主要步骤：</a></p>
+<p>参考<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/nikeylee/article/details/115264818%E8%A7%A3%E5%86%B3%EF%BC%8C%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%EF%BC%9A" >https://blog.csdn.net/nikeylee/article/details/115264818解决，主要步骤：<i class="fas fa-external-link-alt"></i></a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">docker search superset</span><br><span class="line"># 可以自选版本</span><br><span class="line">docker pull amancevice&#x2F;superset</span><br><span class="line"># 查看镜像是否下载成功：</span><br><span class="line">docker images</span><br><span class="line"># 创建Superset容器</span><br><span class="line"># 创建挂载的目录：</span><br><span class="line">mkdir &#x2F;opt&#x2F;superset</span><br><span class="line"># 创建容器</span><br><span class="line">docker run --name my_superset -d -p 8088:8088 -v &#x2F;opt&#x2F;superset:&#x2F;home&#x2F;superset amancevice&#x2F;superset</span><br><span class="line"># 进入docker镜像</span><br><span class="line">docker exec -it my_superset &#x2F;bin&#x2F;bash</span><br><span class="line"># superset 配置</span><br><span class="line">superset db upgrade</span><br><span class="line">superset init</span><br><span class="line">export FLASK_APP&#x3D;superset</span><br><span class="line">flask fab create-admin</span><br><span class="line">superset load_examples</span><br><span class="line"># 启动superset命令</span><br><span class="line">superset run -p 8088</span><br></pre></td></tr></table></figure>
 
 
-<h4 id="基于pip安装"><a href="#基于pip安装" class="headerlink" title="基于pip安装"></a>基于pip安装</h4><p>参考<a target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/installing-superset-from-scratch">https://superset.apache.org/docs/installation/installing-superset-from-scratch</a></p>
+<h4 id="基于pip安装"><a href="#基于pip安装" class="headerlink" title="基于pip安装"></a>基于pip安装</h4><p>参考<a class="link"   target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/installing-superset-from-scratch" >https://superset.apache.org/docs/installation/installing-superset-from-scratch<i class="fas fa-external-link-alt"></i></a></p>
 <p>遇到问题：</p>
 <p>1） 安装client_driver时报错 OSError: mysql_config not found</p>
-<p>解决：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found</a></p>
+<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found" >https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fas fa-external-link-alt"></i></a></p>
 <blockquote>
 <p>Ok, well, first of all, let me check if I am on the same page as you:</p>
 <ul>
@@ -235,7 +235,7 @@
 <li>And finally, you did <code>pip install MySQL-Python</code> (or <code>pip3 install mysqlclient</code> if using python 3)</li>
 </ul>
 </blockquote>
-<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p>参考：<a target="_blank" rel="noopener" href="https://blog.eric7.site/2020/02/23/superset/">https://blog.eric7.site/2020/02/23/superset/</a></p>
+<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p>参考：<a class="link"   target="_blank" rel="noopener" href="https://blog.eric7.site/2020/02/23/superset/" >https://blog.eric7.site/2020/02/23/superset/<i class="fas fa-external-link-alt"></i></a></p>
 <p><strong>Anaconda 创建python环境</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n superset python&#x3D;3.7</span><br></pre></td></tr></table></figure>
 <p>激活环境</p>
@@ -294,7 +294,7 @@
 <li><p>安装nodejs：解压，建立软连接</p>
 <p>然后node -v 查看版本，查看正常即可</p>
 </li>
-<li><p>设置npm为淘宝镜像（原始地址：<a target="_blank" rel="noopener" href="https://registry.npmjs.org)/">https://registry.npmjs.org）</a></p>
+<li><p>设置npm为淘宝镜像（原始地址：<a class="link"   target="_blank" rel="noopener" href="https://registry.npmjs.org)/" >https://registry.npmjs.org）<i class="fas fa-external-link-alt"></i></a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br><span class="line">验证 &#96;npm config get registry&#96;</span><br></pre></td></tr></table></figure></li>
 <li><p>进入superset/assets目录下（新版目录incubator-superset/superset-frontend/）,安装编译所需模块</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -d</span><br></pre></td></tr></table></figure></li>
@@ -312,7 +312,7 @@
 <li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
 <li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
 </ul>
-<p>终于在<a target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A">https://github.com/apache/superset/issues/9719找到解决办法：</a></p>
+<p>终于在<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A" >https://github.com/apache/superset/issues/9719找到解决办法：<i class="fas fa-external-link-alt"></i></a></p>
 <p>这位朋友和我的情况也一样</p>
 <img src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png" alt="image-20210415104252896" style="zoom:80%;" />
 
@@ -345,7 +345,7 @@
 <li><p>从github上下载源码 </p>
 <p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
 </li>
-<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi</a></p>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a class="link"   target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi" >https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fas fa-external-link-alt"></i></a></p>
 <p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
 </li>
 <li><p>（这一步不确定什么用）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
@@ -361,7 +361,7 @@
 <li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
 <p>报错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR in .&#x2F;src&#x2F;visualizations&#x2F;TimeTable&#x2F;TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>解决：<a target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997">https://github.com/apache/superset/issues/10997</a></p>
+<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997" >https://github.com/apache/superset/issues/10997<i class="fas fa-external-link-alt"></i></a></p>
 <p>修改目录下 webpack.config.js 文件：</p>
 <img src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png" alt="img" style="zoom:67%;" />
 
