@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            论文笔记 |
+        
+        JOY&#39;s Blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"没有蛀牙不如干一行爱一行😙"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                JOY&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">论文笔记</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-06-24 15:27:57
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="论文列表"><a href="#论文列表" class="headerlink" title="论文列表"></a>论文列表</h1><h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><table>
+<thead>
+<tr>
+<th>论文</th>
+<th>等级</th>
+<th>时间</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Identifying compromised hosts under APT using DNS request sequences.</td>
+<td>B</td>
+<td>2021</td>
+<td></td>
+</tr>
+<tr>
+<td>Following Passive DNS Traces to Detect Stealthy Malicious Domains Via Graph Inference.</td>
+<td>B</td>
+<td>2020</td>
+<td>略读√</td>
+</tr>
+<tr>
+<td>Malicious DNS Tunneling Detection in Real-Traffic DNS Data.</td>
+<td>C</td>
+<td>2020</td>
+<td></td>
+</tr>
+<tr>
+<td>MalPortrait: Sketch Malicious Domain Portraits Based on Passive DNS Data.</td>
+<td>C</td>
+<td>2020</td>
+<td>略读√</td>
+</tr>
+</tbody></table>
+<h3 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h3><table>
+<thead>
+<tr>
+<th>论文</th>
+<th>等级</th>
+<th>时间</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Generative Adversarial Networks (GANs) in networking: A comprehensive survey &amp; evaluation.</td>
+<td>B</td>
+<td>2021</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="HIN"><a href="#HIN" class="headerlink" title="HIN"></a>HIN</h3><p><strong>HIN研究成果走势：</strong></p>
+<p><strong>检索词：</strong></p>
+<p>==dblp收录不全，个别文章来自谷歌学术检索== </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">heterogeneous network&#x2F;graph &quot;malicious&quot;</span><br><span class="line">heterogeneous network&#x2F;graph &quot;attack&quot;</span><br><span class="line">heterogeneous graph &quot;detect&quot;</span><br><span class="line">heterogeneous network&#x2F;graph &quot;malware&quot;</span><br><span class="line">knowledge graph &quot;malicious&quot;</span><br><span class="line">cyber threat heterogeneous</span><br><span class="line">heterogeneous cyber threat</span><br></pre></td></tr></table></figure>
+<p><strong>整理：</strong></p>
+<ul>
+<li>共34篇，其中<ul>
+<li>木马检测、有害域名发现各有和4篇</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>等级</th>
+<th>时间</th>
+<th>关注侧重</th>
+<th>类别</th>
+<th>关键词</th>
+<th>优先级</th>
+<th>文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Heterogeneous Graph Attention  Networks for Early Detection of Rumors on Twitter.</td>
+<td>C</td>
+<td>2020</td>
+<td>方法</td>
+<td>rumors检测</td>
+<td>attention，early  detection</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Jointly Embedding the Local  and Global Relations of Heterogeneous Graph for Rumor Detection.</td>
+<td>B</td>
+<td>2019</td>
+<td>方法</td>
+<td>rumors检测</td>
+<td>local &amp; global relationship</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Deep Graph neural  network-based spammer detection under the perspective of heterogeneous  cyberspace.</td>
+<td>C</td>
+<td>2021</td>
+<td>方法</td>
+<td>spammer探测</td>
+<td>HIN+GNN</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>A survey on heterogeneous  network representation learning</td>
+<td>B</td>
+<td>2020</td>
+<td>方法</td>
+<td>suvey</td>
+<td>节点表征学习</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>Suspicious Massive  Registration Detection via Dynamic Heterogeneous Graph Neural Networks.</td>
+<td>None</td>
+<td>2020</td>
+<td>方法</td>
+<td>大规模注册识别</td>
+<td>动态</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Multi-attributed heterogeneous  graph convolutional network for bot detection.</td>
+<td>B</td>
+<td>2020</td>
+<td>方向</td>
+<td>僵尸网络检测</td>
+<td></td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>Heterogeneous Graph Matching  Networks for Unknown Malware Detection.</td>
+<td>A</td>
+<td>2019</td>
+<td>方法/方向</td>
+<td>木马检测</td>
+<td>unknown，matching  network</td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Heterogeneous Graph Matching  Networks: Application to Unknown Malware Detection.</td>
+<td>C</td>
+<td>2019</td>
+<td>方向</td>
+<td>木马检测</td>
+<td>unknown，matching  network</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Out-of-sample Node  Representation Learning for Heterogeneous Graph in Real-time Android Malware  Detection.</td>
+<td>A</td>
+<td>2019</td>
+<td>方法</td>
+<td>木马检测</td>
+<td>out-of-sample node</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>AiDroid: When Heterogeneous  Information Network Marries Deep Neural Network for Real-time Android Malware  Detection.</td>
+<td>None</td>
+<td>2018</td>
+<td>方法</td>
+<td>木马检测</td>
+<td></td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>HinDroid: An Intelligent  Android Malware Detection System Based on Structured Heterogeneous  Information Network.</td>
+<td>A</td>
+<td>2017</td>
+<td>方法</td>
+<td>木马检测</td>
+<td></td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MG-DVD: A Real-time Framework  for Malware Variant Detection Based on Dynamic Heterogeneous Graph Learning.</td>
+<td>None</td>
+<td>2021</td>
+<td>方向</td>
+<td>木马检测</td>
+<td>动态，实时</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>HeterSupervise: Package-level  Android Malware Analysis Based on Heterogeneous Graph.</td>
+<td>C</td>
+<td>2020</td>
+<td>方法</td>
+<td>木马检测</td>
+<td></td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>Content-Agnostic Malware  Detection in Heterogeneous Malicious Distribution Graph.</td>
+<td>B</td>
+<td>2016</td>
+<td>方法</td>
+<td>木马检测</td>
+<td>Distribution</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>A malware detection system  based on heterogeneous information network.</td>
+<td>None</td>
+<td>2018</td>
+<td>方法</td>
+<td>木马检测</td>
+<td></td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>αCyber: Enhancing Robustness  of Android Malware Detection System against Adversarial Attacks on  Heterogeneous Graph based Model.</td>
+<td>B</td>
+<td>2019</td>
+<td>方向</td>
+<td>木马探测</td>
+<td>对抗性攻击防御</td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Heterogeneous 2-Phase Method  for Strongly Connected Components Detection and Classification of Graphs.</td>
+<td>None</td>
+<td>2019</td>
+<td>方法</td>
+<td>强连通图提取</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>Revisiting the Bethe-Hessian:  Improved Community Detection in SparseHeterogeneous Graphs.</td>
+<td>A</td>
+<td>2019</td>
+<td>方法</td>
+<td>社区发现</td>
+<td>稀疏</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Efficient hypothesis testing  for community detection in heterogeneous networks by graph dissimilarity</td>
+<td>None</td>
+<td>2021</td>
+<td>方法</td>
+<td>社区发现</td>
+<td></td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Heterogeneous Graph  Convolutional Networks for Temporal Community Detection.</td>
+<td>None</td>
+<td>2018</td>
+<td>方法</td>
+<td>社区检测</td>
+<td>时序社区检测</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>GFD: A Weighted Heterogeneous  Graph Embedding Based Approach for Fraud Detection in Mobile Advertising.</td>
+<td>C</td>
+<td>2020</td>
+<td>方向</td>
+<td>手机广告诈骗</td>
+<td></td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>Detecting Random Walks on  Graphs With Heterogeneous Sensors.</td>
+<td>A</td>
+<td>2019</td>
+<td>方向</td>
+<td>随机游走识别</td>
+<td></td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>Log2vec:  A Heterogeneous Graph Embedding Based Approach for Detecting Cyber Threats  within Enterprise.</td>
+<td>A</td>
+<td>2019</td>
+<td>方法</td>
+<td>威胁检测</td>
+<td>log2vec</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Cyber Threat Intelligence Modeling Based  on Heterogeneous Graph Convolutional Network</td>
+<td>B</td>
+<td>2020</td>
+<td>方法</td>
+<td>威胁情报</td>
+<td>GCN</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>A simple graph embedding for  anomaly detection in a stream of heterogeneous labeled graphs.</td>
+<td>B</td>
+<td>2021</td>
+<td>方法/方向</td>
+<td>小网络，异常检测</td>
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Heterogeneous Mini-Graph  Neural Network and Its Application to Fraud Invitation Detection.</td>
+<td>B</td>
+<td>2020</td>
+<td>方向</td>
+<td>小网络，诈骗检测</td>
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hincti: A cyber threat intelligence modeling and identification  system based on heterogeneous information network</td>
+<td>None(高引用)</td>
+<td>2020</td>
+<td>方法</td>
+<td>有害情报发现</td>
+<td></td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Attributed Heterogeneous Graph  Neural Network for Malicious Domain Detection.</td>
+<td>C</td>
+<td>2021</td>
+<td>方法</td>
+<td>有害域名发现</td>
+<td>HIN+GNN（张帅）</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Deepdom: Malicious domain  detection with scalable and heterogeneous graph convolutional networks.</td>
+<td>C</td>
+<td>2020</td>
+<td>方法</td>
+<td>有害域名发现</td>
+<td>HIN+GCN</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>HGDom: Heterogeneous Graph  Convolutional Networks for Malicious Domain Detection.</td>
+<td>None</td>
+<td>2020</td>
+<td>方法</td>
+<td>有害域名发现</td>
+<td>HIN+GCN</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>HinDom: A Robust Malicious  Domain Detection System based on Heterogeneous Information Network with  Transductive Classification.</td>
+<td>B</td>
+<td>2019</td>
+<td>方法</td>
+<td>有害域名发现</td>
+<td></td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Heterogeneous Graph Neural  Networks for Malicious Account Detection.</td>
+<td>B</td>
+<td>2018</td>
+<td>方法/方向</td>
+<td>有害账户发现</td>
+<td>Alipay有害账户识别，Attention</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>xFraud: Explainable Fraud  Transaction Detection on Heterogeneous Graphs.</td>
+<td>None</td>
+<td>2020</td>
+<td>方法</td>
+<td>诈骗交易识别</td>
+<td></td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MalRank: a measure of  maliciousness in SIEM-based knowledge graphs.</td>
+<td>B</td>
+<td>2019</td>
+<td>方向</td>
+<td>知识图谱</td>
+<td>siem, KG</td>
+<td>6</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h4 id="HIN-基于群组的attention"><a href="#HIN-基于群组的attention" class="headerlink" title="HIN+基于群组的attention"></a>HIN+基于群组的attention</h4><p>| 论文                                                         | 等级 | 时间 |pre-label| 状态 |<br>| ———————————————————— | —- | —- | —- |<br>| MalRank: a measure of  maliciousness in SIEM-based knowledge graphs. | B    | 2019 |      |</p>
+<h3 id="Malicious-Detection"><a href="#Malicious-Detection" class="headerlink" title="Malicious Detection"></a>Malicious Detection</h3><table>
+<thead>
+<tr>
+<th>论文</th>
+<th>等级</th>
+<th>时间</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Detecting Malicious Websites by Integrating Malicious, Benign, and Compromised Redirection Subgraph Similarities</td>
+<td>C</td>
+<td>2017</td>
+<td></td>
+</tr>
+<tr>
+<td>Evasive Malicious Website Detection by Leveraging Redirection Subgraph Similarities</td>
+<td>None</td>
+<td>2019</td>
+<td></td>
+</tr>
+<tr>
+<td>Attributed Heterogeneous Graph Neural Network for Malicious Domain Detection.</td>
+<td>C</td>
+<td>2021</td>
+<td></td>
+</tr>
+<tr>
+<td>Deepdom: Malicious domain detection with scalable and heterogeneous graph convolutional networks.</td>
+<td>B</td>
+<td>2020</td>
+<td></td>
+</tr>
+<tr>
+<td>Mitigating malicious packets attack via vulnerability-aware heterogeneous network devices assignment.</td>
+<td>C</td>
+<td>2020</td>
+<td></td>
+</tr>
+<tr>
+<td>HGDom: Heterogeneous Graph Convolutional Networks for Malicious Domain Detection.</td>
+<td>None</td>
+<td>2020</td>
+<td></td>
+</tr>
+<tr>
+<td>Heterogeneous Graph Neural Networks for Malicious Account Detection.</td>
+<td>B</td>
+<td>2020</td>
+<td></td>
+</tr>
+<tr>
+<td>HinDom: A Robust Malicious Domain Detection System based on Heterogeneous Information Network with Transductive Classification.</td>
+<td>B</td>
+<td>2019</td>
+<td></td>
+</tr>
+<tr>
+<td>Disentangled Representation Learning in Heterogeneous Information Network for Large-scale Android Malware Detection in the COVID-19 Era and Beyond.</td>
+<td>A</td>
+<td>2021</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="论文阅读笔记"><a href="#论文阅读笔记" class="headerlink" title="论文阅读笔记"></a>论文阅读笔记</h1><p>黄色高亮：重点论证语句<br><u><em>下划线</em></u> ：表述积累</p>
+<table>
+<thead>
+<tr>
+<th>论文题目</th>
+<th>研究领域</th>
+<th>发表会议</th>
+<th>数据源</th>
+<th>创新点</th>
+<th>存在问题</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Following Passive DNS Traces to Detect Stealthy Malicious Domains Via Graph Inference</td>
+<td>有害发现/图</td>
+<td>ACM Transactions on Privacy and Security, B类</td>
+<td>DNS被动数据—Farsight Security，付费</td>
+<td>采用belief  propagation算法基于有害种子域名进行推断，主要工作集中在图谱构造：<br />The idea is to associate domains that share IPs from at least two hosting providers, share a dedicated IP, or share the same dedicated apex domain.<br />其中需要另外训练两个分类器：dedicated IP &amp; public IP<br />dedicated domain &amp; public domain</td>
+<td></td>
+<td>1. 提出association要同时满足准确性和覆盖率的要求<br />2.认为co-ip关系作为有害域名发现的关系依据比较weak<br /></td>
+</tr>
+<tr>
+<td>MalPortrait: Sketch Malicious Domain Portraits Based on Passive DNS Data</td>
+<td>有害发现/图</td>
+<td>C类</td>
+<td>DNS被动数据—ISP；黑白名单—开源公开数据集RiskAnalyic,<br />OpenPhish, <br />PhishTank, <br />Zeus <br />Tracker,360 NetLab OpenData Project</td>
+<td>结合individual feature(string &amp; network)和关系特征（基于co-domain的图谱），融合方式基本上是加权计算融合，生成domaind的特征向量，然后采用传统分类器进行分类<br /><br />domain图谱的边带权重，权重物理意义是node1是有害的情况下，node2也有害的概率</td>
+<td>主要在论证特征融合的意义上进行说明，方法上基本是最基础的方法</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="论文想法"><a href="#论文想法" class="headerlink" title="论文想法"></a>论文想法</h1><h3 id="生成对抗网络GAN"><a href="#生成对抗网络GAN" class="headerlink" title="生成对抗网络GAN"></a>生成对抗网络GAN</h3><p>基于GAN做有害服务发现（解决样本稀疏问题）</p>
+<p>TODO:</p>
+<pre><code>- 深入了解研究现状: Generative Adversarial Networks (GANs) in networking: A comprehensive survey &amp; evaluation. 
+- 了解组内论文程度：(zhangshuai) Attributed Heterogeneous Graph Neural Network for Malicious Domain Detection
+- 近期计划：七月份（周末）确定一个尝试的方向；八月份做一些基础实验；
+</code></pre>
+<h3 id="HIN-基于群组的attention-1"><a href="#HIN-基于群组的attention-1" class="headerlink" title="HIN+基于群组的attention"></a>HIN+基于群组的attention</h3>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：论文笔记</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-06-24 15:27:57</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/06/24/论文笔记/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/06/26/clickhouse-meetup/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">clickhouse meetup</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/06/24/%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">概念总结</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%88%97%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">论文列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">1.0.1.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GAN"><span class="nav-number">1.0.2.</span> <span class="nav-text">GAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HIN"><span class="nav-number">1.0.3.</span> <span class="nav-text">HIN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HIN-%E5%9F%BA%E4%BA%8E%E7%BE%A4%E7%BB%84%E7%9A%84attention"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">HIN+基于群组的attention</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Malicious-Detection"><span class="nav-number">1.0.4.</span> <span class="nav-text">Malicious Detection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0"><span class="nav-number">2.</span> <span class="nav-text">论文阅读笔记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E6%83%B3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">论文想法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9CGAN"><span class="nav-number">3.0.1.</span> <span class="nav-text">生成对抗网络GAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HIN-%E5%9F%BA%E4%BA%8E%E7%BE%A4%E7%BB%84%E7%9A%84attention-1"><span class="nav-number">3.0.2.</span> <span class="nav-text">HIN+基于群组的attention</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
