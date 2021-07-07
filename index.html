@@ -36,14 +36,73 @@
 <main class="page-container">
 
     
-        <div class="first-screen-container flex-center fade-in-down-animation">
-    <div class="content flex-center">
-        <div class="description">
-            没有蛀牙不如干一行爱一行😙
-        </div>
-        
-    </div>
-</div>
+        $first-screen-font-size = 2rem;
+$first-screen-icon-size = 1.6rem;
+
+$temp-img = hexo-config('style.first_screen.background_img');
+$first-screen-img = $temp-img ? $temp-img:'/images/bg.svg';
+
+.first-screen-container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  background: url($first-screen-img) center center / cover no-repeat;
+  background-position-y: $header-height;
+
+
+  +keep-tablet() {
+    background-position-y: $header-height * 0.9;
+  }
+
+  +keep-mobile() {
+    background-position-y: $header-height * 0.8;
+  }
+
+  .content {
+    position: relative;
+    box-sizing: border-box;
+    width: 80%;
+    height: 90%;
+
+    .description {
+      font-weight: bold;
+      font-size: $first-screen-font-size;
+      line-height: 1.8;
+      text-align: center;
+      color: var(--default-text-color);
+
+
+      +keep-tablet() {
+        font-size: $first-screen-font-size * 0.9;
+      }
+    }
+
+
+    .s-icon-list {
+      position: absolute;
+      bottom: 0;
+      font-size: $first-screen-icon-size;
+      text-align: center;
+
+      +keep-tablet() {
+        font-size: $first-screen-icon-size * 0.9;
+      }
+
+      .s-icon-item {
+        margin-right: 20px;
+        cursor: pointer;
+        line-height: 2;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+      }
+
+    }
+  }
+}
 
     
 
@@ -159,6 +218,170 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/2021/07/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%BC%82%E6%9E%84%E4%BF%A1%E6%81%AF%E7%BD%91%E7%BB%9CHIN%E5%BA%94%E7%94%A8%E4%B8%8EMalware-Detection%E5%90%88%E9%9B%86/">
+                        论文笔记-异构信息网络HIN应用与Malware Detection合集
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Jul 07 2021 14:50:41 GMT+0800">2021-07-07</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/HIN/">HIN</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Malware/">Malware</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/07/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-%E5%BC%82%E6%9E%84%E4%BF%A1%E6%81%AF%E7%BD%91%E7%BB%9CHIN%E5%BA%94%E7%94%A8%E4%B8%8EMalware-Detection%E5%90%88%E9%9B%86/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2021/07/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Good-Bot-Bad-Bot-Characterizing-Automated-Browsing-Activity/">
+                        论文笔记-Good Bot, Bad Bot: Characterizing Automated Browsing Activity
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        摘要目标是恶意bot测量和分析，通过部署大量（100个）蜜罐站点（honeysite），在28w的IP中发现7w的恶意bots，其中80%以上的bots声称是来自firefox和chrome。
+Intorduction根据行为区分恶意和非恶意
+思路：...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jul 06 2021 19:26:14 GMT+0800">2021-07-06</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/bot/">bot</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/07/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Good-Bot-Bad-Bot-Characterizing-Automated-Browsing-Activity/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2021/07/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/">
+                        论文笔记-Understanding the Growth and Security Considerations of ECS
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        AbstractDNS的重要性要求对DNS扩展的影响做深入研究。本文研究了ECS（EDNS Client Subnet）这一扩展功能的具体影响。该扩展已被广泛使用，但研究发现没有达到预期的用户隐私的效果。对造成的正面和负面的影响进行具体介绍。
+Int...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jul 06 2021 19:26:14 GMT+0800">2021-07-06</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/DNS%E6%89%A9%E5%B1%95/">DNS扩展</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2021/07/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/2021/07/06/%E9%9D%99%E4%B8%8D%E4%B8%8B%E5%BF%83%E7%9A%84%E6%97%B6%E5%80%99%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B/">
                         静不下心的时候梳理一下
                     </a>
@@ -174,6 +397,18 @@
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jul 06 2021 16:14:46 GMT+0800">2021-07-06</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
         
         
             <span class="home-article-tag">
@@ -246,6 +481,18 @@
     <div class="home-article-meta-info">
         <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Jul 03 2021 09:49:05 GMT+0800">2021-07-03</span></span>
         
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
         
             <span class="home-article-tag">
                 <i class="fas fa-tags"></i>&nbsp;
@@ -315,6 +562,18 @@ superset+clickhouse展示加载速度慢
     <div class="home-article-meta-info">
         <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Jun 26 2021 14:07:18 GMT+0800">2021-06-26</span></span>
         
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
         
             <span class="home-article-tag">
                 <i class="fas fa-tags"></i>&nbsp;
@@ -371,6 +630,18 @@ Following Passive DNS...
     <div class="home-article-meta-info">
         <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Jun 24 2021 15:27:57 GMT+0800">2021-06-24</span></span>
         
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
+        
         
             <span class="home-article-tag">
                 <i class="fas fa-tags"></i>&nbsp;
@@ -415,6 +686,18 @@ Zero-day漏洞
                 <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Thu Jun 24 2021 11:13:53 GMT+0800">2021-06-24</span></span>
+        
+            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a>&nbsp;
+                        </li>
+                    
+                    
+                </ul>
+            </span>
         
         
             <span class="home-article-tag">
@@ -491,99 +774,6 @@ Speed 速度快：
     </div>
 
     <a href="/2021/06/23/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/06/21/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94DNS%E7%AF%87/">
-                        不学废之——DNS篇
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        参考阮一峰 http://www.ruanyifeng.com/blog/2016/06/dns.html
-DNSDNS （Domain Name System 的缩写）的作用非常简单，就是根据域名查出IP地址。你可以把它想象成一本巨大的电话本。
-举...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Jun 21 2021 16:46:26 GMT+0800">2021-06-21</span></span>
-        
-        
-    </div>
-
-    <a href="/2021/06/21/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94DNS%E7%AF%87/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/06/19/Mac%E6%9D%A1%E4%BB%B6%E9%87%8D%E8%A3%85window%E7%B3%BB%E7%BB%9F/">
-                        Mac条件重装window系统
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        主要分为两步，制作系统盘+重装系统
-制作系统盘下载windows 10 镜像下载地址：https://www.microsoft.com/zh-cn/software-download/windows10ISO
-Tip：网页下载速度很慢，复制链接在迅...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Jun 19 2021 13:56:17 GMT+0800">2021-06-19</span></span>
-        
-        
-    </div>
-
-    <a href="/2021/06/19/Mac%E6%9D%A1%E4%BB%B6%E9%87%8D%E8%A3%85window%E7%B3%BB%E7%BB%9F/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/06/16/%E8%B8%A9%E8%BF%87%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">
-                        踩过的那些坑
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        sparkspark-submit提交任务cores为0
-解决：设置executor memory, 默认为8g
-
-Linuxcrontab任务不生效，单独运行sh文件生效解决：sh脚本中绝对路径改为完整路径
-
-crontab任务按小时执行不生效12...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Jun 16 2021 10:44:32 GMT+0800">2021-06-16</span></span>
-        
-        
-    </div>
-
-    <a href="/2021/06/16/%E8%B8%A9%E8%BF%87%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>

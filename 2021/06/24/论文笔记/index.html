@@ -168,6 +168,17 @@
         <i class="fas fa-edit"></i>&nbsp;2021-06-24 15:27:57
     </span>
     
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
     
         <span class="article-tags article-meta-item">
             <i class="fas fa-tags"></i>&nbsp;
@@ -229,6 +240,18 @@
 <td>C</td>
 <td>2020</td>
 <td>略读√</td>
+</tr>
+<tr>
+<td>Understanding the Growth and Security Considerations of ECS</td>
+<td>A</td>
+<td>2021</td>
+<td>略读√</td>
+</tr>
+<tr>
+<td>Good Bot, Bad Bot: Characterizing Automated Browsing Activity</td>
+<td>A</td>
+<td>2021</td>
+<td>精读√</td>
 </tr>
 </tbody></table>
 <h3 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h3><table>
@@ -692,7 +715,7 @@
 </thead>
 <tbody><tr>
 <td>Following Passive DNS Traces to Detect Stealthy Malicious Domains Via Graph Inference</td>
-<td>有害发现/图</td>
+<td>DNS——有害发现/图</td>
 <td>ACM Transactions on Privacy and Security, B类</td>
 <td>DNS被动数据—Farsight Security，付费</td>
 <td>采用belief  propagation算法基于有害种子域名进行推断，主要工作集中在图谱构造：<br />The idea is to associate domains that share IPs from at least two hosting providers, share a dedicated IP, or share the same dedicated apex domain.<br />其中需要另外训练两个分类器：dedicated IP &amp; public IP<br />dedicated domain &amp; public domain</td>
@@ -701,11 +724,29 @@
 </tr>
 <tr>
 <td>MalPortrait: Sketch Malicious Domain Portraits Based on Passive DNS Data</td>
-<td>有害发现/图</td>
+<td>DNS——有害发现/图</td>
 <td>C类</td>
 <td>DNS被动数据—ISP；黑白名单—开源公开数据集RiskAnalyic,<br />OpenPhish, <br />PhishTank, <br />Zeus <br />Tracker,360 NetLab OpenData Project</td>
 <td>结合individual feature(string &amp; network)和关系特征（基于co-domain的图谱），融合方式基本上是加权计算融合，生成domaind的特征向量，然后采用传统分类器进行分类<br /><br />domain图谱的边带权重，权重物理意义是node1是有害的情况下，node2也有害的概率</td>
 <td>主要在论证特征融合的意义上进行说明，方法上基本是最基础的方法</td>
+<td></td>
+</tr>
+<tr>
+<td>Good Bot, Bad Bot: Characterizing Automated Browsing Activity</td>
+<td>Bot探测</td>
+<td>A类</td>
+<td>-</td>
+<td>通过部署100个honeysite，获取纯净的bot流量，进而对traffic进行分析，避开了混合流量标注数据难以获得的难题。并且在真实数据中发现实际存在的身份欺骗行为。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Understanding the Growth and Security Considerations of ECS</td>
+<td>DNS——扩展功能测量</td>
+<td>A类</td>
+<td>权威域名请求记录；运营商记录；</td>
+<td>深入研究DNS扩展EDNS client subnet的应用情况、可能存在的隐私泄露影响</td>
+<td>对新的DNS扩展字段情况进行测量，很不错的论文方向</td>
 <td></td>
 </tr>
 </tbody></table>

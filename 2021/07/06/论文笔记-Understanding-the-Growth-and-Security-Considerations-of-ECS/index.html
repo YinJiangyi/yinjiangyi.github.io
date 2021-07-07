@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="计算机网络,编程,算法">
+    <meta name="description" content="盐于律己，甜以待人">
+    <meta name="author" content="可爱的小富婆">
+    
+    <title>
+        
+            论文笔记-Understanding the Growth and Security Considerations of ECS |
+        
+        JOY&#39;s Blog
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"没有蛀牙不如干一行爱一行😙"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                JOY&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">论文笔记-Understanding the Growth and Security Considerations of ECS</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">可爱的小富婆</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-07-06 19:26:14
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%AE%BA%E6%96%87/">论文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/DNS%E6%89%A9%E5%B1%95/">DNS扩展</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>DNS的重要性要求对DNS扩展的影响做深入研究。本文研究了ECS（EDNS Client Subnet）这一扩展功能的具体影响。<strong>该扩展已被广泛使用，但研究发现没有达到预期的用户隐私的效果</strong>。对造成的<strong>正面和负面的影响</strong>进行具体介绍。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p><strong>贡献</strong></p>
+<ul>
+<li>show how the protocol has grown both before and after its official adoption in 2016. </li>
+<li>正负面影响 We discuss how it may provide more freedom to end users and aid security practitioners. At the same time, we discuss how it potentially exacerbates existing threats (i.e., DNS leaks)</li>
+<li>vast majority of highly ranked ECS-enabled domains <em>do not</em> benefit from the use of ECS.</li>
+</ul>
+<h3 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h3><h4 id="ECS的作用"><a href="#ECS的作用" class="headerlink" title="ECS的作用"></a>ECS的作用</h4><blockquote>
+<ul>
+<li>CDN使用DNS获取查询IP，根据IP对用户进行地域调度。但这里获取的IP地址是DNS地址，而不是用户真实的IP地址。</li>
+<li>大多数情况下，我们假设用户通过会使用离自己网络最近的DNS resolver，CDN调度基本还是准确的。</li>
+<li>但也有很多nameserver设置错误，或者用户使用google public dns（nameserver 8.8.8.8/8.8.4.4）或opendns进行DNS resolver</li>
+</ul>
+</blockquote>
+<p>比如：</p>
+<blockquote>
+<ol>
+<li>国内用户设置nameserver 8.8.8.8 (dig xxx.com @8.8.8.8)</li>
+<li>我们得到的DNS query IP是74.125.16.208，判断IP属于<strong>美国,,,加利福尼亚州山景市谷歌公司</strong></li>
+<li>这个时候，我们的DNS会返回离美国加州最近的CDN节点IP给用户。</li>
+<li>国内用户错误的调度到美国节点…… <img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/论文笔记-Understanding-the-Growth-and-Security-Considerations-of-ECS/aHR0cDovL25vb3BzLm1lL3dwLWluY2x1ZGVzL2ltYWdlcy9zbWlsaWVzL2ljb25fc2FkLmdpZg.gif?lastModify=1625624194?lastModify=1625625465" alt=":("></li>
+</ol>
+</blockquote>
+<h4 id="ECS造成的影响"><a href="#ECS造成的影响" class="headerlink" title="ECS造成的影响"></a>ECS造成的影响</h4><p>ECS的使用不影响below递归部分的过程，而是增加了和权威服务器之间的信息传输，携带了clientip信息（ip掩码），用于优化cdn调度。</p>
+<img src="/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/image-20210707104315072.png" alt="image-20210707104315072" style="zoom:33%;" />
+
+<ul>
+<li><p>老式DNS网络拓扑：DNS和HTTP流量遵循相同的网络路径</p>
+<img src="/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/image-20210707104900225.png" alt="image-20210707104900225" style="zoom:50%;" />
+</li>
+<li><p>目前的情况：递归dns解析器往往是cloud DNS或open DNS，而不是和client在同一as中的server，并且web也会讲dns服务托管到第三方平台，<strong>所以这时使用ECS扩展时，会导致Client IP信息在本来无关的网络拓扑（红色部分）中传播。</strong>这部分的变化其实是位于第2-7步</p>
+<img src="/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/image-20210707105317279.png" alt="image-20210707105317279" style="zoom:50%;" />
+
+</li>
+</ul>
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><img src="/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/image-20210707112757294.png" alt="image-20210707112757294" style="zoom:33%;" />
+
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><ul>
+<li><p>Measuring ECS Adoption</p>
+</li>
+<li><p>Potential Security Challenges</p>
+<ul>
+<li><p>50%比例的request前缀是/24，可以通过client IP的掩码识别到所属机构</p>
+<img src="/images/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Understanding-the-Growth-and-Security-Considerations-of-ECS/image-20210707140727936.png" alt="image-20210707140727936" style="zoom:33%;" />
+</li>
+</ul>
+</li>
+<li><p>potential security benefits</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：论文笔记-Understanding the Growth and Security Considerations of ECS</li>
+        <li>本文作者：可爱的小富婆</li>
+        <li>创建时间：2021-07-06 19:26:14</li>
+        <li>
+            本文链接：yinjiangyi.git.io2021/07/06/论文笔记-Understanding-the-Growth-and-Security-Considerations-of-ECS/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/07/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Good-Bot-Bad-Bot-Characterizing-Automated-Browsing-Activity/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">论文笔记-Good Bot, Bad Bot: Characterizing Automated Browsing Activity</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/07/06/%E9%9D%99%E4%B8%8D%E4%B8%8B%E5%BF%83%E7%9A%84%E6%97%B6%E5%80%99%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">静不下心的时候梳理一下</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
+        </div>
+        
+
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">重点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ECS%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">ECS的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ECS%E9%80%A0%E6%88%90%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">3.2.</span> <span class="nav-text">ECS造成的影响</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">4.</span> <span class="nav-text">数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">4.1.</span> <span class="nav-text">结论</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
