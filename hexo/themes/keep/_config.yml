@@ -39,7 +39,7 @@ style:
   first_screen:
     enable: true
     background_img: /images/gb1.jpg
-    description: 没有蛀牙不如干一行爱一行😙
+    description: 有所为，有所爱，有所期待
 
   # Scroll style settings
   scroll:
