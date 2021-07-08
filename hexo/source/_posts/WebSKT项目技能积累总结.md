@@ -3,7 +3,7 @@ title: WebSKT项目技能积累总结
 typora-root-url: ../../source
 date: 2021-03-05 14:00:28
 tags:
-catagories:
+categories:
 sticky:
 ---
 

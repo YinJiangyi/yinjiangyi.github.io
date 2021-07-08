@@ -3,7 +3,7 @@ title: clickhouse meetup
 typora-root-url: ../../source
 date: 2021-06-26 14:07:18
 tags: clickhouse
-catagories: 大数据
+categories: 大数据
 sticky:
 ---
 

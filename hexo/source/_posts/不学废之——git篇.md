@@ -3,7 +3,7 @@ title: 不学废之——git篇
 typora-root-url: ../../source
 date: 2021-05-17 14:41:52
 tags:
-catagories:
+categories:
 sticky:
 ---
 

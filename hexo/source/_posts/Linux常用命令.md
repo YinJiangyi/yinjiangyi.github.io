@@ -2,7 +2,7 @@
 title: Linux常用命令
 date: 2021-01-26 15:57:51
 tags: 操作系统
-catagories: 操作系统
+categories: 操作系统
 ---
 
 - wget

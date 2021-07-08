@@ -3,7 +3,7 @@ title: Superset 上手记录
 typora-root-url: ../../source
 date: 2021-04-21 10:56:56
 tags: superset
-catagories: 
+categories: 
 sticky:
 ---
 

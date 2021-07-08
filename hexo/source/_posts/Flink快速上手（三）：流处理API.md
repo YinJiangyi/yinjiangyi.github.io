@@ -3,7 +3,7 @@ title: Flink快速上手（三）：流处理API
 typora-root-url: ../../source
 date: 2021-01-29 14:14:49
 tags: Flink
-catagories: 大数据
+categories: 大数据
 ---
 
 Flink 流处理API介绍。<!--more-->

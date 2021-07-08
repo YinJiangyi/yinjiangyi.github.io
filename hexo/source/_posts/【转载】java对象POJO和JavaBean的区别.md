@@ -3,7 +3,7 @@ title: 【转载】java：java对象POJO和JavaBean的区别
 typora-root-url: ../../source
 date: 2021-01-29 14:40:27
 tags: Java
-catagories: Java开发
+categories: Java开发
 ---
 
 原文： https://www.jianshu.com/p/224489dfdec8
