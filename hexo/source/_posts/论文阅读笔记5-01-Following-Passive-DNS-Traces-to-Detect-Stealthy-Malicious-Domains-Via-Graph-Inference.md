@@ -5,6 +5,6 @@ title: >-
 typora-root-url: ../../source
 date: 2021-05-12 16:33:05
 tags:
-catagories:
+categories:
 sticky:
 ---

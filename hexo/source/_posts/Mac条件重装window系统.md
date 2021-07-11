@@ -3,7 +3,7 @@ title: Mac条件重装window系统
 typora-root-url: ../../source
 date: 2021-06-19 13:56:17
 tags:
-catagories:
+categories:
 sticky:
 ---
 

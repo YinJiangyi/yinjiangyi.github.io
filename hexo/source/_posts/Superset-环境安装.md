@@ -3,7 +3,7 @@ title: Superset-环境安装
 typora-root-url: ../../source
 date: 2021-04-18 10:14:01
 tags:
-catagories:
+categories:
 sticky:
 ---
 

@@ -3,7 +3,7 @@ title: 不学废之——DNS篇
 typora-root-url: ../../source
 date: 2021-06-21 16:46:26
 tags:
-catagories:
+categories:
 sticky:
 
 ---

@@ -3,7 +3,7 @@ title: Mac下hadoop部署与操作
 typora-root-url: ../../source
 date: 2021-03-30 18:41:13
 tags:
-catagories:
+categories:
 sticky:
 ---
 
