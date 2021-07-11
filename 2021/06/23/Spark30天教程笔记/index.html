@@ -19,7 +19,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"没有蛀牙不如干一行爱一行😙"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"有所为，有所爱，有所期待"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
   </script>
 <meta name="generator" content="Hexo 5.3.0"></head>
@@ -361,12 +361,70 @@
 <h1 id="003-Standalone模式"><a href="#003-Standalone模式" class="headerlink" title="003 Standalone模式"></a>003 Standalone模式</h1><h2 id="standalone模式集群搭建"><a href="#standalone模式集群搭建" class="headerlink" title="standalone模式集群搭建"></a>standalone模式集群搭建</h2><p>Window 10 </p>
 <ul>
 <li>Vmware安装</li>
-<li>ubuntu虚拟机安装（三个节点）</li>
-<li>设置成桥接模式</li>
+<li>ubuntu虚拟机安装（三个节点），设置成桥接模式</li>
 </ul>
 <blockquote>
 <p>三个node IP分别为192.168.124.6-8，主机ip地址为192.168.124.5，具体设置内容查看“VMware三种联网方式及原理”</p>
 </blockquote>
+<ul>
+<li><p>node节点环境部署：</p>
+<ul>
+<li><p>jdk1.8安装</p>
+<blockquote>
+<p>通过tar.gz压缩包安装<br>此方法适用于绝大部分的linux系统</p>
+<p>下载tar.gz的压缩包，这里使用官网下载。<br>进入：<br><a class="link"   target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" >http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html<i class="fas fa-external-link-alt"></i></a></p>
+<p>勾选接受许可协议后选择对应的压缩包，下载完成后上传的linux服务器上，这里是上传到/tmp 目录下。<br>也可以通过wget直接下载，注意这里的下载地址是有认证的。</p>
+<p>下载完成后解压到指定文件下<br>先创建java文件目录，如果已存在就不用创建<br>[root@lyh:] # mkdir -p /usr/local/java<br>解压到java文件目录<br>[root@lyh:] # tar -vzxf jdk-8u161-linux-x64.tar.gz -C /usr/local/java/</p>
+<p>添加环境变量，编辑配置文件<br>[root@lyh:] # vi /etc/profile<br>在文件最下方或者指定文件添加<br>export JAVA_HOME=/usr/local/java/jdk1.8.0_161<br>export CLASSPATH=$CLASSPATH:$JAVA_HOME/lib/<br>export PATH=$PATH:$JAVA_HOME/bin</p>
+<p>保存退出（保存退出的命令是，Shift+:后输入wq回车），然后重新加载配置文件<br>[root@lyh:] # source /etc/profile</p>
+<p>最后测试<br>[root@lyh:] # java -version<br>可以看到一下信息则表示配置成功<br>java version “1.8.0_161”<br>Java™ SE Runtime Environment (build 1.8.0_161-b12)<br>Java HotSpot™ 64-Bit Server VM (build 25.161-b12, mixed mode)</p>
+</blockquote>
+</li>
+<li><p>ssh 安装</p>
+<p>系统自带，但是没有安装openssl-service，用apt-get install安装即可。</p>
+<p>安装后需要修改 <code>/etc/ssh/sshd_config</code> 中 <code>PermitRootLogin</code> 参数为 <code>yes</code>，然后重启ssh <code>service sshd restart</code>。</p>
+<p>另外，如果linux没有初始化root密码也会导致连接错误。<code>sudo passwd root</code>，连续输入密码即可。</p>
+</li>
+<li><p>hadoop安装包下载，解压</p>
+</li>
+</ul>
+</li>
+<li><p>hadoop配置文件修改</p>
+<ul>
+<li><p><code>slaves.templete</code>-&gt;<code>slaves </code>修改配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> A Spark Worker will be started on each of the machines listed below.</span></span><br><span class="line">node01</span><br><span class="line">node02</span><br><span class="line">node03      </span><br></pre></td></tr></table></figure></li>
+<li><p> <code>spark-env.sh.templete</code> -&gt; <code>spark-env.sh</code> 修改配置</p>
+</li>
+</ul>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/local/java/jdk1.8.0_291</span><br><span class="line">SPARK_MASTER_HOST=node01</span><br><span class="line">SPARK_MASTER_PORT=7077</span><br><span class="line">SPARK_WORKER_CORES=2</span><br><span class="line">SPARK_WORKER_MEMORY=2g</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>同步到其他节点上</p>
+</li>
+<li><p><code>不配置HADOOP_HOME</code></p>
+</li>
+</ul>
+<blockquote>
+<p>依次进行节点hostname配置：</p>
+<p>网上的教程不适用，安装的虚拟机里没有 <code>/etc/sysconfig</code> 文件夹。</p>
+<p>成功方法：</p>
+<ul>
+<li><p>hostnamectl命令</p>
+<p>命令语法为：</p>
+<p><code> sudo hostnamectl set-hostname &lt;newhostname&gt;</code></p>
+<p>这条命令会删除/etc/hostname文件中的主机名，然后替换为新的主机名。并且更新/etc/hosts文件。</p>
+</li>
+<li><p>修改/etc/hostname文件</p>
+<p><code>sudo nano /etc/hosts</code></p>
+<p>把旧的主机名删除，替换为新的主机名，保存文件就行了。要注意大小写。<img src="../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/20180531121424912" alt="这里写图片描述"></p>
+</li>
+<li><p>编辑 IP 与 hostname 的映射表 /etc/hosts</p>
+<p>这个文件和 hostname 的修改没有任何关系，他需要放在集群中的每个节点，以告知每个节点 各个 IP 对应的 hostname，相当于 DNS</p>
+<p>vi 命令，加入下面内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.124.6 node01</span><br><span class="line">192.168.124.7 node02</span><br><span class="line">192.168.124.8 node03</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+</li>
+</ul>
 
         </div>
 
