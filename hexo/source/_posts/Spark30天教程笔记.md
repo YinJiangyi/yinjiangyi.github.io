@@ -1,10 +1,11 @@
 ---
 title: Spark30天教程笔记
-typora-root-url: ..
+
 date: 2021-06-23 22:24:06
 tags: spark
 categories: 大数据
 sticky:
+typora-root-url: ..
 ---
 
 # 001_spark简介
@@ -256,12 +257,119 @@ def checkpoint(): Unit = {
 Window 10 
 
 - Vmware安装
-- ubuntu虚拟机安装（三个节点）
-- 设置成桥接模式
+- ubuntu虚拟机安装（三个节点），设置成桥接模式
 
 > 三个node IP分别为192.168.124.6-8，主机ip地址为192.168.124.5，具体设置内容查看“VMware三种联网方式及原理”
 
+- node节点环境部署：
 
+  - jdk1.8安装
+
+    > 通过tar.gz压缩包安装
+    > 此方法适用于绝大部分的linux系统
+    >
+    > 下载tar.gz的压缩包，这里使用官网下载。
+    > 进入：
+    > http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+    >
+    > 勾选接受许可协议后选择对应的压缩包，下载完成后上传的linux服务器上，这里是上传到/tmp 目录下。
+    > 也可以通过wget直接下载，注意这里的下载地址是有认证的。
+    >
+    > 下载完成后解压到指定文件下
+    > 先创建java文件目录，如果已存在就不用创建
+    > [root@lyh:] # mkdir -p /usr/local/java
+    > 解压到java文件目录
+    > [root@lyh:] # tar -vzxf jdk-8u161-linux-x64.tar.gz -C /usr/local/java/
+    >
+    > 添加环境变量，编辑配置文件
+    > [root@lyh:] # vi /etc/profile
+    > 在文件最下方或者指定文件添加
+    > export JAVA_HOME=/usr/local/java/jdk1.8.0_161
+    > export CLASSPATH=$CLASSPATH:$JAVA_HOME/lib/
+    > export PATH=$PATH:$JAVA_HOME/bin
+    >
+    > 保存退出（保存退出的命令是，Shift+:后输入wq回车），然后重新加载配置文件
+    > [root@lyh:] # source /etc/profile
+    >
+    > 最后测试
+    > [root@lyh:] # java -version
+    > 可以看到一下信息则表示配置成功
+    > java version “1.8.0_161”
+    > Java™ SE Runtime Environment (build 1.8.0_161-b12)
+    > Java HotSpot™ 64-Bit Server VM (build 25.161-b12, mixed mode)
+
+  - ssh 安装
+
+    系统自带，但是没有安装openssl-service，用apt-get install安装即可。
+
+    安装后需要修改 `/etc/ssh/sshd_config` 中 `PermitRootLogin` 参数为 `yes`，然后重启ssh `service sshd restart`。
+
+    另外，如果linux没有初始化root密码也会导致连接错误。`sudo passwd root`，连续输入密码即可。
+
+  - hadoop安装包下载，解压
+
+- hadoop配置文件修改
+
+  - `slaves.templete`->`slaves `修改配置
+
+    ```shell
+    # A Spark Worker will be started on each of the machines listed below.
+    node01
+    node02
+    node03      
+    ```
+
+  -  `spark-env.sh.templete` -> `spark-env.sh` 修改配置
+
+    ```shell
+    JAVA_HOME=/usr/local/java/jdk1.8.0_291
+    SPARK_MASTER_HOST=node01
+    SPARK_MASTER_PORT=7077
+    SPARK_WORKER_CORES=2
+    SPARK_WORKER_MEMORY=2g
+    ```
+
+  - 同步到其他节点上
+
+  - `不配置HADOOP_HOME`
+
+  > 依次进行节点hostname配置：
+  >
+  > 网上的教程不适用，安装的虚拟机里没有 `/etc/sysconfig` 文件夹。
+  >
+  > 
+  >
+  > 成功方法：
+  >
+  > - hostnamectl命令
+  >
+  >   命令语法为：
+  >
+  >   ` sudo hostnamectl set-hostname <newhostname>`
+  >
+  >   这条命令会删除/etc/hostname文件中的主机名，然后替换为新的主机名。并且更新/etc/hosts文件。
+  >
+  > - 修改/etc/hostname文件
+  >
+  >   `sudo nano /etc/hosts`
+  >
+  >   把旧的主机名删除，替换为新的主机名，保存文件就行了。要注意大小写。![这里写图片描述](../images/Spark30%E5%A4%A9%E6%95%99%E7%A8%8B%E7%AC%94%E8%AE%B0/20180531121424912)
+  >
+  > - 编辑 IP 与 hostname 的映射表 /etc/hosts
+  >
+  >   这个文件和 hostname 的修改没有任何关系，他需要放在集群中的每个节点，以告知每个节点 各个 IP 对应的 hostname，相当于 DNS
+  >
+  >   vi 命令，加入下面内容
+  >
+  >   ```shell
+  >   192.168.124.6 node01
+  >   192.168.124.7 node02
+  >   192.168.124.8 node03
+  >   ```
+  
+    
+  
+  
 
 
 

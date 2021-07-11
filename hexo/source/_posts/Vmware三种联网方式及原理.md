@@ -1,6 +1,6 @@
 ---
 title: VMware三种联网方式及原理
-typora-root-url: ../../source
+typora-root-url: ..
 date: 2021-07-03 09:49:05
 tags: 虚拟机
 catagories: 计算机网络
