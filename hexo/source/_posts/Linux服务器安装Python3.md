@@ -2,8 +2,8 @@
 title: Linux服务器安装Python3
 typora-root-url: ../../source
 date: 2021-04-20 09:35:02
-tags:
-categories:
+tags: python安装
+categories: 环境部署
 sticky:
 ---
 
