@@ -159,7 +159,7 @@
                     <div class="author">
                         <span class="name">可爱的小富婆</span>
                         
-                            <span class="author-label">Lv4</span>
+                            <span class="author-label">Lv2</span>
                         
                     </div>
                     <div class="meta-info">
@@ -167,6 +167,17 @@
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;2021-04-21 10:56:56
     </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
     
         <span class="article-tags article-meta-item">
@@ -199,7 +210,7 @@
         <div class="article-content markdown-body">
             <p><strong>含泪在卷首血书：</strong></p>
 <p><strong>有新不用旧啊！版本兼容问题会被搞到死！</strong></p>
-<h2 id="1-关于安装"><a href="#1-关于安装" class="headerlink" title="1. 关于安装"></a>1. 关于安装</h2><h3 id="Mac系统踩坑"><a href="#Mac系统踩坑" class="headerlink" title="Mac系统踩坑"></a>Mac系统踩坑</h3><p>安装方式：</p>
+<h1 id="1-关于安装"><a href="#1-关于安装" class="headerlink" title="1. 关于安装"></a>1. 关于安装</h1><h2 id="Mac系统踩坑"><a href="#Mac系统踩坑" class="headerlink" title="Mac系统踩坑"></a>Mac系统踩坑</h2><p>安装方式：</p>
 <ul>
 <li>基于docker安装：快速方便，但是不适合二次开发，只适合对superset直接进行使用</li>
 <li>基于pip安装：快速方便，但是源码需要手动下载，并且版本切换坑比较多</li>
@@ -318,7 +329,7 @@
 
 <p>解决：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall infi.clickhouse_orm</span><br><span class="line">pip install infi.clickhouse_orm&#x3D;&#x3D;1.0.4</span><br></pre></td></tr></table></figure>
-<h3 id="Window-系统下安装完全解决"><a href="#Window-系统下安装完全解决" class="headerlink" title="Window 系统下安装完全解决"></a>Window 系统下安装完全解决</h3></li>
+<h2 id="Window-系统下安装完全解决"><a href="#Window-系统下安装完全解决" class="headerlink" title="Window 系统下安装完全解决"></a>Window 系统下安装完全解决</h2></li>
 </ul>
 <p>mac本出了点问题，转战工作电脑window系统</p>
 <h4 id="pip方式快速安装"><a href="#pip方式快速安装" class="headerlink" title="pip方式快速安装"></a>pip方式快速安装</h4><ul>
@@ -372,7 +383,123 @@
 <li><p>目录导入pycharm，配置好编译器就可以进行开发了</p>
 </li>
 </ul>
+<h2 id="最终版解决方案"><a href="#最终版解决方案" class="headerlink" title="最终版解决方案"></a>最终版解决方案</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>python：3.7</p>
+<p>superset：源码安装最新版1.1.0</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>windows和mac系统亲测有效</p>
+<h4 id="pip方式快速安装-1"><a href="#pip方式快速安装-1" class="headerlink" title="pip方式快速安装"></a>pip方式快速安装</h4><ul>
+<li><p>新建conda虚拟环境（主要为了降低试错成本，不影响其他环境）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n superset(环境名) python&#x3D;3.7</span><br><span class="line">conda activate superset</span><br></pre></td></tr></table></figure></li>
+<li><p>虚拟环境中，安装superset</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install apache-superset -i https:&#x2F;&#x2F;pypi.mirrors.ustc.edu.cn&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+<p>安装过程中可能出现的问题：</p>
+<ul>
+<li><p>提示需要Vitual c++ 14.0以上版本，个别依赖库编译失败，无法生成wheel：</p>
+<p>解决：直接下载wheel，pip install wheel文件安装成功后，重新执行</p>
+</li>
+</ul>
+</li>
+<li><p>安装成功后配置</p>
+<p>这一步之后很多博客要求进入superset/bin目录下执行python superset ……命令，可能由于版本问题，并不适用。之后步骤以此为准：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 初始化数据库</span><br><span class="line">superset db upgrade</span><br><span class="line"># 创建管理员用户</span><br><span class="line">superset fab create-admin</span><br><span class="line">(fabmanager create-admin --app superset 命令会出现nontype &quot;au_then&quot;?（记不清了）报错)</span><br><span class="line"># 初始化角色和权限</span><br><span class="line">superset init</span><br></pre></td></tr></table></figure>
+<h4 id="二次开发环境安装-1"><a href="#二次开发环境安装-1" class="headerlink" title="二次开发环境安装"></a>二次开发环境安装</h4></li>
+</ul>
+<p>pip安装仅适合使用，不适合二次开发。二次开发需要源码下载</p>
+<ul>
+<li><p>另外新建一份虚拟环境</p>
+</li>
+<li><p>从github上下载源码 </p>
+<p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
+</li>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a class="link"   target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi" >https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fas fa-external-link-alt"></i></a></p>
+<p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
+</li>
+<li><p>（这一步不确定什么用，mac 不需要）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
+<p>删除G:\pyProduct\incubator-superset\superset\static\assets文件 输入代码(根据你下载代码的路径而定) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mklink &#x2F;D &quot;D:\incubator-superset\superset\static\assets&quot; &quot;D:\incubator-superset\superset</span><br><span class="line">需要管理员模式运行</span><br></pre></td></tr></table></figure></li>
+<li><p>安装。进入下载好的前端目录 <code>incubator-superset</code> 中</p>
+<p><code>pip install -e .</code></p>
+<p>(新版的superset最外层目录下已经没有requirement.txt了，直接安装就可以)</p>
+<p>这一步出现的无法生成wheel文件问题解决同上</p>
+</li>
+<li><p>创建用户、初始化数据库、用户权限步骤类似</p>
+</li>
+<li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
+<p>报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR in .&#x2F;src&#x2F;visualizations&#x2F;TimeTable&#x2F;TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997" >https://github.com/apache/superset/issues/10997<i class="fas fa-external-link-alt"></i></a></p>
+<p>修改目录下 webpack.config.js 文件：</p>
+<p><img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918" alt="img"></p>
+<p>成功！</p>
+</li>
+<li><p>进入前端开发者模式 <code>npm run dev</code></p>
+</li>
+<li><p>目录导入pycharm，配置好编译器就可以进行开发了</p>
+</li>
+</ul>
+<h4 id="无网络环境下基于docker安装和Dashboard迁移"><a href="#无网络环境下基于docker安装和Dashboard迁移" class="headerlink" title="无网络环境下基于docker安装和Dashboard迁移"></a>无网络环境下基于docker安装和Dashboard迁移</h4><p>xj环境superset安装</p>
+<p><strong>1）提前下载源码和docker镜像</strong></p>
+<p>源码直接在github下载</p>
+<p>需要提前下载的镜像：apache/superset, redis, node, post和postgress</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在有网络的机器上进行镜像拉取</span><br><span class="line">docker pull xxx(镜像名)</span><br><span class="line">docker save -o xxx.tar(要保存的压缩包名) xxx(镜像名)</span><br></pre></td></tr></table></figure>
+<p><strong>2）在目标机器上安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将压缩包拷贝到目标机器上</span><br><span class="line">docker load -i xxx.tar(压缩包名)</span><br><span class="line"># 在目标机器上的源码目录下运行，等待容器创建和运行</span><br><span class="line">docker-compose up</span><br><span class="line">或 docker-compose -f docker-compose.yml up</span><br></pre></td></tr></table></figure>
 
+
+
+
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ul>
+<li><p>安装client_driver时报错 OSError: mysql_config not found</p>
+<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found" >https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>Ok, well, first of all, let me check if I am on the same page as you:</p>
+<ul>
+<li>You installed python</li>
+<li>You did <code>brew install mysql</code></li>
+<li>You did <code>export PATH=$PATH:/usr/local/mysql/bin</code></li>
+<li>And finally, you did <code>pip install MySQL-Python</code> (or <code>pip3 install mysqlclient</code> if using python 3)</li>
+</ul>
+</blockquote>
+</li>
+<li><p>pip 方式安装好之后，clickhouse连接总是出问题：</p>
+<ul>
+<li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
+<li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
+</ul>
+<p>终于在<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A" >https://github.com/apache/superset/issues/9719找到解决办法：<i class="fas fa-external-link-alt"></i></a></p>
+<p>这位朋友和我的情况也一样</p>
+<p><img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918" alt="image-20210415104252896"></p>
+<p>解决：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall infi.clickhouse_orm</span><br><span class="line">pip install infi.clickhouse_orm&#x3D;&#x3D;1.0.4</span><br></pre></td></tr></table></figure></li>
+<li><p>如果出现pip install 安装过程中build wheel失败，直接下载对应库的wheel包进行单独pip install 即可。</p>
+</li>
+</ul>
+<h1 id="2-性能优化"><a href="#2-性能优化" class="headerlink" title="2. 性能优化"></a>2. 性能优化</h1><h3 id="Caching配置"><a href="#Caching配置" class="headerlink" title="Caching配置"></a>Caching配置</h3><p>官方文档：<a class="link"   target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/cache" >https://superset.apache.org/docs/installation/cache<i class="fas fa-external-link-alt"></i></a></p>
+<p>参考：<a class="link"   target="_blank" rel="noopener" href="https://yorke.gitbooks.io/superset-note/content/chapter1.html" >https://yorke.gitbooks.io/superset-note/content/chapter1.html<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="使用-Redis-做-Superset-的缓存"><a href="#使用-Redis-做-Superset-的缓存" class="headerlink" title="使用 Redis 做 Superset 的缓存"></a>使用 Redis 做 Superset 的缓存</h4><p>配置 Superset 的缓存后端，只需在其配置文件中提供一个 <code>CACHE_CONFIG</code> 常量即可。</p>
+<p>而对于 Redis，我们还需要一个运行一个 Redis 服务，以及安装一个 redis-py 库（Redis 的 Python 接口）。</p>
+<h5 id="安装-Redis"><a href="#安装-Redis" class="headerlink" title="安装 Redis"></a>安装 Redis</h5><p>当前 Redis 最新版为 3.2.8，在 <code>/opt/</code> 目录下安装并启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;</span><br><span class="line">wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-3.2.8.tar.gz</span><br><span class="line">tar xzvf redis-3.2.8.tar.gz</span><br><span class="line">cd redis-3.2.8&#x2F;</span><br><span class="line">make</span><br><span class="line">cd src&#x2F;</span><br><span class="line">.&#x2F;redis-server</span><br></pre></td></tr></table></figure>
+<p>make时报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">……</span><br><span class="line">server.c: 在函数‘hasActiveChildProcess’中:</span><br><span class="line">server.c:1476:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘allPersistenceDisabled’中:</span><br><span class="line">server.c:1482:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘writeCommandsDeniedByDiskError’中:</span><br><span class="line">server.c:3747:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘iAmMaster’中:</span><br><span class="line">server.c:4914:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">make[1]: *** [server.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis/redis-6.0.0/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+<p> 解决： <a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242" >https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242<i class="fas fa-external-link-alt"></i></a></p>
+<p>升级gcc版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 redis-6.0.5]# gcc -v                             # 查看gcc版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install centos-release-scl  # 升级到9.1版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils</span><br><span class="line">[root@hadoop01 redis-6.0.5]# scl enable devtoolset-9 bash</span><br><span class="line">以上为临时启用，如果要长期使用gcc 9.1的话：</span><br><span class="line">[root@hadoop01 redis-6.0.5]# echo &quot;source &#x2F;opt&#x2F;rh&#x2F;devtoolset-9&#x2F;enable&quot; &gt;&gt;&#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-12 redis-6.0.0]# redis-cli</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<p>启动成功，查看进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-12 redis-6.0.0]# ps -ef | grep redis</span><br><span class="line">root     17215 11601  0 16:14 pts&#x2F;5    00:00:00 .&#x2F;src&#x2F;redis-server *:6379 [cluster]</span><br></pre></td></tr></table></figure>
+<p>这里主机号应该是*而不是127.0.0.1，否则外部机器无法连接redis服务。</p>
+<p>如果为127.0.0.1，修改redis.conf文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1&gt;注释掉bind</span><br><span class="line">#bind 127.0.0.1</span><br><span class="line">2&gt;默认不是守护进程方式运行，这里可以修改</span><br><span class="line">daemonize no</span><br><span class="line">3&gt;禁用保护模式</span><br><span class="line">protected-mode no</span><br></pre></td></tr></table></figure>
+<p>启动Redis时指明配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server ..&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+<h5 id="安装-redis-py"><a href="#安装-redis-py" class="headerlink" title="安装 redis-py"></a>安装 redis-py</h5><p>在 Superset 所在虚拟环境中安装 redis-py：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install redis</span><br></pre></td></tr></table></figure>
+<h5 id="配置使用-Redis-做缓存"><a href="#配置使用-Redis-做缓存" class="headerlink" title="配置使用 Redis 做缓存"></a>配置使用 Redis 做缓存</h5><p>在 Superset 的 config.py 中，做如下配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line">...</span><br><span class="line">CACHE_DEFAULT_TIMEOUT = <span class="number">500</span> <span class="comment"># 默认超时时间</span></span><br><span class="line">CACHE_CONFIG = &#123;</span><br><span class="line">    <span class="string">&#x27;CACHE_TYPE&#x27;</span>: <span class="string">&#x27;redis&#x27;</span>, <span class="comment"># 使用 Redis</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_HOST&#x27;</span>: <span class="string">&#x27;localhost&#x27;</span>, <span class="comment"># 配置域名</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_PORT&#x27;</span>: <span class="number">6379</span>, <span class="comment"># 配置端口号</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_URL&#x27;</span>: <span class="string">&#x27;redis://localhost:6379&#x27;</span> <span class="comment"># 配置 URL</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新启动 Superset</p>
+<p>打开任意 Dashboard，观察后台打印情况</p>
+<p>配置成功！</p>
+<h5 id="其他问题-1"><a href="#其他问题-1" class="headerlink" title="其他问题"></a>其他问题</h5>
         </div>
 
         
@@ -400,13 +527,13 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/04/21/Superset-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"
+                           href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Superset 性能优化</span>
+                                <span class="post-nav-title-item">不学废之——git篇</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -544,7 +671,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1. 关于安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac%E7%B3%BB%E7%BB%9F%E8%B8%A9%E5%9D%91"><span class="nav-number">1.1.</span> <span class="nav-text">Mac系统踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">基于docker安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Epip%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">基于pip安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.3.</span> <span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Window-%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%AE%89%E8%A3%85%E5%AE%8C%E5%85%A8%E8%A7%A3%E5%86%B3"><span class="nav-number">1.2.</span> <span class="nav-text">Window 系统下安装完全解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">二次开发环境安装</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1. 关于安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac%E7%B3%BB%E7%BB%9F%E8%B8%A9%E5%9D%91"><span class="nav-number">1.1.</span> <span class="nav-text">Mac系统踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">基于docker安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Epip%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">基于pip安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Window-%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%AE%89%E8%A3%85%E5%AE%8C%E5%85%A8%E8%A7%A3%E5%86%B3"><span class="nav-number">1.2.</span> <span class="nav-text">Window 系统下安装完全解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">二次开发环境安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">最终版解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">二次开发环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85%E5%92%8CDashboard%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">无网络环境下基于docker安装和Dashboard迁移</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.3.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2. 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching%E9%85%8D%E7%BD%AE"><span class="nav-number">2.0.1.</span> <span class="nav-text">Caching配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A-Superset-%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">使用 Redis 做 Superset 的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Redis"><span class="nav-number">2.0.1.1.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">2.0.1.1.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-redis-py"><span class="nav-number">2.0.1.1.3.</span> <span class="nav-text">安装 redis-py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.1.4.</span> <span class="nav-text">配置使用 Redis 做缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98-1"><span class="nav-number">2.0.1.1.5.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
     </div>
 </div>
         </aside>
