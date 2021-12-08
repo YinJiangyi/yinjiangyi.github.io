@@ -17,7 +17,10 @@ Apache Flink is a framework and distributed **processing engine** for **statefu*
 
 - 事务处理OLTP（Online Transactional Processing）
   - 问题：多应用程序用到相同数据表或基础设施，更改和扩展难度大
-  - 微服务架构
+  - 低延迟、低吞吐
+  
+  <img src="/images/Flink%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AE%80%E4%BB%8B%E3%80%81%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/image-20211208102538667.png" alt="image-20211208102538667" style="zoom:50%;" />
+
 - 分析处理OLAP（Online Analytical Processing）
   - 汇总数据分析价值高，多个事务数据库会先进行汇总复制到数据仓库
   - ETL
