@@ -1,5 +1,5 @@
 ---
-title: Flink从0到1：01_Flink简介
+title: Flink从入门到放弃01——Flink简介
 typora-root-url: ../../source
 date: 2021-12-08 10:37:21
 tags: Flink
@@ -7,17 +7,15 @@ categories: BigData
 sticky:
 ---
 
-[toc]
-
-# 1. Flink是什么
+# Flink是什么
 
 Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apache 孵化器接收，然后迅速地成为了Apache Software Foundation的顶级项目之一。
 
 > Apache Flink is a framework and ***distributed*** processing engine for ***stateful*** computations over ***unbounded and bounded*** data ***streams***.
 
-# 2. 为什么选择Flink
+# 为什么选择Flink
 
-## 2.1 传统数据处理架构
+## 传统数据处理架构
 
 大多数企业实施的传统架构区分了两种类型的数据处理模式：数据事务处理和数据分析处理。两种架构分别面向不同的功能需求，适用于不同场景，具有各自的优势和局限
 
@@ -39,7 +37,7 @@ Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apa
 
 <img src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0103.png" alt="img" style="zoom: 50%;" />
 
-## 2.2 流处理架构
+## 流处理架构
 
 流处理的目标就是模拟真实情况下的数据特点，同时满足低延迟、高吞吐的数据处理要求。
 
@@ -59,7 +57,7 @@ Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apa
 
 这种架构的问题在于，每个功能都需要实现两个独立的、具有不同API的处理系统，难以建立和维护。
 
-## 2.3. flink架构特点
+## flink架构特点
 
 ### 主要特点
 

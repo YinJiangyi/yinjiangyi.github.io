@@ -160,6 +160,14 @@ website_count:
 # Dependencies: hexo-generator-searchdb
 # See: https://github.com/theme-next/hexo-generator-searchdb
 # ---------------------------------------------------------------------------------------
+# Search
+## See: https://github.com/theme-next/hexo-generator-searchdb
+search:
+  path: search.json
+  field: post
+  content: true
+  format: striptags
+
 local_search:
   enable: true
   preload: true     # Preload the search data when the page loads
