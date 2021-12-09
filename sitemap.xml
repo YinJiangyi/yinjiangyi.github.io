@@ -149,13 +149,6 @@
   </url>
   
   <url>
-    <loc>https://yinjiangyi.github.io/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</loc>
-    <lastmod>2021-12-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://yinjiangyi.github.io/tags/hadoop/</loc>
     <lastmod>2021-12-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -163,21 +156,14 @@
   </url>
   
   <url>
+    <loc>https://yinjiangyi.github.io/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</loc>
+    <lastmod>2021-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://yinjiangyi.github.io/tags/web%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2021-12-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yinjiangyi.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2021-12-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://yinjiangyi.github.io/tags/%E5%8F%8D%E4%B9%8C%E6%89%98%E9%82%A6/</loc>
     <lastmod>2021-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -192,6 +178,20 @@
   
   <url>
     <loc>https://yinjiangyi.github.io/tags/OSNIT/</loc>
+    <lastmod>2021-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinjiangyi.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://yinjiangyi.github.io/tags/%E5%8F%8D%E4%B9%8C%E6%89%98%E9%82%A6/</loc>
     <lastmod>2021-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
