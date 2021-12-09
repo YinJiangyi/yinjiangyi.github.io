@@ -1,6 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Flink从入门到放弃01——Flink简介</title>
+    <url>/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>Apache Flink是一个面向数据流处理和批量数据处理的可分布式的开源计算框架，它基于同一个Flink流式执行模型（streaming execution model），能够支持流处理和批处理两种应用类型。由于流处理和批处理所提供的SLA(服务等级协议)是完全不相同， 流处理一般需要支持低延迟、Exactly-once保证，而批处理需要支持高吞吐、高效处理，所以在实现的时候通常是分别给出两套实现方法，或者通过一个独立的开源框架来实现其中每一种处理方案。</p>
+<a id="more"></a>
+
+<h1 id="Flink是什么"><a href="#Flink是什么" class="headerlink" title="Flink是什么"></a>Flink是什么</h1><p>Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apache 孵化器接收，然后迅速地成为了Apache Software Foundation的顶级项目之一。</p>
+<blockquote>
+<p>Apache Flink is a framework and <em><strong>distributed</strong></em> processing engine for <em><strong>stateful</strong></em> computations over <em><strong>unbounded and bounded</strong></em> data <em><strong>streams</strong></em>.</p>
+</blockquote>
+<h1 id="为什么选择Flink"><a href="#为什么选择Flink" class="headerlink" title="为什么选择Flink"></a>为什么选择Flink</h1><h2 id="传统数据处理架构"><a href="#传统数据处理架构" class="headerlink" title="传统数据处理架构"></a>传统数据处理架构</h2><p>大多数企业实施的传统架构区分了两种类型的数据处理模式：数据事务处理和数据分析处理。两种架构分别面向不同的功能需求，适用于不同场景，具有各自的优势和局限</p>
+<h3 id="事务处理架构"><a href="#事务处理架构" class="headerlink" title="事务处理架构"></a>事务处理架构</h3><p>事务处理架构中，各种应用程序分别由单独的层编写，如用户关系关系CRM、订单系统、web应用。应用程序通常连接到外部服务或直接面向用户，并持续处理传入的事件，如网站上的订单，电子邮件或点击。处理事件时，<strong>应用程序将会读取远程数据库的状态，或者通过运行事务来更新它</strong>。通常，一个数据库系统被多个应用程序共用。</p>
+<p>这种架构的优势是，对于用户产生的事件可以进行快速的响应，事件来一个处理一个，<strong>低时延</strong>，但是由于后台共用一个远程数据库，<strong>当数据越来越庞大的时候代价会很高，并且扩展性不好</strong>。应用程序可以通过分布式处理来解决，但是对于需要综合数据实现分析类功能时，关系型数据库的联表查询会出问题。</p>
+<img data-src="/images/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/spaf_0101.png" alt="img" style="zoom:50%;" />
+
+<h3 id="分析处理架构"><a href="#分析处理架构" class="headerlink" title="分析处理架构"></a>分析处理架构</h3><p>事务数据通常分布在多个数据库中，往往汇总起来联合分析时更有价值。所以我们一般不会直接在事务数据库上运行分析查询，而是复制数据到数据仓库。数据仓库是对工作负载进行分析和查询的专用数据存储。为了填充数据仓库，需要将事务数据库系统管理的数据复制过来。<strong>将数据复制到数据仓库的过程称为extract-transform-load（ETL）</strong>。 ETL过程从事务数据库中提取数据，将其转换为某种通用的结构表示，可能包括验证，值的规范化，编码，重复数据删除（去重）和模式转换，最后将其加载到分析数据库中。 ETL过程可能非常复杂，并且通常需要技术复杂的解决方案来满足性能要求。 ETL过程需要定期运行以保持数据仓库中的数据同步。</p>
+<p>数据仓库上的查询类型有两种：<strong>第一种类型是定期报告查询</strong>，用于计算与业务相关的统计信息。<strong>第二种类型是即席查询</strong>，旨在提供特定问题的答案并支持关键业务决策。两种查询由批处理方式由数据仓库执行。</p>
+<p>这种架构的问题很明显，<strong>实时性较差</strong>，不适用于延迟要求低的事务处理要求。</p>
+<img data-src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0103.png" alt="img" style="zoom: 50%;" />
+
+<h2 id="流处理架构"><a href="#流处理架构" class="headerlink" title="流处理架构"></a>流处理架构</h2><p>流处理的目标就是模拟真实情况下的数据特点，同时满足低延迟、高吞吐的数据处理要求。</p>
+<h3 id="有状态的流处理"><a href="#有状态的流处理" class="headerlink" title="有状态的流处理"></a>有状态的流处理</h3><p>有状态的流处理方式将数据的中间状态直接存储在内存当中，处理过程中，不需要进行反复写入和更新远程数据库，而直接基于内存存储状态完成计算。由于保存在内存中的状态（local state）容易丢失，可以依靠定期将应用程序状态的一致性检查点（check point）写入远程且持久的存储。因此同时具备<strong>高吞吐、低延迟、可靠</strong>的特定。</p>
+<img data-src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0104.png" alt="img" style="zoom:50%;" />
+
+<h3 id="lambda架构"><a href="#lambda架构" class="headerlink" title="lambda架构"></a>lambda架构</h3><p>基于有状态流处理方案设计的第一代分布式开源流处理器（2011），专注于具有毫秒延迟的事件处理，并提供了在发生故障时防止事件丢失的保证。这些系统具有相当低级的API，并且对于流应用程序的准确性和结果的一致性，不提供内置支持，因为结果会取决于到达事件的时间和顺序。另外，即使事件没有丢失，也可能不止一次地处理它们。<strong>与批处理器相比，第一代开源流处理器牺牲了结果准确性，用来获得更低的延迟</strong>。为了让当时的数据处理系统，可以同时提供快速和准确的结果，设计了lambda架构。</p>
+<img data-src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0107.png" alt="img" style="zoom:50%;" />
+
+<p>批处理器定期处理批量存储中的数据，将准确的结果写入批处理表，并从速度表中删除相应的不准确结果。应用程序会合并快速表中的近似结果和批处理表中的准确结果，然后消费最终的结果。</p>
+<p>这种架构的问题在于，每个功能都需要实现两个独立的、具有不同API的处理系统，难以建立和维护。</p>
+<h2 id="flink架构特点"><a href="#flink架构特点" class="headerlink" title="flink架构特点"></a>flink架构特点</h2><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ul>
+<li><p>事件驱动 Event-drive</p>
+<p><strong>事件驱动的应用程序</strong>是有状态的应用程序，它从一个或多个事件中提取事件，并通过触发计算，状态更新或外部操作来对传入的事件做出反应。</p>
+<img data-src="/images/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/image-20211208142135187.png" alt="image-20211208142135187" style="zoom: 67%;" /></li>
+<li><p>基于流的世界观</p>
+<p>一切都是由流组成的，<strong>离线数据是有界的流;实时数据是一个没有界限的流</strong></p>
+</li>
+<li><p>分层API</p>
+<ul>
+<li>越顶层越抽象，表达含义越简明，使用越方便</li>
+<li>越底层越具体，表达能力越丰富，使用越灵活</li>
+</ul>
+<img data-src="/images/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/image-20211208142557976.png" alt="image-20211208142557976" style="zoom:50%;" /></li>
+</ul>
+<h3 id="其他特点"><a href="#其他特点" class="headerlink" title="其他特点"></a>其他特点</h3><ul>
+<li><p>支持事件时间（event-time）和处理时间(processing-time)语义</p>
+<ul>
+<li><p><strong><code>Processing Time</code>(处理时间)是指执行相应操作的机器系统时间</strong>，是操作算子在计算过程中获取到的所在主机的系统时间。当用户选择使用处理时间时，所有和时间相关的算子，例如 Windows 计算，在当前任务中所有的算子直接使用所在主机的系统时间。例如，一个基于处理时间按每小时进行处理的时间窗口将处理一个小时内（以系统时间为标准）到达指定算子的所有的记录。</p>
+<p>处理时间是最简单的一个时间概念，不需要在数据流和机器之间进行协调。具有最好的性能和最低的延迟。然而，在分布式或者异步环境中，处理时间具有不确定性，因为容易受到记录到达系统速度的影响(例如，从消息队列到达的记录)，还会受到系统内记录在不同算子之间的流动速度的影响。对数据乱序的处理，处理时间不是一种最优的选择。总之，<strong>处理时间适用于时间计算精度要求不是特别高的计算场景</strong>。</p>
+</li>
+<li><p>**<code>Event Time</code>(事件时间)是每个事件在产生它的设备上发生的时间。****在进入 Flink 之前，事件时间通常要嵌入到记录中，并且事件时间也可以从记录中提取出来。对于事件时间，时间的进度取决于数据，而不是系统时钟。基于事件时间的程序必须指定如何生成事件时间的<code>Watermarks</code>，这是表示事件时间进度的机制。</p>
+<p>在理想情况下，事件时间处理将产生完全一致且确定的结果，无论事件何时到达以及以什么样的顺序到达。但是，除非已知事件是按顺序（按时间戳）到达，否则事件时间处理在等待无序事件时产生一定的延迟。由于只能等待有限的时间，因此这限制了事件时间应用程序的确定性。</p>
+<p>假定所有数据都已到达，事件时间算子将按预期方式运行，即使在处理无序、迟到事件或重新处理历史数据时，也会产生正确且一致的结果。例如，每小时事件时间窗口将将处理事件时间在这一小时之内所有的记录，不管它们何时到达，以及它们以什么顺序到达。</p>
+<p><strong>按事件时间处理往往会导致一定的延迟，因为它要等待延迟事件和无序事件一段时间。因此，事件时间程序通常与处理时间操作相结合使用。</strong></p>
+</li>
+</ul>
+</li>
+<li><p>精确一次(exactly-once)的状态一致性保证</p>
+<ul>
+<li><strong>状态</strong>：为了产生一个结果，函数一般会聚合某个时间段内（或是一定数量的）events的状态信息（例如计算聚合值，或是发现一个模式），有状态的 operators使用流的输入事件以及内部状态，计算出它们的输出。<strong>例如，一个滚动聚合operator输出当前它读入的所有的events的总和。Operator 持有当前sum的值作为它的内部状态，并在每次读入新值时对它做更新。</strong></li>
+<li><strong>exactly-once</strong>：流处理系统通过提供结果保障（result guarantees）定义任务在故障发生时的行为。主流流处理器提供的保障（guarantees）包括<strong>至多一次at-most-once、至少一次（AT-LEAST-ONCE）、精确一次（EXACTLY-ONCE）</strong>等。exactly-once是最严个保障。</li>
+</ul>
+</li>
+<li><p>低延迟，每秒处理数百万个事件，毫秒级延迟</p>
+</li>
+<li><p>与众多常用存储系统的连接</p>
+</li>
+<li><p>高可用，动态扩展，实现7*24小时全天候运行</p>
+</li>
+</ul>
+<h3 id="Flink-amp-Spark-streaming"><a href="#Flink-amp-Spark-streaming" class="headerlink" title="Flink &amp; Spark streaming"></a>Flink &amp; Spark streaming</h3><ul>
+<li>spark streaming 本质是微批处理，flink是真正的流处理平台</li>
+<li>spark采用RDD(弹性分布式算子)，flink基本数据模型是数据流</li>
+<li>spark是批计算，将DAG划分成不同的stage，（一个单位的）所有数据完成一个stage才能开始下一个，有一定的延迟；flink一个事件在一个节点处理完成后可以直接发往下一个</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>传统架构演进 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dhbm51b2dlNDc2Ni9hcnRpY2xlL2RldGFpbHMvOTQ0ODQyNjM=">https://blog.csdn.net/wannuoge4766/article/details/94484263<i class="fa fa-external-link-alt"></i></span><br>教程视频 <span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMXF5NHkxcTcyOD9wPTQ=">https://www.bilibili.com/video/BV1qy4y1q728?p=4<i class="fa fa-external-link-alt"></i></span><br>flink教程文档 <span class="exturl" data-url="aHR0cHM6Ly9jb25mdWNpYW56dW95dWFuLmdpdGh1Yi5pby9mbGluay10dXRvcmlhbC9ib29rLw==">https://confucianzuoyuan.github.io/flink-tutorial/book/<i class="fa fa-external-link-alt"></i></span><br>时间时间 <span class="exturl" data-url="aHR0cDovL3NtYXJ0c2kuY2x1Yi9mbGluay1zdHJlYW0tZXZlbnQtdGltZS1hbmQtcHJvY2Vzc2luZy10aW1lLmh0bWw=">http://smartsi.club/flink-stream-event-time-and-processing-time.html<i class="fa fa-external-link-alt"></i></span><br>状态一致 <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vemFja3N0YW5nL3AvMTA4NTAwMjMuaHRtbA==">https://www.cnblogs.com/zackstang/p/10850023.html<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>BigData</category>
+      </categories>
+      <tags>
+        <tag>Flink</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux服务器安装Python3</title>
+    <url>/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/</url>
+    <content><![CDATA[<p>服务器Linux下默认系统自带python2.6的版本，这个版本被系统很多程序所依赖，所以不建议删除。如果使用最新的Python3那么我们知道编译安装源码包和系统默认包之间是没有任何影响的。根据工作需要在服务器上安装python3环境，相关操作步骤记录。</p>
+<a id="more"></a>
+
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>由于centos7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">root@iZuf6ititjgl7x9tgf1cyiZ ~</span>]<span class="meta"># python</span></span><br><span class="line">Python <span class="number">2.6</span><span class="number">.6</span> (r266:<span class="number">84292</span>, Aug <span class="number">18</span> <span class="number">2016</span>, <span class="number">15</span>:<span class="number">13</span>:<span class="number">37</span>) </span><br><span class="line">[<span class="meta">GCC 4.4.7 20120313 (Red Hat 4.4.7-17)</span>] <span class="keyword">on</span> linux2</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
+<p>输入Python命令，查看可以得知是Python2.6.6版本</p>
+<p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">which</span> python</span><br></pre></td></tr></table></figure>
+<p>可以查看位置，一般是位于/usr/bin/python目录下。</p>
+<p>下面介绍安装Python3的方法</p>
+<p>首先安装依赖包</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yum</span> -y groupinstall <span class="string">&quot;Development tools&quot;</span></span><br><span class="line"><span class="attribute">yum</span> -y install zlib-devel bzip<span class="number">2</span>-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db<span class="number">4</span>-devel libpcap-devel xz-devel</span><br></pre></td></tr></table></figure>
+<p>然后根据自己需求下载不同版本的Python3，我下载的是Python3.7.4</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">https</span>://www.python.org/ftp/python/<span class="number">3</span>.<span class="number">7</span>,<span class="number">4</span>/Python-<span class="number">3</span>.<span class="number">7</span>.<span class="number">4</span>.tar.xz</span><br></pre></td></tr></table></figure>
+<p>如果速度不够快，可以直接去官网下载，利用WinSCP等软件传到服务器上指定位置，我的存放目录是/usr/local/python3，使用命令：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir <span class="regexp">/usr/</span>local/python3 </span><br></pre></td></tr></table></figure>
+<p>建立一个空文件夹</p>
+<p>然后解压压缩包，进入该目录，安装Python3</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">tar -xvJf  Python-<span class="number">3.7</span>.<span class="number">4</span>.tar.xz</span><br><span class="line">cd Python-<span class="number">3.7</span>.<span class="number">4</span></span><br><span class="line">.<span class="regexp">/configure --prefix=/u</span>sr<span class="regexp">/local/</span>python3</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>最后创建软链接</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/python3/</span>bin<span class="regexp">/python3 /u</span>sr<span class="regexp">/bin/</span>python3</span><br><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/python3/</span>bin<span class="regexp">/pip3 /u</span>sr<span class="regexp">/bin/</span>pip3</span><br></pre></td></tr></table></figure>
+<p>在命令行中输入python3测试</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li><p>依赖包查找失败</p>
+<p>编译make的时候会出现：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Python build finished successfully!</span><br><span class="line">The necessary bits to build these optional modules were not found:</span><br><span class="line">_curses               _curses_panel         _lzma</span><br><span class="line">_tkinter              _uuid                 readline</span><br><span class="line">To find the necessary bits, look in setup.py in detect_modules() for the module&#x27;s name.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The following modules found by detect_modules() in setup.py, have been</span><br><span class="line">built by the Makefile instead, as configured by the Setup files:</span><br><span class="line">_abc                  atexit                pwd</span><br><span class="line">time</span><br></pre></td></tr></table></figure>
+<p>这种情况下安装python命令可以正常执行，但是有些任务会import 报错，安装superset时就除了问题</p>
+<p><strong>解决：</strong></p>
+<ul>
+<li><p>_sqlite: </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMTIxMDY2NC9uby1tb2R1bGUtbmFtZWQtc3FsaXRlMw==">https://stackoverflow.com/questions/1210664/no-module-named-sqlite3<i class="fa fa-external-link-alt"></i></span></p>
+<p><code>yum install sqlite-devel</code></p>
+<p>然后重新编译安装python3</p>
+</li>
+<li><p>_lzma:</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3VsdHJhbHl0aWNzL3lvbG92NS9pc3N1ZXMvMTI5OA==">https://github.com/ultralytics/yolov5/issues/1298<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>参考：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EyMDk5OTQ4NzY4L2FydGljbGUvZGV0YWlscy84MTUzMTc3NA==">https://blog.csdn.net/a2099948768/article/details/81531774<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HBase上手记录</title>
     <url>/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTUlODglODYlRTUlQjglODMlRTUlQkMlOEYlRTUlQUQlOTglRTUlODIlQTglRTclQjMlQkIlRTclQkIlOUYvNjYwODg3NQ==">分布式存储系统<i class="fa fa-external-link-alt"></i></span>”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。另一个不同的是HBase基于列的而不是基于行的模式。</p>
@@ -103,151 +235,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Mac下hadoop部署与操作</title>
-    <url>/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<p>由于课程需要和工具限制，需要在mac上安装Hadoop，参考了网上的教程，默认mac的terminal已经安装了homebrew软件管理工具、JDK环境，如果没安装homebrew、JDK环境的小伙伴请自行搜索mac终端安装homebrew、JDK教程。下面是部署与操作记录。</p>
-<a id="more"></a>
-
-<p>部署：</p>
-<p><span class="exturl" data-url="aHR0cDovL2NvZGluZ3hpYXh3LmNuLzIwMTYvMTIvMDYvNTktbWFjLWhhZG9vcC8=">http://codingxiaxw.cn/2016/12/06/59-mac-hadoop/<i class="fa fa-external-link-alt"></i></span></p>
-<p>其他问题：</p>
-<p>1） hadoop下载速度太慢，切换国内镜像无效。<br>采用手动下载方式 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xMDc0NjkzNzg=">https://zhuanlan.zhihu.com/p/107469378<i class="fa fa-external-link-alt"></i></span></p>
-<p>2） 启动hadoop权限问题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(base) MacBook-Pro:sbin joy$ ./start-dfs.sh </span><br><span class="line">Starting namenodes on [localhost]</span><br><span class="line">localhost: joy@localhost: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">Starting datanodes</span><br><span class="line">localhost: joy@localhost: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">Starting secondary namenodes [account.jetbrains.com]</span><br><span class="line">account.jetbrains.com: Warning: Permanently added &#x27;account.jetbrains.com,0.0.0.0&#x27; (ECDSA) to the list of known hosts.</span><br><span class="line">account.jetbrains.com: joy@account.jetbrains.com: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">2021-03-30 18:38:31,682 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br></pre></td></tr></table></figure>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5ndmFsdWUvYXJ0aWNsZS9kZXRhaWxzLzEwMzc0ODQzOA==">https://blog.csdn.net/zhangvalue/article/details/103748438<i class="fa fa-external-link-alt"></i></span></p>
-<p>3）按照<span class="exturl" data-url="aHR0cDovL2NvZGluZ3hpYXh3LmNuLzIwMTYvMTIvMDcvNjAtbWFjLXNwYXJrLyVFNSU4NiU4NSVFNSVBRSVCOSVFOCVCRiU5QiVFOCVBMSU4Q3NwYXJrJUU1JUFFJTg5JUU4JUEzJTg1JUU2JTk3JUI2JUVGJUJDJThDJUU3JTk0JUIxJUU0JUJBJThFJUU0JUI4JThCJUU4JUJEJUJEJUU5JTgwJTlGJUU1JUJBJUE2JUU5JTk3JUFFJUU5JUEyJTk4JUVGJUJDJThDJUU2JTg5JThCJUU1JThBJUE4JUU0JUI4JThCJUU4JUJEJUJEJUU1JUFFJTg5JUU4JUEzJTg1JUU1JThDJTg1JUU4JUJGJTlCJUU4JUExJThDJUU1JUFFJTg5JUU4JUEzJTg1JUVGJUJDJThDJUU1JThGJTkxJUU3JThFJUIwc2NhbGElRTQlQkQlQkYlRTclOTQlQTglRTYlQUQlQTMlRTUlQjglQjglRUYlQkMlOENzcGFyayVFNSU5MSVCRCVFNCVCQiVBNCVFNiU5NyVBMCVFNiVCMyU5NSVFNiVBRCVBMyVFNSVCOCVCOCVFOCVCRiU5MCVFOCVBMSU4QyVFRiVCQyU5QQ==">http://codingxiaxw.cn/2016/12/07/60-mac-spark/内容进行spark安装时，由于下载速度问题，手动下载安装包进行安装，发现scala使用正常，spark命令无法正常运行：<i class="fa fa-external-link-alt"></i></span></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">MacBook-Pro:conf joy$ scala</span><br><span class="line">Welcome to Scala 2.13.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_271).</span><br><span class="line">Type in expressions for evaluation. Or try :help.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(base) MacBook-Pro:conf joy$ spark-shell</span><br><span class="line">-bash: spark-shell: command not found</span><br></pre></td></tr></table></figure>
-<p><strong>问题排查：主要原因在于scala下载后用homebrew安装，spark没有经过brew安装，建立软连接</strong></p>
-<p>homebrew进行Scala安装时，手动下载安装包之后，按照2）解决方案进行后续安装操作，brew将scala自动安装在/usr/local/Cellar下，然后自动建立软连接到/usr/local/bin/目录下（安装时使用-v命令可查看详细过程）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(base) MacBook-Pro:~ joy$ brew reinstall scala -v</span><br><span class="line">rm /usr/local/bin/fsc</span><br><span class="line">rm /usr/local/bin/scala</span><br><span class="line">rm /usr/local/bin/scalac</span><br><span class="line">rm /usr/local/bin/scaladoc</span><br><span class="line">rm /usr/local/bin/scalap</span><br><span class="line">rm /usr/local/share/doc/scala</span><br><span class="line">rm /usr/local/share/man/man1/fsc.1</span><br><span class="line">rm /usr/local/share/man/man1/scala.1</span><br><span class="line">rm /usr/local/share/man/man1/scalac.1</span><br><span class="line">rm /usr/local/share/man/man1/scaladoc.1</span><br><span class="line">rm /usr/local/share/man/man1/scalap.1</span><br><span class="line">==&gt; Downloading https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz</span><br><span class="line">/usr/bin/curl --disable --globoff --show-error --user-agent Homebrew/3.0.10-42-ge5bda4e\ \(Macintosh\;\ Intel\ Mac\ OS\ X\ 10.15.7\)\ curl/7.64.1 --header Accept-Language:\ en --retry 3 --location --silent --head --request GET https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz</span><br><span class="line">Already downloaded: /Users/joy/Library/Caches/Homebrew/downloads/f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz</span><br><span class="line">==&gt; Verifying checksum for &#x27;f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz&#x27;</span><br><span class="line">==&gt; Reinstalling scala </span><br><span class="line">/usr/bin/sandbox-exec -f /private/tmp/homebrew20210331-48919-1kaua9k.sb nice ruby -W1 -- /usr/local/Homebrew/Library/Homebrew/build.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/scala.rb --verbose</span><br><span class="line">tar xof /Users/joy/Library/Caches/Homebrew/downloads/f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz -C /private/tmp/d20210331-48920-5yc016</span><br><span class="line">cp -pR /private/tmp/d20210331-48920-5yc016/scala-2.13.5/. /private/tmp/scala-20210331-48920-3r6y9a/scala-2.13.5</span><br><span class="line">chmod -Rf +w /private/tmp/d20210331-48920-5yc016</span><br><span class="line">==&gt; Cleaning</span><br><span class="line">==&gt; Finishing up</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/fsc fsc</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scala scala</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scalac scalac</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scaladoc scaladoc</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scalap scalap</span><br><span class="line">ln -s ../../Cellar/scala/2.13.5/share/doc/scala scala</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/fsc.1 fsc.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scala.1 scala.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scalac.1 scalac.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scaladoc.1 scaladoc.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scalap.1 scalap.1</span><br><span class="line">/usr/bin/sandbox-exec -f /private/tmp/homebrew20210331-48976-3t2vk6.sb nice ruby -W1 -I $LOAD_PATH -- /usr/local/Homebrew/Library/Homebrew/postinstall.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/scala.rb</span><br><span class="line">==&gt; Caveats</span><br><span class="line">To use with IntelliJ, set the Scala home to:</span><br><span class="line">  /usr/local/opt/scala/idea</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/scala/2.13.5: 43 files, 23.4MB, built in 14 seconds</span><br></pre></td></tr></table></figure>
-<p>而homebrew无法下载正确版本的spark，因此手动下载后，安装博客步骤进行安装，手动解压安装在/usr/loacal，配置时无脑copy</p>
-<img data-src="/images/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/image-20210331150851400.png" alt="image-20210331150851400" style="zoom:80%;" />
-
-<p>其中scala_home路径应该为实际路径：brew自动安装后建立软连接的 <code>/usr/local/scala/bin</code> 而不是 <code>/usr/local/scala</code>。</p>
-<p><strong>解决一：</strong>保持sparka安装在/usr/local目录下，修改conf中的scala home路径</p>
-<p>上图修改为如下后，重新运行spark-shell命令成功。</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">SCALA_HOME</span>=/usr/local/bin/scala</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">SPARK_MASTER_IP</span>=localhost</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">SPARK_WORKER_MEMORY</span>=4g</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">MacBook-Pro:conf joy$ spark-shell</span><br><span class="line">21/03/31 15:00:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Using Spark&#x27;s default log4j profile: org/apache/spark/log4j-defaults.properties</span><br><span class="line">Setting default log level to &quot;WARN&quot;.</span><br><span class="line">To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</span><br><span class="line">Spark context Web UI available at http://192.168.36.116:4040</span><br><span class="line">Spark context available as &#x27;sc&#x27; (master = local[*], app id = local-1617174045126).</span><br><span class="line">Spark session available as &#x27;spark&#x27;.</span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  &#x27;_/</span><br><span class="line">   /___/ .__/\_,_/_/ /_/\_\   version 3.1.1</span><br><span class="line">      /_/</span><br><span class="line">         </span><br><span class="line">Using Scala version 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_271)</span><br><span class="line">Type in expressions to have them evaluated.</span><br><span class="line">Type :help for more information.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-<p><strong>解决二（理论上可行）：</strong>想要和brew安装方式对齐，将spark移动到/usr/local/Cellar下，按brew安装的方式重新建立软连接至/usr/local/bin</p>
-<p>首先，将解压后的spark包移动到Cellar目录下，修改文件格式，和其他安装包保持一致，即Cellar/spark/3.1.1/</p>
-<p>然后<code>brew link spark</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not symlink sbin/start-all.sh</span><br><span class="line">Target /usr/local/sbin/start-all.sh</span><br><span class="line">is a symlink belonging to hadoop. You can unlink it:</span><br><span class="line">  brew unlink hadoop</span><br></pre></td></tr></table></figure>
-<p>提示/usr/local/bin里已经有一个名为 ’start-all.sh‘ 的同名脚本了。也就是hadoop和spark里有脚本名重复了，所以方便起见，采用了第一种解决方案，但是为了/usr/local目录的整洁性，如果可以，还是优先用brew安装，或者靠齐安装目录格式比较好。</p>
-]]></content>
-      <categories>
-        <category>bigdata</category>
-      </categories>
-      <tags>
-        <tag>hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux服务器安装Python3</title>
-    <url>/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/</url>
-    <content><![CDATA[<p>服务器Linux下默认系统自带python2.6的版本，这个版本被系统很多程序所依赖，所以不建议删除。如果使用最新的Python3那么我们知道编译安装源码包和系统默认包之间是没有任何影响的。根据工作需要在服务器上安装python3环境，相关操作步骤记录。</p>
-<a id="more"></a>
-
-<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>由于centos7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">root@iZuf6ititjgl7x9tgf1cyiZ ~</span>]<span class="meta"># python</span></span><br><span class="line">Python <span class="number">2.6</span><span class="number">.6</span> (r266:<span class="number">84292</span>, Aug <span class="number">18</span> <span class="number">2016</span>, <span class="number">15</span>:<span class="number">13</span>:<span class="number">37</span>) </span><br><span class="line">[<span class="meta">GCC 4.4.7 20120313 (Red Hat 4.4.7-17)</span>] <span class="keyword">on</span> linux2</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
-<p>输入Python命令，查看可以得知是Python2.6.6版本</p>
-<p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">which</span> python</span><br></pre></td></tr></table></figure>
-<p>可以查看位置，一般是位于/usr/bin/python目录下。</p>
-<p>下面介绍安装Python3的方法</p>
-<p>首先安装依赖包</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yum</span> -y groupinstall <span class="string">&quot;Development tools&quot;</span></span><br><span class="line"><span class="attribute">yum</span> -y install zlib-devel bzip<span class="number">2</span>-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db<span class="number">4</span>-devel libpcap-devel xz-devel</span><br></pre></td></tr></table></figure>
-<p>然后根据自己需求下载不同版本的Python3，我下载的是Python3.7.4</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">https</span>://www.python.org/ftp/python/<span class="number">3</span>.<span class="number">7</span>,<span class="number">4</span>/Python-<span class="number">3</span>.<span class="number">7</span>.<span class="number">4</span>.tar.xz</span><br></pre></td></tr></table></figure>
-<p>如果速度不够快，可以直接去官网下载，利用WinSCP等软件传到服务器上指定位置，我的存放目录是/usr/local/python3，使用命令：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mkdir <span class="regexp">/usr/</span>local/python3 </span><br></pre></td></tr></table></figure>
-<p>建立一个空文件夹</p>
-<p>然后解压压缩包，进入该目录，安装Python3</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">tar -xvJf  Python-<span class="number">3.7</span>.<span class="number">4</span>.tar.xz</span><br><span class="line">cd Python-<span class="number">3.7</span>.<span class="number">4</span></span><br><span class="line">.<span class="regexp">/configure --prefix=/u</span>sr<span class="regexp">/local/</span>python3</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>最后创建软链接</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/python3/</span>bin<span class="regexp">/python3 /u</span>sr<span class="regexp">/bin/</span>python3</span><br><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/python3/</span>bin<span class="regexp">/pip3 /u</span>sr<span class="regexp">/bin/</span>pip3</span><br></pre></td></tr></table></figure>
-<p>在命令行中输入python3测试</p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
-<li><p>依赖包查找失败</p>
-<p>编译make的时候会出现：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Python build finished successfully!</span><br><span class="line">The necessary bits to build these optional modules were not found:</span><br><span class="line">_curses               _curses_panel         _lzma</span><br><span class="line">_tkinter              _uuid                 readline</span><br><span class="line">To find the necessary bits, look in setup.py in detect_modules() for the module&#x27;s name.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The following modules found by detect_modules() in setup.py, have been</span><br><span class="line">built by the Makefile instead, as configured by the Setup files:</span><br><span class="line">_abc                  atexit                pwd</span><br><span class="line">time</span><br></pre></td></tr></table></figure>
-<p>这种情况下安装python命令可以正常执行，但是有些任务会import 报错，安装superset时就除了问题</p>
-<p><strong>解决：</strong></p>
-<ul>
-<li><p>_sqlite: </p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMTIxMDY2NC9uby1tb2R1bGUtbmFtZWQtc3FsaXRlMw==">https://stackoverflow.com/questions/1210664/no-module-named-sqlite3<i class="fa fa-external-link-alt"></i></span></p>
-<p><code>yum install sqlite-devel</code></p>
-<p>然后重新编译安装python3</p>
-</li>
-<li><p>_lzma:</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3VsdHJhbHl0aWNzL3lvbG92NS9pc3N1ZXMvMTI5OA==">https://github.com/ultralytics/yolov5/issues/1298<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>参考：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EyMDk5OTQ4NzY4L2FydGljbGUvZGV0YWlscy84MTUzMTc3NA==">https://blog.csdn.net/a2099948768/article/details/81531774<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VMware三种联网方式及原理</title>
-    <url>/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<p>虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalone模式时，需要基于虚拟机进行模拟集群搭建。所以详细记录相关操作经验及原理备忘。</p>
-<a id="more"></a>
-
-<h2 id="1-VMware三种联网方式及原理"><a href="#1-VMware三种联网方式及原理" class="headerlink" title="1. VMware三种联网方式及原理"></a>1. VMware三种联网方式及原理</h2><p>vmware提供三种虚拟机联网方法：bridge桥接模式，NAT网络地址转换模式，Host-only仅主机模式。</p>
-<ul>
-<li><p>桥接模式</p>
-<blockquote>
-<p><strong>首先理解“桥接”的概念。</strong></p>
-<p>路由器上一般有多个LAN口，不同LAN口之间就是桥接关系。这个路由器就是“桥”。一个桥设备上有多块网卡，分别处于多个局域网中。桥设备的作用就是学习不同网口连接的mac地址，并在转发帧的时候查询mac地址和LAN口的绑定关系。</p>
-</blockquote>
-<p>VMware的桥也是一样的道理，采用桥接模式时，VMware会虚拟出一块网卡和真正的物理网卡进行桥接，这样发到物理网卡的所有数据包都到了VMware虚拟机，由虚拟机发出的数据包也会通过桥从物理网卡那端发出。VMware的虚拟机就像局域网中一台独立的主机，可以访问局域网内任意一台机器。</p>
-</li>
-<li><p>NAT模式</p>
-<p>VMware的NAT是在主机和虚拟机之间用软件伪造出一块网卡，这块网卡和虚拟机的ip处于同一个地址段，同时和主机的网络接口之间进行NAT。虚拟机相当于一台内网设备，能够ping到主机IP。</p>
-</li>
-<li><p>HostOnly模式</p>
-<p>HostOnly模式下，虚拟网络是一个全封闭的网络，唯一能访问的就是主机。</p>
-</li>
-</ul>
-<h2 id="2-不同方式的设置及其他操作"><a href="#2-不同方式的设置及其他操作" class="headerlink" title="2. 不同方式的设置及其他操作"></a>2. 不同方式的设置及其他操作</h2><p>安装完虚拟机之后，会在控制面板-&gt; 网络和共享中心 -&gt; 更改适配器设置 中，新增两块虚拟网卡：</p>
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png" alt="image-20210703102545051" style="zoom:50%;" />
-
-<p>VMware Network Adepter VMnet1：Host用于与Host-Only虚拟网络进行通信的虚拟网卡<br>VMware Network Adepter VMnet8：Host用于与NAT虚拟网络进行通信的虚拟网卡</p>
-<h3 id="桥接模式设置"><a href="#桥接模式设置" class="headerlink" title="桥接模式设置"></a>桥接模式设置</h3><p>这种模式下，需要手工设置虚拟机的IP地址、子网掩码，必须保持和宿主机处于同一个网段，这样虚拟机才能和宿主机通信（我理解相当于通过设置为同一网段，使具备桥设备的桥接功能）</p>
-<ul>
-<li><p>首先确定主机ip设置，ipconfig</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png" alt="image-20210703110322533"></p>
-<p>将自动获取IP地址修改为指定ip</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png" alt="image-20210703110405014"></p>
-</li>
-<li><p>在VMware-&gt;edit-&gt;虚拟网络编辑器中修改设置VMnet</p>
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256" alt="img" style="zoom:50%;" />
-
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429" alt="img" style="zoom:50%;" />
-
-<p>选择 桥接模式，然后点击 还原默认设置，然后再重新进来，不打开虚拟机，进入设置项，设置为桥接模式。</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794" alt="img"></p>
-<p>打开虚拟机，进入settings，然后设置ipv4网络</p>
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png" alt="image-20210703115033366" style="zoom:50%;" />
-
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png" alt="image-20210703213335139"></p>
-<p>这里的192.168.124.7是和主机ip在统一网段的。重新开启网络就可以看到配置已经成功。</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png" alt="image-20210703213435546"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>虚拟机</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>nginx+Ngrok在mac下实现内网穿透</title>
     <url>/2021/01/09/nginx+Ngrok%E5%9C%A8mac%E4%B8%8B%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
     <content><![CDATA[<p>使用maltego产品，用公司数据做关系探索演示。服务部署在内网环境中，和产品云服务平台交互需要实现内网穿透。简单了解下相关流程。</p>
@@ -334,86 +321,43 @@
       </tags>
   </entry>
   <entry>
-    <title>Flink从入门到放弃01——Flink简介</title>
-    <url>/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<p>Apache Flink是一个面向数据流处理和批量数据处理的可分布式的开源计算框架，它基于同一个Flink流式执行模型（streaming execution model），能够支持流处理和批处理两种应用类型。由于流处理和批处理所提供的SLA(服务等级协议)是完全不相同， 流处理一般需要支持低延迟、Exactly-once保证，而批处理需要支持高吞吐、高效处理，所以在实现的时候通常是分别给出两套实现方法，或者通过一个独立的开源框架来实现其中每一种处理方案。</p>
+    <title>Mac下hadoop部署与操作</title>
+    <url>/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p>由于课程需要和工具限制，需要在mac上安装Hadoop，参考了网上的教程，默认mac的terminal已经安装了homebrew软件管理工具、JDK环境，如果没安装homebrew、JDK环境的小伙伴请自行搜索mac终端安装homebrew、JDK教程。下面是部署与操作记录。</p>
 <a id="more"></a>
 
-<h1 id="Flink是什么"><a href="#Flink是什么" class="headerlink" title="Flink是什么"></a>Flink是什么</h1><p>Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apache 孵化器接收，然后迅速地成为了Apache Software Foundation的顶级项目之一。</p>
-<blockquote>
-<p>Apache Flink is a framework and <em><strong>distributed</strong></em> processing engine for <em><strong>stateful</strong></em> computations over <em><strong>unbounded and bounded</strong></em> data <em><strong>streams</strong></em>.</p>
-</blockquote>
-<h1 id="为什么选择Flink"><a href="#为什么选择Flink" class="headerlink" title="为什么选择Flink"></a>为什么选择Flink</h1><h2 id="传统数据处理架构"><a href="#传统数据处理架构" class="headerlink" title="传统数据处理架构"></a>传统数据处理架构</h2><p>大多数企业实施的传统架构区分了两种类型的数据处理模式：数据事务处理和数据分析处理。两种架构分别面向不同的功能需求，适用于不同场景，具有各自的优势和局限</p>
-<h3 id="事务处理架构"><a href="#事务处理架构" class="headerlink" title="事务处理架构"></a>事务处理架构</h3><p>事务处理架构中，各种应用程序分别由单独的层编写，如用户关系关系CRM、订单系统、web应用。应用程序通常连接到外部服务或直接面向用户，并持续处理传入的事件，如网站上的订单，电子邮件或点击。处理事件时，<strong>应用程序将会读取远程数据库的状态，或者通过运行事务来更新它</strong>。通常，一个数据库系统被多个应用程序共用。</p>
-<p>这种架构的优势是，对于用户产生的事件可以进行快速的响应，事件来一个处理一个，<strong>低时延</strong>，但是由于后台共用一个远程数据库，<strong>当数据越来越庞大的时候代价会很高，并且扩展性不好</strong>。应用程序可以通过分布式处理来解决，但是对于需要综合数据实现分析类功能时，关系型数据库的联表查询会出问题。</p>
-<img data-src="/images/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/spaf_0101.png" alt="img" style="zoom:50%;" />
+<p>部署：</p>
+<p><span class="exturl" data-url="aHR0cDovL2NvZGluZ3hpYXh3LmNuLzIwMTYvMTIvMDYvNTktbWFjLWhhZG9vcC8=">http://codingxiaxw.cn/2016/12/06/59-mac-hadoop/<i class="fa fa-external-link-alt"></i></span></p>
+<p>其他问题：</p>
+<p>1） hadoop下载速度太慢，切换国内镜像无效。<br>采用手动下载方式 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xMDc0NjkzNzg=">https://zhuanlan.zhihu.com/p/107469378<i class="fa fa-external-link-alt"></i></span></p>
+<p>2） 启动hadoop权限问题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(base) MacBook-Pro:sbin joy$ ./start-dfs.sh </span><br><span class="line">Starting namenodes on [localhost]</span><br><span class="line">localhost: joy@localhost: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">Starting datanodes</span><br><span class="line">localhost: joy@localhost: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">Starting secondary namenodes [account.jetbrains.com]</span><br><span class="line">account.jetbrains.com: Warning: Permanently added &#x27;account.jetbrains.com,0.0.0.0&#x27; (ECDSA) to the list of known hosts.</span><br><span class="line">account.jetbrains.com: joy@account.jetbrains.com: Permission denied (publickey,password,keyboard-interactive).</span><br><span class="line">2021-03-30 18:38:31,682 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br></pre></td></tr></table></figure>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5ndmFsdWUvYXJ0aWNsZS9kZXRhaWxzLzEwMzc0ODQzOA==">https://blog.csdn.net/zhangvalue/article/details/103748438<i class="fa fa-external-link-alt"></i></span></p>
+<p>3）按照<span class="exturl" data-url="aHR0cDovL2NvZGluZ3hpYXh3LmNuLzIwMTYvMTIvMDcvNjAtbWFjLXNwYXJrLyVFNSU4NiU4NSVFNSVBRSVCOSVFOCVCRiU5QiVFOCVBMSU4Q3NwYXJrJUU1JUFFJTg5JUU4JUEzJTg1JUU2JTk3JUI2JUVGJUJDJThDJUU3JTk0JUIxJUU0JUJBJThFJUU0JUI4JThCJUU4JUJEJUJEJUU5JTgwJTlGJUU1JUJBJUE2JUU5JTk3JUFFJUU5JUEyJTk4JUVGJUJDJThDJUU2JTg5JThCJUU1JThBJUE4JUU0JUI4JThCJUU4JUJEJUJEJUU1JUFFJTg5JUU4JUEzJTg1JUU1JThDJTg1JUU4JUJGJTlCJUU4JUExJThDJUU1JUFFJTg5JUU4JUEzJTg1JUVGJUJDJThDJUU1JThGJTkxJUU3JThFJUIwc2NhbGElRTQlQkQlQkYlRTclOTQlQTglRTYlQUQlQTMlRTUlQjglQjglRUYlQkMlOENzcGFyayVFNSU5MSVCRCVFNCVCQiVBNCVFNiU5NyVBMCVFNiVCMyU5NSVFNiVBRCVBMyVFNSVCOCVCOCVFOCVCRiU5MCVFOCVBMSU4QyVFRiVCQyU5QQ==">http://codingxiaxw.cn/2016/12/07/60-mac-spark/内容进行spark安装时，由于下载速度问题，手动下载安装包进行安装，发现scala使用正常，spark命令无法正常运行：<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">MacBook-Pro:conf joy$ scala</span><br><span class="line">Welcome to Scala 2.13.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_271).</span><br><span class="line">Type in expressions for evaluation. Or try :help.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(base) MacBook-Pro:conf joy$ spark-shell</span><br><span class="line">-bash: spark-shell: command not found</span><br></pre></td></tr></table></figure>
+<p><strong>问题排查：主要原因在于scala下载后用homebrew安装，spark没有经过brew安装，建立软连接</strong></p>
+<p>homebrew进行Scala安装时，手动下载安装包之后，按照2）解决方案进行后续安装操作，brew将scala自动安装在/usr/local/Cellar下，然后自动建立软连接到/usr/local/bin/目录下（安装时使用-v命令可查看详细过程）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(base) MacBook-Pro:~ joy$ brew reinstall scala -v</span><br><span class="line">rm /usr/local/bin/fsc</span><br><span class="line">rm /usr/local/bin/scala</span><br><span class="line">rm /usr/local/bin/scalac</span><br><span class="line">rm /usr/local/bin/scaladoc</span><br><span class="line">rm /usr/local/bin/scalap</span><br><span class="line">rm /usr/local/share/doc/scala</span><br><span class="line">rm /usr/local/share/man/man1/fsc.1</span><br><span class="line">rm /usr/local/share/man/man1/scala.1</span><br><span class="line">rm /usr/local/share/man/man1/scalac.1</span><br><span class="line">rm /usr/local/share/man/man1/scaladoc.1</span><br><span class="line">rm /usr/local/share/man/man1/scalap.1</span><br><span class="line">==&gt; Downloading https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz</span><br><span class="line">/usr/bin/curl --disable --globoff --show-error --user-agent Homebrew/3.0.10-42-ge5bda4e\ \(Macintosh\;\ Intel\ Mac\ OS\ X\ 10.15.7\)\ curl/7.64.1 --header Accept-Language:\ en --retry 3 --location --silent --head --request GET https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz</span><br><span class="line">Already downloaded: /Users/joy/Library/Caches/Homebrew/downloads/f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz</span><br><span class="line">==&gt; Verifying checksum for &#x27;f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz&#x27;</span><br><span class="line">==&gt; Reinstalling scala </span><br><span class="line">/usr/bin/sandbox-exec -f /private/tmp/homebrew20210331-48919-1kaua9k.sb nice ruby -W1 -- /usr/local/Homebrew/Library/Homebrew/build.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/scala.rb --verbose</span><br><span class="line">tar xof /Users/joy/Library/Caches/Homebrew/downloads/f0d485510e9c8d56e9ed6b020888e122c1ef09fff596c0c93ca946952b4624c2--scala-2.13.5.tgz -C /private/tmp/d20210331-48920-5yc016</span><br><span class="line">cp -pR /private/tmp/d20210331-48920-5yc016/scala-2.13.5/. /private/tmp/scala-20210331-48920-3r6y9a/scala-2.13.5</span><br><span class="line">chmod -Rf +w /private/tmp/d20210331-48920-5yc016</span><br><span class="line">==&gt; Cleaning</span><br><span class="line">==&gt; Finishing up</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/fsc fsc</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scala scala</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scalac scalac</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scaladoc scaladoc</span><br><span class="line">ln -s ../Cellar/scala/2.13.5/bin/scalap scalap</span><br><span class="line">ln -s ../../Cellar/scala/2.13.5/share/doc/scala scala</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/fsc.1 fsc.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scala.1 scala.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scalac.1 scalac.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scaladoc.1 scaladoc.1</span><br><span class="line">ln -s ../../../Cellar/scala/2.13.5/share/man/man1/scalap.1 scalap.1</span><br><span class="line">/usr/bin/sandbox-exec -f /private/tmp/homebrew20210331-48976-3t2vk6.sb nice ruby -W1 -I $LOAD_PATH -- /usr/local/Homebrew/Library/Homebrew/postinstall.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/scala.rb</span><br><span class="line">==&gt; Caveats</span><br><span class="line">To use with IntelliJ, set the Scala home to:</span><br><span class="line">  /usr/local/opt/scala/idea</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/scala/2.13.5: 43 files, 23.4MB, built in 14 seconds</span><br></pre></td></tr></table></figure>
+<p>而homebrew无法下载正确版本的spark，因此手动下载后，安装博客步骤进行安装，手动解压安装在/usr/loacal，配置时无脑copy</p>
+<img data-src="/images/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/image-20210331150851400.png" alt="image-20210331150851400" style="zoom:80%;" />
 
-<h3 id="分析处理架构"><a href="#分析处理架构" class="headerlink" title="分析处理架构"></a>分析处理架构</h3><p>事务数据通常分布在多个数据库中，往往汇总起来联合分析时更有价值。所以我们一般不会直接在事务数据库上运行分析查询，而是复制数据到数据仓库。数据仓库是对工作负载进行分析和查询的专用数据存储。为了填充数据仓库，需要将事务数据库系统管理的数据复制过来。<strong>将数据复制到数据仓库的过程称为extract-transform-load（ETL）</strong>。 ETL过程从事务数据库中提取数据，将其转换为某种通用的结构表示，可能包括验证，值的规范化，编码，重复数据删除（去重）和模式转换，最后将其加载到分析数据库中。 ETL过程可能非常复杂，并且通常需要技术复杂的解决方案来满足性能要求。 ETL过程需要定期运行以保持数据仓库中的数据同步。</p>
-<p>数据仓库上的查询类型有两种：<strong>第一种类型是定期报告查询</strong>，用于计算与业务相关的统计信息。<strong>第二种类型是即席查询</strong>，旨在提供特定问题的答案并支持关键业务决策。两种查询由批处理方式由数据仓库执行。</p>
-<p>这种架构的问题很明显，<strong>实时性较差</strong>，不适用于延迟要求低的事务处理要求。</p>
-<img data-src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0103.png" alt="img" style="zoom: 50%;" />
-
-<h2 id="流处理架构"><a href="#流处理架构" class="headerlink" title="流处理架构"></a>流处理架构</h2><p>流处理的目标就是模拟真实情况下的数据特点，同时满足低延迟、高吞吐的数据处理要求。</p>
-<h3 id="有状态的流处理"><a href="#有状态的流处理" class="headerlink" title="有状态的流处理"></a>有状态的流处理</h3><p>有状态的流处理方式将数据的中间状态直接存储在内存当中，处理过程中，不需要进行反复写入和更新远程数据库，而直接基于内存存储状态完成计算。由于保存在内存中的状态（local state）容易丢失，可以依靠定期将应用程序状态的一致性检查点（check point）写入远程且持久的存储。因此同时具备<strong>高吞吐、低延迟、可靠</strong>的特定。</p>
-<img data-src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0104.png" alt="img" style="zoom:50%;" />
-
-<h3 id="lambda架构"><a href="#lambda架构" class="headerlink" title="lambda架构"></a>lambda架构</h3><p>基于有状态流处理方案设计的第一代分布式开源流处理器（2011），专注于具有毫秒延迟的事件处理，并提供了在发生故障时防止事件丢失的保证。这些系统具有相当低级的API，并且对于流应用程序的准确性和结果的一致性，不提供内置支持，因为结果会取决于到达事件的时间和顺序。另外，即使事件没有丢失，也可能不止一次地处理它们。<strong>与批处理器相比，第一代开源流处理器牺牲了结果准确性，用来获得更低的延迟</strong>。为了让当时的数据处理系统，可以同时提供快速和准确的结果，设计了lambda架构。</p>
-<img data-src="https://confucianzuoyuan.github.io/flink-tutorial/book/images/spaf_0107.png" alt="img" style="zoom:50%;" />
-
-<p>批处理器定期处理批量存储中的数据，将准确的结果写入批处理表，并从速度表中删除相应的不准确结果。应用程序会合并快速表中的近似结果和批处理表中的准确结果，然后消费最终的结果。</p>
-<p>这种架构的问题在于，每个功能都需要实现两个独立的、具有不同API的处理系统，难以建立和维护。</p>
-<h2 id="flink架构特点"><a href="#flink架构特点" class="headerlink" title="flink架构特点"></a>flink架构特点</h2><h3 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h3><ul>
-<li><p>事件驱动 Event-drive</p>
-<p><strong>事件驱动的应用程序</strong>是有状态的应用程序，它从一个或多个事件中提取事件，并通过触发计算，状态更新或外部操作来对传入的事件做出反应。</p>
-<img data-src="/images/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/image-20211208142135187.png" alt="image-20211208142135187" style="zoom: 67%;" /></li>
-<li><p>基于流的世界观</p>
-<p>一切都是由流组成的，<strong>离线数据是有界的流;实时数据是一个没有界限的流</strong></p>
-</li>
-<li><p>分层API</p>
-<ul>
-<li>越顶层越抽象，表达含义越简明，使用越方便</li>
-<li>越底层越具体，表达能力越丰富，使用越灵活</li>
-</ul>
-<img data-src="/images/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/image-20211208142557976.png" alt="image-20211208142557976" style="zoom:50%;" /></li>
-</ul>
-<h3 id="其他特点"><a href="#其他特点" class="headerlink" title="其他特点"></a>其他特点</h3><ul>
-<li><p>支持事件时间（event-time）和处理时间(processing-time)语义</p>
-<ul>
-<li><p><strong><code>Processing Time</code>(处理时间)是指执行相应操作的机器系统时间</strong>，是操作算子在计算过程中获取到的所在主机的系统时间。当用户选择使用处理时间时，所有和时间相关的算子，例如 Windows 计算，在当前任务中所有的算子直接使用所在主机的系统时间。例如，一个基于处理时间按每小时进行处理的时间窗口将处理一个小时内（以系统时间为标准）到达指定算子的所有的记录。</p>
-<p>处理时间是最简单的一个时间概念，不需要在数据流和机器之间进行协调。具有最好的性能和最低的延迟。然而，在分布式或者异步环境中，处理时间具有不确定性，因为容易受到记录到达系统速度的影响(例如，从消息队列到达的记录)，还会受到系统内记录在不同算子之间的流动速度的影响。对数据乱序的处理，处理时间不是一种最优的选择。总之，<strong>处理时间适用于时间计算精度要求不是特别高的计算场景</strong>。</p>
-</li>
-<li><p>**<code>Event Time</code>(事件时间)是每个事件在产生它的设备上发生的时间。****在进入 Flink 之前，事件时间通常要嵌入到记录中，并且事件时间也可以从记录中提取出来。对于事件时间，时间的进度取决于数据，而不是系统时钟。基于事件时间的程序必须指定如何生成事件时间的<code>Watermarks</code>，这是表示事件时间进度的机制。</p>
-<p>在理想情况下，事件时间处理将产生完全一致且确定的结果，无论事件何时到达以及以什么样的顺序到达。但是，除非已知事件是按顺序（按时间戳）到达，否则事件时间处理在等待无序事件时产生一定的延迟。由于只能等待有限的时间，因此这限制了事件时间应用程序的确定性。</p>
-<p>假定所有数据都已到达，事件时间算子将按预期方式运行，即使在处理无序、迟到事件或重新处理历史数据时，也会产生正确且一致的结果。例如，每小时事件时间窗口将将处理事件时间在这一小时之内所有的记录，不管它们何时到达，以及它们以什么顺序到达。</p>
-<p><strong>按事件时间处理往往会导致一定的延迟，因为它要等待延迟事件和无序事件一段时间。因此，事件时间程序通常与处理时间操作相结合使用。</strong></p>
-</li>
-</ul>
-</li>
-<li><p>精确一次(exactly-once)的状态一致性保证</p>
-<ul>
-<li><strong>状态</strong>：为了产生一个结果，函数一般会聚合某个时间段内（或是一定数量的）events的状态信息（例如计算聚合值，或是发现一个模式），有状态的 operators使用流的输入事件以及内部状态，计算出它们的输出。<strong>例如，一个滚动聚合operator输出当前它读入的所有的events的总和。Operator 持有当前sum的值作为它的内部状态，并在每次读入新值时对它做更新。</strong></li>
-<li><strong>exactly-once</strong>：流处理系统通过提供结果保障（result guarantees）定义任务在故障发生时的行为。主流流处理器提供的保障（guarantees）包括<strong>至多一次at-most-once、至少一次（AT-LEAST-ONCE）、精确一次（EXACTLY-ONCE）</strong>等。exactly-once是最严个保障。</li>
-</ul>
-</li>
-<li><p>低延迟，每秒处理数百万个事件，毫秒级延迟</p>
-</li>
-<li><p>与众多常用存储系统的连接</p>
-</li>
-<li><p>高可用，动态扩展，实现7*24小时全天候运行</p>
-</li>
-</ul>
-<h3 id="Flink-amp-Spark-streaming"><a href="#Flink-amp-Spark-streaming" class="headerlink" title="Flink &amp; Spark streaming"></a>Flink &amp; Spark streaming</h3><ul>
-<li>spark streaming 本质是微批处理，flink是真正的流处理平台</li>
-<li>spark采用RDD(弹性分布式算子)，flink基本数据模型是数据流</li>
-<li>spark是批计算，将DAG划分成不同的stage，（一个单位的）所有数据完成一个stage才能开始下一个，有一定的延迟；flink一个事件在一个节点处理完成后可以直接发往下一个</li>
-</ul>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>传统架构演进 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dhbm51b2dlNDc2Ni9hcnRpY2xlL2RldGFpbHMvOTQ0ODQyNjM=">https://blog.csdn.net/wannuoge4766/article/details/94484263<i class="fa fa-external-link-alt"></i></span><br>教程视频 <span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMXF5NHkxcTcyOD9wPTQ=">https://www.bilibili.com/video/BV1qy4y1q728?p=4<i class="fa fa-external-link-alt"></i></span><br>flink教程文档 <span class="exturl" data-url="aHR0cHM6Ly9jb25mdWNpYW56dW95dWFuLmdpdGh1Yi5pby9mbGluay10dXRvcmlhbC9ib29rLw==">https://confucianzuoyuan.github.io/flink-tutorial/book/<i class="fa fa-external-link-alt"></i></span><br>时间时间 <span class="exturl" data-url="aHR0cDovL3NtYXJ0c2kuY2x1Yi9mbGluay1zdHJlYW0tZXZlbnQtdGltZS1hbmQtcHJvY2Vzc2luZy10aW1lLmh0bWw=">http://smartsi.club/flink-stream-event-time-and-processing-time.html<i class="fa fa-external-link-alt"></i></span><br>状态一致 <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vemFja3N0YW5nL3AvMTA4NTAwMjMuaHRtbA==">https://www.cnblogs.com/zackstang/p/10850023.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>其中scala_home路径应该为实际路径：brew自动安装后建立软连接的 <code>/usr/local/scala/bin</code> 而不是 <code>/usr/local/scala</code>。</p>
+<p><strong>解决一：</strong>保持sparka安装在/usr/local目录下，修改conf中的scala home路径</p>
+<p>上图修改为如下后，重新运行spark-shell命令成功。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">SCALA_HOME</span>=/usr/local/bin/scala</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">SPARK_MASTER_IP</span>=localhost</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">SPARK_WORKER_MEMORY</span>=4g</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">MacBook-Pro:conf joy$ spark-shell</span><br><span class="line">21/03/31 15:00:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Using Spark&#x27;s default log4j profile: org/apache/spark/log4j-defaults.properties</span><br><span class="line">Setting default log level to &quot;WARN&quot;.</span><br><span class="line">To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</span><br><span class="line">Spark context Web UI available at http://192.168.36.116:4040</span><br><span class="line">Spark context available as &#x27;sc&#x27; (master = local[*], app id = local-1617174045126).</span><br><span class="line">Spark session available as &#x27;spark&#x27;.</span><br><span class="line">Welcome to</span><br><span class="line">      ____              __</span><br><span class="line">     / __/__  ___ _____/ /__</span><br><span class="line">    _\ \/ _ \/ _ `/ __/  &#x27;_/</span><br><span class="line">   /___/ .__/\_,_/_/ /_/\_\   version 3.1.1</span><br><span class="line">      /_/</span><br><span class="line">         </span><br><span class="line">Using Scala version 2.12.10 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_271)</span><br><span class="line">Type in expressions to have them evaluated.</span><br><span class="line">Type :help for more information.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+<p><strong>解决二（理论上可行）：</strong>想要和brew安装方式对齐，将spark移动到/usr/local/Cellar下，按brew安装的方式重新建立软连接至/usr/local/bin</p>
+<p>首先，将解压后的spark包移动到Cellar目录下，修改文件格式，和其他安装包保持一致，即Cellar/spark/3.1.1/</p>
+<p>然后<code>brew link spark</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not symlink sbin/start-all.sh</span><br><span class="line">Target /usr/local/sbin/start-all.sh</span><br><span class="line">is a symlink belonging to hadoop. You can unlink it:</span><br><span class="line">  brew unlink hadoop</span><br></pre></td></tr></table></figure>
+<p>提示/usr/local/bin里已经有一个名为 ’start-all.sh‘ 的同名脚本了。也就是hadoop和spark里有脚本名重复了，所以方便起见，采用了第一种解决方案，但是为了/usr/local目录的整洁性，如果可以，还是优先用brew安装，或者靠齐安装目录格式比较好。</p>
 ]]></content>
       <categories>
-        <category>BigData</category>
+        <category>bigdata</category>
       </categories>
       <tags>
-        <tag>Flink</tag>
+        <tag>hadoop</tag>
       </tags>
   </entry>
   <entry>
@@ -528,6 +472,62 @@
       <tags>
         <tag>HTTP服务</tag>
         <tag>OSNIT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VMware三种联网方式及原理</title>
+    <url>/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<p>虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalone模式时，需要基于虚拟机进行模拟集群搭建。所以详细记录相关操作经验及原理备忘。</p>
+<a id="more"></a>
+
+<h2 id="1-VMware三种联网方式及原理"><a href="#1-VMware三种联网方式及原理" class="headerlink" title="1. VMware三种联网方式及原理"></a>1. VMware三种联网方式及原理</h2><p>vmware提供三种虚拟机联网方法：bridge桥接模式，NAT网络地址转换模式，Host-only仅主机模式。</p>
+<ul>
+<li><p>桥接模式</p>
+<blockquote>
+<p><strong>首先理解“桥接”的概念。</strong></p>
+<p>路由器上一般有多个LAN口，不同LAN口之间就是桥接关系。这个路由器就是“桥”。一个桥设备上有多块网卡，分别处于多个局域网中。桥设备的作用就是学习不同网口连接的mac地址，并在转发帧的时候查询mac地址和LAN口的绑定关系。</p>
+</blockquote>
+<p>VMware的桥也是一样的道理，采用桥接模式时，VMware会虚拟出一块网卡和真正的物理网卡进行桥接，这样发到物理网卡的所有数据包都到了VMware虚拟机，由虚拟机发出的数据包也会通过桥从物理网卡那端发出。VMware的虚拟机就像局域网中一台独立的主机，可以访问局域网内任意一台机器。</p>
+</li>
+<li><p>NAT模式</p>
+<p>VMware的NAT是在主机和虚拟机之间用软件伪造出一块网卡，这块网卡和虚拟机的ip处于同一个地址段，同时和主机的网络接口之间进行NAT。虚拟机相当于一台内网设备，能够ping到主机IP。</p>
+</li>
+<li><p>HostOnly模式</p>
+<p>HostOnly模式下，虚拟网络是一个全封闭的网络，唯一能访问的就是主机。</p>
+</li>
+</ul>
+<h2 id="2-不同方式的设置及其他操作"><a href="#2-不同方式的设置及其他操作" class="headerlink" title="2. 不同方式的设置及其他操作"></a>2. 不同方式的设置及其他操作</h2><p>安装完虚拟机之后，会在控制面板-&gt; 网络和共享中心 -&gt; 更改适配器设置 中，新增两块虚拟网卡：</p>
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png" alt="image-20210703102545051" style="zoom:50%;" />
+
+<p>VMware Network Adepter VMnet1：Host用于与Host-Only虚拟网络进行通信的虚拟网卡<br>VMware Network Adepter VMnet8：Host用于与NAT虚拟网络进行通信的虚拟网卡</p>
+<h3 id="桥接模式设置"><a href="#桥接模式设置" class="headerlink" title="桥接模式设置"></a>桥接模式设置</h3><p>这种模式下，需要手工设置虚拟机的IP地址、子网掩码，必须保持和宿主机处于同一个网段，这样虚拟机才能和宿主机通信（我理解相当于通过设置为同一网段，使具备桥设备的桥接功能）</p>
+<ul>
+<li><p>首先确定主机ip设置，ipconfig</p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png" alt="image-20210703110322533"></p>
+<p>将自动获取IP地址修改为指定ip</p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png" alt="image-20210703110405014"></p>
+</li>
+<li><p>在VMware-&gt;edit-&gt;虚拟网络编辑器中修改设置VMnet</p>
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256" alt="img" style="zoom:50%;" />
+
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429" alt="img" style="zoom:50%;" />
+
+<p>选择 桥接模式，然后点击 还原默认设置，然后再重新进来，不打开虚拟机，进入设置项，设置为桥接模式。</p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794" alt="img"></p>
+<p>打开虚拟机，进入settings，然后设置ipv4网络</p>
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png" alt="image-20210703115033366" style="zoom:50%;" />
+
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png" alt="image-20210703213335139"></p>
+<p>这里的192.168.124.7是和主机ip在统一网段的。重新开启网络就可以看到配置已经成功。</p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png" alt="image-20210703213435546"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>虚拟机</tag>
       </tags>
   </entry>
   <entry>
