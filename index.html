@@ -1,826 +1,1206 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en-US">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="计算机网络,编程,算法">
-    <meta name="description" content="盐于律己，甜以待人">
-    <meta name="author" content="可爱的小富婆">
-    
-    <title>
-        
-        JOY&#39;s Blog
-    </title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="shortcut icon" href="/images/logo.jpg">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"有所为，有所爱，有所期待"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
-    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
+  <link rel="manifest" href="/images/avatar.jpg">
+  <meta name="msapplication-config" content="/images/avatar.jpg">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yinjiangyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":320,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <meta name="description" content="盐于律己，甜以待人">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Joy&#39;s blog">
+<meta property="og:url" content="https://yinjiangyi.github.io/index.html">
+<meta property="og:site_name" content="Joy&#39;s blog">
+<meta property="og:description" content="盐于律己，甜以待人">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Yin">
+<meta property="article:tag" content="计算机网络,编程,算法">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://yinjiangyi.github.io/">
 
 
-<body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en-US'
+  };
+</script>
 
-    
+  <title>Joy's blog - 有趣有盼，无灾无难</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Joy's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">有趣有盼，无灾无难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
 
 
-<main class="page-container">
 
-    
-        <div class="first-screen-container flex-center fade-in-down-animation">
-    <div class="content flex-center">
-        <div class="description">
-            有所为，有所爱，有所期待
-        </div>
-        
-    </div>
-</div>
 
-    
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
 
-    <div class="page-main-content">
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
+  </li>
+        <li class="menu-item menu-item-about">
 
-    <div class="header-content has-first-screen">
-        <div class="left">
-            <a class="logo-title" href="/">
-                JOY&#39;s Blog
-            </a>
-        </div>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class="active"
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                分类
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+  </li>
+        <li class="menu-item menu-item-tags">
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class="active"
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">分类</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-        </ul>
-    </div>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
 
-    <div class="window-mask"></div>
+  </li>
+        <li class="menu-item menu-item-categories">
 
-</header>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
 
+  </li>
+        <li class="menu-item menu-item-archives">
 
-        </div>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
 
-        <div class="page-main-content-middle">
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
 
-            <div class="main-content">
 
-                
-                    <div class="home-content-container fade-in-down-animation">
-    <ul class="home-article-list">
-        
-            <li class="home-article-item">
 
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/">
-                        Flink从入门到放弃01——Flink简介
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        Flink是什么Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apache 孵化器接收，然后迅速地成为了Apache Software Foundation的顶级项目之一。
-
-Apache Flink is a fra...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Dec 08 2021 10:37:21 GMT+0800">2021-12-08</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/BigData/">BigData</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Flink/">Flink</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
-                        HBase上手记录
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        https://zhuanlan.zhihu.com/p/145551967
-一、HBase是什么
-Apache HBase™ is the Hadoop database, a distributed, scalable, big data sto...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jul 20 2021 10:16:47 GMT+0800">2021-07-20</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/HBase/">HBase</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">
-                        DDos攻击与保护
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        参考：
-https://www.cloudflare.com/learning/
-1. 什么是DDos攻击工作原理Distribution Denial-of-Service 分布式拒绝服务。
-如何识别明显迹象：
-
-来自单个 IP 地址或 IP 范围...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon Jul 12 2021 14:21:43 GMT+0800">2021-07-12</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E5%AE%89%E5%85%A8/">安全</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/DDos/">DDos</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/">
-                        VMware三种联网方式及原理
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        学习spark的standalone模式时，需要基于虚拟机进行模拟集群搭建。所以详细记录相关操作经验及原理。
-1. VMware三种联网方式及原理vmware提供三种虚拟机联网方法：bridge桥接模式，NAT网络地址转换模式，Host-only仅主...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Sat Jul 03 2021 09:49:05 GMT+0800">2021-07-03</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/">
-                        不学废之——git篇
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        参考：https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008
-1 简介GIT是什么git是目前世界上最先进的分布式版本控制系统。
-接下来用通俗语言翻译下一下版本控制系统是用来干...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Mon May 17 2021 14:41:52 GMT+0800">2021-05-17</span></span>
-        
-        
-    </div>
-
-    <a href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
-                        Superset 上手记录
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        含泪在卷首血书：
-有新不用旧啊！版本兼容问题会被搞到死！
-1. 关于安装Mac系统踩坑安装方式：
-
-基于docker安装：快速方便，但是不适合二次开发，只适合对superset直接进行使用
-基于pip安装：快速方便，但是源码需要手动下载，并且版本切换...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Apr 21 2021 10:56:56 GMT+0800">2021-04-21</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/superset/">superset</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/">
-                        Linux服务器安装Python3
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        参考：https://blog.csdn.net/a2099948768/article/details/81531774
-步骤由于centos7原本就安装了Python2，而且这个Python2不能被删除，因为有很多系统命令，比如yum都要用到。
-...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Apr 20 2021 09:35:02 GMT+0800">2021-04-20</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/python%E5%AE%89%E8%A3%85/">python安装</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/">
-                        Mac下hadoop部署与操作
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        部署：
-http://codingxiaxw.cn/2016/12/06/59-mac-hadoop/
-其他问题：
-1） hadoop下载速度太慢，切换国内镜像无效。采用手动下载方式 https://zhuanlan.zhihu.com/p/1074...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Mar 30 2021 18:41:13 GMT+0800">2021-03-30</span></span>
-        
-        
-    </div>
-
-    <a href="/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/01/26/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-                        Linux常用命令
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-wget
-使用wget下载单个文件 wget http://www.centos.bz/download?id=1
-使用wget -O下载并以不同的文件名保存wget -O wordpress.zip http://www.centos.bz/do...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Tue Jan 26 2021 15:57:51 GMT+0800">2021-01-26</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/01/26/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2021/01/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C/">
-                        读书笔记-美丽新世界
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <blockquote>
-<p>人们忧心忡忡的1984并没有如期而至，而赫胥黎所预言的美丽新世界却在日益成为现实。——Neil Postman ，《娱乐至死》</p>
-<p>如果说奥威尔的《1984》里，人们为失去自由而痛苦，那么赫胥黎的《美丽新世界》里，人们则为了摆脱自由的重负而狂喜。——《美丽新世界》代序</p>
-</blockquote>
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-history"></i>&nbsp;<span class="home-article-date" data-date="Wed Jan 13 2021 13:39:48 GMT+0800">2021-01-13</span></span>
-        
-            <span class="home-article-category"><i class="fas fa-folder"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/categories/%E8%AF%BB%E4%B9%A6/">读书</a>&nbsp;
-                        </li>
-                    
-                    
-                </ul>
-            </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%8F%8D%E4%B9%8C%E6%89%98%E9%82%A6/">反乌托邦</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2021/01/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C/">阅读全文&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-    </ul>
-
-    <div class="home-paginator">
-        <div class="paginator">
-    
-
-    
-        <a class="next btn"
-           href="/page/2/"
-        >下一页</a>
-    
-</div>
-
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2020</span>&nbsp;-&nbsp;
-            
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
-        </div>
-        
-
-    </div>
-</footer>
-
-        </div>
-    </div>
-
-    
-
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-        <div class="search-pop-overlay">
+  <div class="search-pop-overlay">
     <div class="popup search-popup">
         <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fas fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
     </div>
+  </div>
+
 </div>
+    </header>
 
     
-
-</main>
-
-
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
-<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/">
 
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Flink从入门到放弃01——Flink简介</a>
+        </h2>
 
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
+              <time title="Created: 2021-12-08 10:37:21" itemprop="dateCreated datePublished" datetime="2021-12-08T10:37:21+08:00">2021-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:37:17" itemprop="dateModified" datetime="2021-12-09T10:37:17+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a>
+                </span>
+            </span>
 
+          
 
+        </div>
+      </header>
 
-<div class="post-scripts">
     
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Apache Flink是一个面向数据流处理和批量数据处理的可分布式的开源计算框架，它基于同一个Flink流式执行模型（streaming execution model），能够支持流处理和批处理两种应用类型。由于流处理和批处理所提供的SLA(服务等级协议)是完全不相同， 流处理一般需要支持低延迟、Exactly-once保证，而批处理需要支持高吞吐、高效处理，所以在实现的时候通常是分别给出两套实现方法，或者通过一个独立的开源框架来实现其中每一种处理方案。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">HBase上手记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-20 10:16:47" itemprop="dateCreated datePublished" datetime="2021-07-20T10:16:47+08:00">2021-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:37:50" itemprop="dateModified" datetime="2021-12-09T10:37:50+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bigdata/" itemprop="url" rel="index"><span itemprop="name">bigdata</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTUlODglODYlRTUlQjglODMlRTUlQkMlOEYlRTUlQUQlOTglRTUlODIlQTglRTclQjMlQkIlRTclQkIlOUYvNjYwODg3NQ==">分布式存储系统<i class="fa fa-external-link-alt"></i></span>”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。另一个不同的是HBase基于列的而不是基于行的模式。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" class="post-title-link" itemprop="url">DDos攻击与保护</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-12 14:21:43" itemprop="dateCreated datePublished" datetime="2021-07-12T14:21:43+08:00">2021-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:39:53" itemprop="dateModified" datetime="2021-12-09T10:39:53+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">安全</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>DoS是Denial of Service的简称，即拒绝服务，造成DoS的攻击行为被称为DoS攻击，其目的是使计算机或网络无法提供正常的服务。最常见的DoS攻击有计算机网络宽带攻击和连通性攻击。 DoS攻击是指故意的攻击网络协议实现的缺陷或直接通过野蛮手段残忍地耗尽被攻击对象的资源，目的是让使目标系统服务系统停止响应甚至崩溃。这些服务资源包括网络带宽，文件系统空间容量，开放的进程或者允许的连接。这种攻击会导致资源的匮乏，无论计算机的处理速度多快、内存容量多大、网络带宽的速度多快都无法避免这种攻击带来的后果。 </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">VMware三种联网方式及原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-03 09:49:05" itemprop="dateCreated datePublished" datetime="2021-07-03T09:49:05+08:00">2021-07-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:41:18" itemprop="dateModified" datetime="2021-12-09T10:41:18+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalone模式时，需要基于虚拟机进行模拟集群搭建。所以详细记录相关操作经验及原理备忘。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/" class="post-title-link" itemprop="url">Git介绍及常用操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-17 14:41:52" itemprop="dateCreated datePublished" datetime="2021-05-17T14:41:52+08:00">2021-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:38:44" itemprop="dateModified" datetime="2021-12-09T10:38:44+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Git 是用于 <span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9MaW51eCVFNSU4NiU4NSVFNiVBMCVCOC8xMDE0MjgyMA==">Linux内核<i class="fa fa-external-link-alt"></i></span>开发的<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTclODklODglRTYlOUMlQUMlRTYlOEUlQTclRTUlODglQjY=">版本控制<i class="fa fa-external-link-alt"></i></span>工具。与常用的版本控制工具 CVS, Subversion 等不同，它采用了分布式版本库的方式，不必服务器端软件支持（wingeddevil注：这得分是用什么样的服务端，使用http协议或者git协议等不太一样。并且在push和pull的时候和服务器端还是有交互的。），使<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTYlQkElOTAlRTQlQkIlQTMlRTclQTAlODE=">源代码<i class="fa fa-external-link-alt"></i></span>的发布和交流极其方便。 Git 的速度很快，这对于诸如 Linux kernel 这样的大项目来说自然很重要。 Git 最为出色的是它的合并跟踪（merge tracing）能力。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">Superset 上手记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-21 10:56:56" itemprop="dateCreated datePublished" datetime="2021-04-21T10:56:56+08:00">2021-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:42:53" itemprop="dateModified" datetime="2021-12-09T10:42:53+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/" itemprop="url" rel="index"><span itemprop="name">环境部署</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户/角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用docker搞定，这里还是把之前踩的坑记录一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/" class="post-title-link" itemprop="url">Linux服务器安装Python3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-20 09:35:02" itemprop="dateCreated datePublished" datetime="2021-04-20T09:35:02+08:00">2021-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:44:14" itemprop="dateModified" datetime="2021-12-09T10:44:14+08:00">2021-12-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>服务器Linux下默认系统自带python2.6的版本，这个版本被系统很多程序所依赖，所以不建议删除。如果使用最新的Python3那么我们知道编译安装源码包和系统默认包之间是没有任何影响的。根据工作需要在服务器上安装python3环境，相关操作步骤记录。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">Mac下hadoop部署与操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-30 18:41:13" itemprop="dateCreated datePublished" datetime="2021-03-30T18:41:13+08:00">2021-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:45:24" itemprop="dateModified" datetime="2021-12-09T10:45:24+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bigdata/" itemprop="url" rel="index"><span itemprop="name">bigdata</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由于课程需要和工具限制，需要在mac上安装Hadoop，参考了网上的教程，默认mac的terminal已经安装了homebrew软件管理工具、JDK环境，如果没安装homebrew、JDK环境的小伙伴请自行搜索mac终端安装homebrew、JDK教程。下面是部署与操作记录。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/30/Mac%E4%B8%8Bhadoop%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/01/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C/" class="post-title-link" itemprop="url">读书笔记-美丽新世界</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-13 13:39:48" itemprop="dateCreated datePublished" datetime="2021-01-13T13:39:48+08:00">2021-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:25:25" itemprop="dateModified" datetime="2021-12-09T10:25:25+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">读书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>人们忧心忡忡的1984并没有如期而至，而赫胥黎所预言的美丽新世界却在日益成为现实。——Neil Postman ，《娱乐至死》</p>
+<p>如果说奥威尔的《1984》里，人们为失去自由而痛苦，那么赫胥黎的《美丽新世界》里，人们则为了摆脱自由的重负而狂喜。——《美丽新世界》代序</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/01/11/%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0maltego-TDS-transform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/11/%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0maltego-TDS-transform/" class="post-title-link" itemprop="url">内网实现maltego-TDS-transform</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-11 15:49:39" itemprop="dateCreated datePublished" datetime="2021-01-11T15:49:39+08:00">2021-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:24:54" itemprop="dateModified" datetime="2021-12-09T10:24:54+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>将本地数据库中实体关系通过maltego产品界面进行画布探索展示。maltego产品支持自定义local transform（基于给定节点进行关联节点的探索过程），但是local方式的实现需要用户根据设备的具体情况，对python编译器等进行配置，不方便功能共享和展示。TDS-transform结合内网穿透可以解决分布式操作需求。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/11/%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0maltego-TDS-transform/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yin"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yin</p>
+  <div class="site-description" itemprop="description">盐于律己，甜以待人</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
 </div>
 
 
 
-</body>
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yin</span>
+</div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

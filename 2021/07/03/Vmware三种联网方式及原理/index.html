@@ -1,214 +1,271 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en-US">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="计算机网络,编程,算法">
-    <meta name="description" content="盐于律己，甜以待人">
-    <meta name="author" content="可爱的小富婆">
-    
-    <title>
-        
-            VMware三种联网方式及原理 |
-        
-        JOY&#39;s Blog
-    </title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="shortcut icon" href="/images/logo.jpg">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"有所为，有所爱，有所期待"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
-    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
+  <link rel="manifest" href="/images/avatar.jpg">
+  <meta name="msapplication-config" content="/images/avatar.jpg">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yinjiangyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":320,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <meta name="description" content="虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VMware三种联网方式及原理">
+<meta property="og:url" content="https://yinjiangyi.github.io/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Joy&#39;s blog">
+<meta property="og:description" content="虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalon">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png">
+<meta property="article:published_time" content="2021-07-03T01:49:05.000Z">
+<meta property="article:modified_time" content="2021-12-09T02:41:18.297Z">
+<meta property="article:author" content="Yin">
+<meta property="article:tag" content="虚拟机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yinjiangyi.github.io/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png">
+
+<link rel="canonical" href="https://yinjiangyi.github.io/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/">
 
 
-<body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en-US'
+  };
+</script>
 
-    
+  <title>VMware三种联网方式及原理 | Joy's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Joy's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">有趣有盼，无灾无难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
 
 
-<main class="page-container">
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
 
     
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-    <div class="page-main-content">
 
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="header-content">
-        <div class="left">
-            <a class="logo-title" href="/">
-                JOY&#39;s Blog
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                分类
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
+          <div class="content post posts-expand">
             
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">分类</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-        </ul>
-    </div>
 
-    <div class="window-mask"></div>
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/07/03/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/">
 
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">VMware三种联网方式及原理</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/images/avatar.jpg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">可爱的小富婆</span>
-                        
-                            <span class="author-label">Lv2</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-07-03 09:49:05
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
     </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VMware三种联网方式及原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-03 09:49:05" itemprop="dateCreated datePublished" datetime="2021-07-03T09:49:05+08:00">2021-07-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:41:18" itemprop="dateModified" datetime="2021-12-09T10:41:18+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
 
     
     
     
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
-</div>
+    <div class="post-body" itemprop="articleBody">
 
-                    </div>
-                </div>
-            </div>
-        
+      
+        <p>虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalone模式时，需要基于虚拟机进行模拟集群搭建。所以详细记录相关操作经验及原理备忘。</p>
+<a id="more"></a>
 
-        <div class="article-content markdown-body">
-            <p>学习spark的standalone模式时，需要基于虚拟机进行模拟集群搭建。所以详细记录相关操作经验及原理。</p>
 <h2 id="1-VMware三种联网方式及原理"><a href="#1-VMware三种联网方式及原理" class="headerlink" title="1. VMware三种联网方式及原理"></a>1. VMware三种联网方式及原理</h2><p>vmware提供三种虚拟机联网方法：bridge桥接模式，NAT网络地址转换模式，Host-only仅主机模式。</p>
 <ul>
 <li><p>桥接模式</p>
@@ -226,266 +283,266 @@
 </li>
 </ul>
 <h2 id="2-不同方式的设置及其他操作"><a href="#2-不同方式的设置及其他操作" class="headerlink" title="2. 不同方式的设置及其他操作"></a>2. 不同方式的设置及其他操作</h2><p>安装完虚拟机之后，会在控制面板-&gt; 网络和共享中心 -&gt; 更改适配器设置 中，新增两块虚拟网卡：</p>
-<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png" alt="image-20210703102545051" style="zoom:50%;" />
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png" alt="image-20210703102545051" style="zoom:50%;" />
 
 <p>VMware Network Adepter VMnet1：Host用于与Host-Only虚拟网络进行通信的虚拟网卡<br>VMware Network Adepter VMnet8：Host用于与NAT虚拟网络进行通信的虚拟网卡</p>
 <h3 id="桥接模式设置"><a href="#桥接模式设置" class="headerlink" title="桥接模式设置"></a>桥接模式设置</h3><p>这种模式下，需要手工设置虚拟机的IP地址、子网掩码，必须保持和宿主机处于同一个网段，这样虚拟机才能和宿主机通信（我理解相当于通过设置为同一网段，使具备桥设备的桥接功能）</p>
 <ul>
 <li><p>首先确定主机ip设置，ipconfig</p>
-<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png" alt="image-20210703110322533"></p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png" alt="image-20210703110322533"></p>
 <p>将自动获取IP地址修改为指定ip</p>
-<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png" alt="image-20210703110405014"></p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png" alt="image-20210703110405014"></p>
 </li>
 <li><p>在VMware-&gt;edit-&gt;虚拟网络编辑器中修改设置VMnet</p>
-<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256" alt="img" style="zoom:50%;" />
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256" alt="img" style="zoom:50%;" />
 
-<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429" alt="img" style="zoom:50%;" />
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429" alt="img" style="zoom:50%;" />
 
 <p>选择 桥接模式，然后点击 还原默认设置，然后再重新进来，不打开虚拟机，进入设置项，设置为桥接模式。</p>
-<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794" alt="img"></p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794" alt="img"></p>
 <p>打开虚拟机，进入settings，然后设置ipv4网络</p>
-<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png" alt="image-20210703115033366" style="zoom:50%;" />
+<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png" alt="image-20210703115033366" style="zoom:50%;" />
 
-<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png" alt="image-20210703213335139"></p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png" alt="image-20210703213335139"></p>
 <p>这里的192.168.124.7是和主机ip在统一网段的。重新开启网络就可以看到配置已经成功。</p>
-<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png" alt="image-20210703213435546"></p>
+<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png" alt="image-20210703213435546"></p>
 </li>
 </ul>
 
-        </div>
-
-        
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>本文标题：VMware三种联网方式及原理</li>
-        <li>本文作者：可爱的小富婆</li>
-        <li>创建时间：2021-07-03 09:49:05</li>
-        <li>
-            本文链接：yinjiangyi.git.io2021/07/03/Vmware三种联网方式及原理/
-        </li>
-        <li>
-            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
-        </li>
-    </ul>
-</div>
-
-            </div>
-        
-
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">DDos攻击与保护</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">不学废之——git篇</span>
-                                <span class="post-nav-item">下一篇</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2020</span>&nbsp;-&nbsp;
-            
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
-        </div>
-        
-
-    </div>
-</footer>
-
-        </div>
     </div>
 
     
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag"><i class="fa fa-tag"></i> 虚拟机</a>
+          </div>
+
         
 
-        <!-- go comment -->
+
         
-    </ul>
-</div>
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/" rel="prev" title="Git介绍及常用操作">
+      <i class="fa fa-chevron-left"></i> Git介绍及常用操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" rel="next" title="DDos攻击与保护">
+      DDos攻击与保护 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
-    
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
 
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
         </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
+        <li class="sidebar-nav-overview">
+          Overview
         </li>
+      </ul>
 
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-VMware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1. VMware三种联网方式及原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%8D%E5%90%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E8%AE%BE%E7%BD%AE%E5%8F%8A%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">2. 不同方式的设置及其他操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">桥接模式设置</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
 
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-    </ul>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yin"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yin</p>
+  <div class="site-description" itemprop="description">盐于律己，甜以待人</div>
 </div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-VMware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1. VMware三种联网方式及原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%8D%E5%90%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E8%AE%BE%E7%BD%AE%E5%8F%8A%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">2. 不同方式的设置及其他操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">桥接模式设置</span></a></li></ol></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
 </div>
 
 
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fas fa-times"></i>
-            </span>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
+
     </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yin</span>
 </div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  </div>
 
-    
-
-</main>
-
-
-
-<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
-
-
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+        
 
 
 
 
 
 
-<div class="post-scripts">
-    
-        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
-    
-</div>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
 
 
 
-</body>
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

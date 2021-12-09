@@ -1,214 +1,267 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en-US">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="计算机网络,编程,算法">
-    <meta name="description" content="盐于律己，甜以待人">
-    <meta name="author" content="可爱的小富婆">
-    
-    <title>
-        
-            Superset 上手记录 |
-        
-        JOY&#39;s Blog
-    </title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="shortcut icon" href="/images/logo.jpg">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"有所为，有所爱，有所期待"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
-    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
+  <link rel="manifest" href="/images/avatar.jpg">
+  <meta name="msapplication-config" content="/images/avatar.jpg">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yinjiangyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":320,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <meta name="description" content="Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户&#x2F;角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用doc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Superset 上手记录">
+<meta property="og:url" content="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Joy&#39;s blog">
+<meta property="og:description" content="Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户&#x2F;角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用doc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yinjiangyi.github.io/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png">
+<meta property="og:image" content="https://yinjiangyi.github.io/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png">
+<meta property="og:image" content="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918">
+<meta property="og:image" content="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918">
+<meta property="article:published_time" content="2021-04-21T02:56:56.000Z">
+<meta property="article:modified_time" content="2021-12-09T02:42:53.268Z">
+<meta property="article:author" content="Yin">
+<meta property="article:tag" content="superset">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yinjiangyi.github.io/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png">
+
+<link rel="canonical" href="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
 
 
-<body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en-US'
+  };
+</script>
 
-    
+  <title>Superset 上手记录 | Joy's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Joy's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">有趣有盼，无灾无难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
 
 
-<main class="page-container">
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
 
     
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-    <div class="page-main-content">
 
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="header-content">
-        <div class="left">
-            <a class="logo-title" href="/">
-                JOY&#39;s Blog
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                分类
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
+          <div class="content post posts-expand">
             
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">分类</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-        </ul>
-    </div>
 
-    <div class="window-mask"></div>
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
 
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">Superset 上手记录</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/images/avatar.jpg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">可爱的小富婆</span>
-                        
-                            <span class="author-label">Lv2</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-04-21 10:56:56
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
     </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/superset/">superset</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Superset 上手记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-21 10:56:56" itemprop="dateCreated datePublished" datetime="2021-04-21T10:56:56+08:00">2021-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:42:53" itemprop="dateModified" datetime="2021-12-09T10:42:53+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/" itemprop="url" rel="index"><span itemprop="name">环境部署</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
 
     
     
     
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
-</div>
+    <div class="post-body" itemprop="articleBody">
 
-                    </div>
-                </div>
-            </div>
-        
+      
+        <p>Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户/角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用docker搞定，这里还是把之前踩的坑记录一下。</p>
+<a id="more"></a>
 
-        <div class="article-content markdown-body">
-            <p><strong>含泪在卷首血书：</strong></p>
+<p><strong>含泪在卷首血书：</strong></p>
 <p><strong>有新不用旧啊！版本兼容问题会被搞到死！</strong></p>
 <h1 id="1-关于安装"><a href="#1-关于安装" class="headerlink" title="1. 关于安装"></a>1. 关于安装</h1><h2 id="Mac系统踩坑"><a href="#Mac系统踩坑" class="headerlink" title="Mac系统踩坑"></a>Mac系统踩坑</h2><p>安装方式：</p>
 <ul>
@@ -225,18 +278,18 @@
 <p><strong>拉取superset 仓库</strong></p>
 <p><code>git clone https://github.com/apache/superset.git</code> 巨慢</p>
 <p><strong>docker中启动superset</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd superset</span><br><span class="line">$ git checkout latest</span><br><span class="line">$ docker-compose up</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> superset</span><br><span class="line"><span class="variable">$</span> git checkout latest</span><br><span class="line"><span class="variable">$</span> docker<span class="literal">-compose</span> up</span><br></pre></td></tr></table></figure>
 <p>等待容器下载。下载完毕后找不到文件，未解决……转至install from scratch</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">superset_tests_worker exited with code 127</span><br><span class="line">superset_init exited with code 127</span><br><span class="line">superset_node exited with code 1</span><br><span class="line">superset_worker exited with code 127</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app exited with code 127</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker exited with code 127</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app exited with code 127</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker exited with code 127</span><br></pre></td></tr></table></figure>
 <p>错误原因：官网步骤不详细，需要下载superset镜像，创建superset容器，启动容器</p>
-<p>参考<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/nikeylee/article/details/115264818%E8%A7%A3%E5%86%B3%EF%BC%8C%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%EF%BC%9A" >https://blog.csdn.net/nikeylee/article/details/115264818解决，主要步骤：<i class="fas fa-external-link-alt"></i></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">docker search superset</span><br><span class="line"># 可以自选版本</span><br><span class="line">docker pull amancevice&#x2F;superset</span><br><span class="line"># 查看镜像是否下载成功：</span><br><span class="line">docker images</span><br><span class="line"># 创建Superset容器</span><br><span class="line"># 创建挂载的目录：</span><br><span class="line">mkdir &#x2F;opt&#x2F;superset</span><br><span class="line"># 创建容器</span><br><span class="line">docker run --name my_superset -d -p 8088:8088 -v &#x2F;opt&#x2F;superset:&#x2F;home&#x2F;superset amancevice&#x2F;superset</span><br><span class="line"># 进入docker镜像</span><br><span class="line">docker exec -it my_superset &#x2F;bin&#x2F;bash</span><br><span class="line"># superset 配置</span><br><span class="line">superset db upgrade</span><br><span class="line">superset init</span><br><span class="line">export FLASK_APP&#x3D;superset</span><br><span class="line">flask fab create-admin</span><br><span class="line">superset load_examples</span><br><span class="line"># 启动superset命令</span><br><span class="line">superset run -p 8088</span><br></pre></td></tr></table></figure>
+<p>参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25pa2V5bGVlL2FydGljbGUvZGV0YWlscy8xMTUyNjQ4MTglRTglQTclQTMlRTUlODYlQjMlRUYlQkMlOEMlRTQlQjglQkIlRTglQTYlODElRTYlQUQlQTUlRTklQUElQTQlRUYlQkMlOUE=">https://blog.csdn.net/nikeylee/article/details/115264818解决，主要步骤：<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="string">search</span> <span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 可以自选版本</span></span><br><span class="line"><span class="string">docker</span> <span class="string">pull</span> <span class="string">amancevice</span>/<span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 查看镜像是否下载成功：</span></span><br><span class="line"><span class="string">docker</span> <span class="string">images</span></span><br><span class="line"><span class="string"></span><span class="comment"># 创建Superset容器</span></span><br><span class="line"><span class="comment"># 创建挂载的目录：</span></span><br><span class="line"><span class="string">mkdir</span> /<span class="string">opt</span>/<span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 创建容器</span></span><br><span class="line"><span class="string">docker</span> <span class="string">run</span> <span class="built_in">--name</span> <span class="string">my_superset</span> -<span class="string">d</span> -<span class="string">p</span> <span class="string">8088:8088 </span>-<span class="string">v</span> /<span class="string">opt</span>/<span class="string">superset</span>:/<span class="string">home</span>/<span class="string">superset</span> <span class="string">amancevice</span>/<span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 进入docker镜像</span></span><br><span class="line"><span class="string">docker</span> <span class="string">exec</span> -<span class="string">it</span> <span class="string">my_superset</span> /<span class="string">bin</span>/<span class="string">bash</span></span><br><span class="line"><span class="string"></span><span class="comment"># superset 配置</span></span><br><span class="line"><span class="string">superset</span> <span class="string">db</span> <span class="string">upgrade</span></span><br><span class="line"><span class="string">superset</span> <span class="string">init</span></span><br><span class="line"><span class="string">export</span> <span class="string">FLASK_APP</span>=<span class="string">superset</span></span><br><span class="line"><span class="string">flask</span> <span class="string">fab</span> <span class="built_in">create-admin</span></span><br><span class="line"><span class="built_in">superset</span> <span class="string">load_examples</span></span><br><span class="line"><span class="string"></span><span class="comment"># 启动superset命令</span></span><br><span class="line"><span class="string">superset</span> <span class="string">run</span> -<span class="string">p</span> <span class="string">8088</span></span><br></pre></td></tr></table></figure>
 
 
-<h4 id="基于pip安装"><a href="#基于pip安装" class="headerlink" title="基于pip安装"></a>基于pip安装</h4><p>参考<a class="link"   target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/installing-superset-from-scratch" >https://superset.apache.org/docs/installation/installing-superset-from-scratch<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="基于pip安装"><a href="#基于pip安装" class="headerlink" title="基于pip安装"></a>基于pip安装</h4><p>参考<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnNldC5hcGFjaGUub3JnL2RvY3MvaW5zdGFsbGF0aW9uL2luc3RhbGxpbmctc3VwZXJzZXQtZnJvbS1zY3JhdGNo">https://superset.apache.org/docs/installation/installing-superset-from-scratch<i class="fa fa-external-link-alt"></i></span></p>
 <p>遇到问题：</p>
 <p>1） 安装client_driver时报错 OSError: mysql_config not found</p>
-<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found" >https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fas fa-external-link-alt"></i></a></p>
+<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMjU0NTkzODYvbWFjLW9zLXgtZW52aXJvbm1lbnRlcnJvci1teXNxbC1jb25maWctbm90LWZvdW5k">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
 <p>Ok, well, first of all, let me check if I am on the same page as you:</p>
 <ul>
@@ -246,13 +299,13 @@
 <li>And finally, you did <code>pip install MySQL-Python</code> (or <code>pip3 install mysqlclient</code> if using python 3)</li>
 </ul>
 </blockquote>
-<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p>参考：<a class="link"   target="_blank" rel="noopener" href="https://blog.eric7.site/2020/02/23/superset/" >https://blog.eric7.site/2020/02/23/superset/<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p>参考：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmVyaWM3LnNpdGUvMjAyMC8wMi8yMy9zdXBlcnNldC8=">https://blog.eric7.site/2020/02/23/superset/<i class="fa fa-external-link-alt"></i></span></p>
 <p><strong>Anaconda 创建python环境</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n superset python&#x3D;3.7</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">conda</span> create -n superset python=<span class="number">3</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
 <p>激活环境</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate superset</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">activate</span> superset</span><br></pre></td></tr></table></figure>
 <p><strong>github 下载源码包</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;apache&#x2F;incubator-superset.git</span><br><span class="line"></span><br><span class="line">git tag　列出所有版本号</span><br><span class="line"></span><br><span class="line">#切换到自己想要的版本 </span><br><span class="line">git checkout　+某版本号</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/apache/incubator-superset.git</span><br><span class="line"></span><br><span class="line">git <span class="keyword">tag</span>　<span class="title">列出所有版本号</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">#切换到自己想要的版本 </span></span><br><span class="line"><span class="title">git</span> checkout　+某版本号</span><br></pre></td></tr></table></figure>
 <p>这里我是用资料较多的0.28版本</p>
 <p><strong>安装扩展依赖</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#进入到目录</span><br><span class="line">cd incubator-superset</span><br><span class="line">pip install -r requirements.txt -i https:&#x2F;&#x2F;pypi.douban.com&#x2F;simple&#x2F;</span><br><span class="line"></span><br><span class="line">安装开发依赖</span><br><span class="line">pip install -r requirements-dev.txt -i https:&#x2F;&#x2F;pypi.douban.com&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
@@ -263,16 +316,16 @@
 <p>对下面配置superset造成影响</p>
 </blockquote>
 <p><strong>安装superset</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#incubator-superset 目录执行 pip install -e . </span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#incubator-superset 目录执行 pip install -e . </span></span><br></pre></td></tr></table></figure>
 <p><strong>配置superset</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">创建管理员账户和密码</span><br><span class="line">这个命令已经不推荐使用了。</span><br><span class="line">fabmanager create-admin --app superset </span><br><span class="line">推荐使用</span><br><span class="line">$export FLASK_APP&#x3D;superset</span><br><span class="line">flask fab create-admin</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>报错：</p>
 <p>1）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: cannot import name &#39;_maybe_box_datetimelike&#39; from &#39;pandas.core.common&#39; (&#x2F;Users&#x2F;joy&#x2F;opt&#x2F;anaconda3&#x2F;envs&#x2F;superset&#x2F;lib&#x2F;python3.7&#x2F;site-packages&#x2F;pandas&#x2F;core&#x2F;common.py)</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: cannot <span class="keyword">import</span> name <span class="string">&#x27;_maybe_box_datetimelike&#x27;</span> <span class="keyword">from</span> <span class="string">&#x27;pandas.core.common&#x27;</span> (<span class="regexp">/Users/</span>joy<span class="regexp">/opt/</span>anaconda3<span class="regexp">/envs/</span>superset<span class="regexp">/lib/</span>python3.<span class="number">7</span><span class="regexp">/site-packages/</span>pandas<span class="regexp">/core/</span>common.py)</span><br></pre></td></tr></table></figure>
 
 <p>要求pandas版本是0.23.1，安装的版本为1.2.4</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(superset) ➜  incubator-superset git:(0.28) pip show pandas</span><br><span class="line">Name: pandas</span><br><span class="line">Version: 1.2.4</span><br><span class="line">Summary: Powerful data structures for data analysis, time series, and statistics</span><br><span class="line">Home-page: https:&#x2F;&#x2F;pandas.pydata.org</span><br><span class="line">Author: None</span><br><span class="line">Author-email: None</span><br><span class="line">License: BSD</span><br><span class="line">Location: &#x2F;Users&#x2F;joy&#x2F;opt&#x2F;anaconda3&#x2F;envs&#x2F;superset&#x2F;lib&#x2F;python3.7&#x2F;site-packages</span><br><span class="line">Requires: python-dateutil, pytz, numpy</span><br><span class="line">Required-by: superset</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(superset) ➜  incubator-superset <span class="attr">git:</span>(<span class="number">0.28</span>) pip show pandas</span><br><span class="line"><span class="attr">Name:</span> pandas</span><br><span class="line"><span class="attr">Version:</span> <span class="number">1.2</span><span class="number">.4</span></span><br><span class="line"><span class="attr">Summary:</span> Powerful data structures <span class="keyword">for</span> data analysis, time series, and statistics</span><br><span class="line">Home-<span class="attr">page:</span> <span class="attr">https:</span><span class="comment">//pandas.pydata.org</span></span><br><span class="line"><span class="attr">Author:</span> None</span><br><span class="line">Author-<span class="attr">email:</span> None</span><br><span class="line"><span class="attr">License:</span> BSD</span><br><span class="line"><span class="attr">Location:</span> <span class="regexp">/Users/</span>joy<span class="regexp">/opt/</span>anaconda3<span class="regexp">/envs/</span>superset<span class="regexp">/lib/</span>python3<span class="number">.7</span>/site-packages</span><br><span class="line"><span class="attr">Requires:</span> python-dateutil, pytz, numpy</span><br><span class="line">Required-<span class="attr">by:</span> superset</span><br></pre></td></tr></table></figure>
 
 <p>尝试安装低版本pandas 要求的0.23.1在python3.7上build失败，</p>
 <p>安装pandas==0.23.4  </p>
@@ -287,7 +340,7 @@
 <hr>
 <p>修改配置环境：</p>
 <p>重新创建conda虚拟环境，superset版本从0.28为0.36</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">conda deactive</span><br><span class="line"># 删除原有环境</span><br><span class="line">conda remove -n superset --all</span><br><span class="line"># 新建</span><br><span class="line">conda create -n superset python&#x3D;3.7</span><br><span class="line">conda activate superset</span><br><span class="line"></span><br><span class="line">git checkout 0.36</span><br><span class="line">……（后续安装步骤类似）</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">conda deactive</span><br><span class="line"><span class="comment"># 删除原有环境</span></span><br><span class="line">conda <span class="builtin-name">remove</span> -n superset --all</span><br><span class="line"><span class="comment"># 新建</span></span><br><span class="line">conda create -n superset <span class="attribute">python</span>=3.7</span><br><span class="line">conda activate superset</span><br><span class="line"></span><br><span class="line">git checkout 0.36</span><br><span class="line">……（后续安装步骤类似）</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：创建用户时有时可能因为用户邮箱等信息重复而创建失败</p>
 </blockquote>
@@ -299,18 +352,18 @@
 <p>尝试直接安装最新版1.0.1（直接pip install -e .）</p>
 <p>总算正常运行</p>
 <p><strong>配置superset</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#初始化数据库</span><br><span class="line">python superset db upgrade</span><br><span class="line"></span><br><span class="line">#初始化角色和权限</span><br><span class="line">python superset init</span><br><span class="line"></span><br><span class="line">#加载示例数据</span><br><span class="line">python superset load_examples</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#初始化数据库</span></span><br><span class="line">python superset db upgrade</span><br><span class="line"></span><br><span class="line"><span class="meta">#初始化角色和权限</span></span><br><span class="line">python superset init</span><br><span class="line"></span><br><span class="line"><span class="meta">#加载示例数据</span></span><br><span class="line">python superset load_examples</span><br></pre></td></tr></table></figure>
 <p><strong>安装编译前端文件，并进入前端开发者模式</strong></p>
 <ul>
 <li><p>安装nodejs：解压，建立软连接</p>
 <p>然后node -v 查看版本，查看正常即可</p>
 </li>
-<li><p>设置npm为淘宝镜像（原始地址：<a class="link"   target="_blank" rel="noopener" href="https://registry.npmjs.org)/" >https://registry.npmjs.org）<i class="fas fa-external-link-alt"></i></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org</span><br><span class="line">验证 &#96;npm config get registry&#96;</span><br></pre></td></tr></table></figure></li>
+<li><p>设置npm为淘宝镜像（原始地址：<span class="exturl" data-url="aHR0cHM6Ly9yZWdpc3RyeS5ucG1qcy5vcmcpLw==">https://registry.npmjs.org）<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="built_in">config</span> <span class="built_in">set</span> registry https:<span class="comment">//registry.npm.taobao.org</span></span><br><span class="line">验证 `npm <span class="built_in">config</span> <span class="built_in">get</span> registry`</span><br></pre></td></tr></table></figure></li>
 <li><p>进入superset/assets目录下（新版目录incubator-superset/superset-frontend/）,安装编译所需模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -d</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -d</span><br></pre></td></tr></table></figure></li>
 <li><p>编译前端文件，并进入前端开发者模式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build npm run dev </span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="builtin-name">run</span> build npm <span class="builtin-name">run</span> dev </span><br></pre></td></tr></table></figure>
 <p>注：如果这两部编译失败，可能是因为nodejs版本过低。可尝试升级nodejs再试。</p>
 <ul>
 <li>运行完npm run dev，命令窗口会停止，不要误以为是执行不下去，保持窗口开启状态即可，一有文件变动时，它会重新编译</li>
@@ -323,20 +376,20 @@
 <li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
 <li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
 </ul>
-<p>终于在<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A" >https://github.com/apache/superset/issues/9719找到解决办法：<i class="fas fa-external-link-alt"></i></a></p>
+<p>终于在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvOTcxOSVFNiU4OSVCRSVFNSU4OCVCMCVFOCVBNyVBMyVFNSU4NiVCMyVFNSU4QSU5RSVFNiVCMyU5NSVFRiVCQyU5QQ==">https://github.com/apache/superset/issues/9719找到解决办法：<i class="fa fa-external-link-alt"></i></span></p>
 <p>这位朋友和我的情况也一样</p>
-<img src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png" alt="image-20210415104252896" style="zoom:80%;" />
+<img data-src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png" alt="image-20210415104252896" style="zoom:80%;" />
 
 <p>解决：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall infi.clickhouse_orm</span><br><span class="line">pip install infi.clickhouse_orm&#x3D;&#x3D;1.0.4</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">pip</span> uninstall infi.clickhouse_orm</span><br><span class="line"><span class="attribute">pip</span> install infi.clickhouse_orm==<span class="number">1</span>.<span class="number">0</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure>
 <h2 id="Window-系统下安装完全解决"><a href="#Window-系统下安装完全解决" class="headerlink" title="Window 系统下安装完全解决"></a>Window 系统下安装完全解决</h2></li>
 </ul>
 <p>mac本出了点问题，转战工作电脑window系统</p>
 <h4 id="pip方式快速安装"><a href="#pip方式快速安装" class="headerlink" title="pip方式快速安装"></a>pip方式快速安装</h4><ul>
 <li><p>新建conda虚拟环境（主要为了降低试错成本，不影响其他环境）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n superset(环境名) python&#x3D;3.7</span><br><span class="line">conda activate superset</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">conda</span> create -n superset(环境名) python=<span class="number">3</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">conda</span> activate superset</span><br></pre></td></tr></table></figure></li>
 <li><p>虚拟环境中，安装superset</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install apache-superset -i https:&#x2F;&#x2F;pypi.mirrors.ustc.edu.cn&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install apache-superset -i https:<span class="regexp">//</span>pypi.mirrors.ustc.edu.cn<span class="regexp">/simple/</span></span><br></pre></td></tr></table></figure>
 <p>安装过程中可能出现的问题：</p>
 <ul>
 <li><p>提示需要Vitual c++ 14.0以上版本，个别依赖库编译失败，无法生成wheel：</p>
@@ -346,7 +399,7 @@
 </li>
 <li><p>安装成功后配置</p>
 <p>这一步之后很多博客要求进入superset/bin目录下执行python superset ……命令，可能由于版本问题，并不适用。之后步骤以此为准：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 初始化数据库</span><br><span class="line">superset db upgrade</span><br><span class="line"># 创建管理员用户</span><br><span class="line">superset fab create-admin</span><br><span class="line">(fabmanager create-admin --app superset 命令会出现nontype &quot;au_then&quot;?（记不清了）报错)</span><br><span class="line"># 初始化角色和权限</span><br><span class="line">superset init</span><br></pre></td></tr></table></figure>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化数据库</span></span><br><span class="line"><span class="string">superset</span> <span class="string">db</span> <span class="string">upgrade</span></span><br><span class="line"><span class="string"></span><span class="comment"># 创建管理员用户</span></span><br><span class="line"><span class="string">superset</span> <span class="string">fab</span> <span class="built_in">create-admin</span></span><br><span class="line"><span class="built_in">(fabmanager</span> <span class="built_in">create-admin</span> <span class="built_in">--app</span> <span class="string">superset</span> 命令会出现<span class="string">nontype</span> <span class="string">&quot;au_then&quot;</span>?（记不清了）报错)</span><br><span class="line"><span class="comment"># 初始化角色和权限</span></span><br><span class="line"><span class="string">superset</span> <span class="string">init</span></span><br></pre></td></tr></table></figure>
 <h4 id="二次开发环境安装"><a href="#二次开发环境安装" class="headerlink" title="二次开发环境安装"></a>二次开发环境安装</h4></li>
 </ul>
 <p>pip安装仅适合使用，不适合二次开发。二次开发需要源码下载</p>
@@ -356,12 +409,12 @@
 <li><p>从github上下载源码 </p>
 <p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
 </li>
-<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a class="link"   target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi" >https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fas fa-external-link-alt"></i></a></p>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2Rpc3QvdjEyLjQuMC9ub2RlLXYxMi40LjAteDY0Lm1zaQ==">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fa fa-external-link-alt"></i></span></p>
 <p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
 </li>
 <li><p>（这一步不确定什么用）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
 <p>删除G:\pyProduct\incubator-superset\superset\static\assets文件<br>输入代码(根据你下载代码的路径而定) </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mklink &#x2F;D &quot;D:\incubator-superset\superset\static\assets&quot; &quot;D:\incubator-superset\superset</span><br><span class="line">需要管理员模式运行</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mklink /D &quot;D:<span class="symbol">\i</span>ncubator-superset<span class="symbol">\s</span>uperset<span class="symbol">\s</span>tatic<span class="symbol">\a</span>ssets&quot; &quot;D:<span class="symbol">\i</span>ncubator-superset<span class="symbol">\s</span>uperset</span><br><span class="line">需要管理员模式运行</span><br></pre></td></tr></table></figure></li>
 <li><p>安装。进入下载好的源码目录 <code>incubator-superset</code> 中</p>
 <p><code>pip install -e .</code></p>
 <p>(新版的superset最外层目录下已经没有requirement.txt了，直接安装就可以)</p>
@@ -371,10 +424,10 @@
 </li>
 <li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
 <p>报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR in .&#x2F;src&#x2F;visualizations&#x2F;TimeTable&#x2F;TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997" >https://github.com/apache/superset/issues/10997<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>in ./src/visualizations/TimeTable/TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvMTA5OTc=">https://github.com/apache/superset/issues/10997<i class="fa fa-external-link-alt"></i></span></p>
 <p>修改目录下 webpack.config.js 文件：</p>
-<img src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png" alt="img" style="zoom:67%;" />
+<img data-src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png" alt="img" style="zoom:67%;" />
 
 <p>成功！</p>
 </li>
@@ -388,9 +441,9 @@
 <h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>windows和mac系统亲测有效</p>
 <h4 id="pip方式快速安装-1"><a href="#pip方式快速安装-1" class="headerlink" title="pip方式快速安装"></a>pip方式快速安装</h4><ul>
 <li><p>新建conda虚拟环境（主要为了降低试错成本，不影响其他环境）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n superset(环境名) python&#x3D;3.7</span><br><span class="line">conda activate superset</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">conda</span> create -n superset(环境名) python=<span class="number">3</span>.<span class="number">7</span></span><br><span class="line"><span class="attribute">conda</span> activate superset</span><br></pre></td></tr></table></figure></li>
 <li><p>虚拟环境中，安装superset</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install apache-superset -i https:&#x2F;&#x2F;pypi.mirrors.ustc.edu.cn&#x2F;simple&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install apache-superset -i https:<span class="regexp">//</span>pypi.mirrors.ustc.edu.cn<span class="regexp">/simple/</span></span><br></pre></td></tr></table></figure>
 <p>安装过程中可能出现的问题：</p>
 <ul>
 <li><p>提示需要Vitual c++ 14.0以上版本，个别依赖库编译失败，无法生成wheel：</p>
@@ -400,7 +453,7 @@
 </li>
 <li><p>安装成功后配置</p>
 <p>这一步之后很多博客要求进入superset/bin目录下执行python superset ……命令，可能由于版本问题，并不适用。之后步骤以此为准：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 初始化数据库</span><br><span class="line">superset db upgrade</span><br><span class="line"># 创建管理员用户</span><br><span class="line">superset fab create-admin</span><br><span class="line">(fabmanager create-admin --app superset 命令会出现nontype &quot;au_then&quot;?（记不清了）报错)</span><br><span class="line"># 初始化角色和权限</span><br><span class="line">superset init</span><br></pre></td></tr></table></figure>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化数据库</span></span><br><span class="line"><span class="string">superset</span> <span class="string">db</span> <span class="string">upgrade</span></span><br><span class="line"><span class="string"></span><span class="comment"># 创建管理员用户</span></span><br><span class="line"><span class="string">superset</span> <span class="string">fab</span> <span class="built_in">create-admin</span></span><br><span class="line"><span class="built_in">(fabmanager</span> <span class="built_in">create-admin</span> <span class="built_in">--app</span> <span class="string">superset</span> 命令会出现<span class="string">nontype</span> <span class="string">&quot;au_then&quot;</span>?（记不清了）报错)</span><br><span class="line"><span class="comment"># 初始化角色和权限</span></span><br><span class="line"><span class="string">superset</span> <span class="string">init</span></span><br></pre></td></tr></table></figure>
 <h4 id="二次开发环境安装-1"><a href="#二次开发环境安装-1" class="headerlink" title="二次开发环境安装"></a>二次开发环境安装</h4></li>
 </ul>
 <p>pip安装仅适合使用，不适合二次开发。二次开发需要源码下载</p>
@@ -410,12 +463,12 @@
 <li><p>从github上下载源码 </p>
 <p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
 </li>
-<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a class="link"   target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi" >https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fas fa-external-link-alt"></i></a></p>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2Rpc3QvdjEyLjQuMC9ub2RlLXYxMi40LjAteDY0Lm1zaQ==">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fa fa-external-link-alt"></i></span></p>
 <p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
 </li>
 <li><p>（这一步不确定什么用，mac 不需要）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
 <p>删除G:\pyProduct\incubator-superset\superset\static\assets文件 输入代码(根据你下载代码的路径而定) </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mklink &#x2F;D &quot;D:\incubator-superset\superset\static\assets&quot; &quot;D:\incubator-superset\superset</span><br><span class="line">需要管理员模式运行</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mklink /D &quot;D:<span class="symbol">\i</span>ncubator-superset<span class="symbol">\s</span>uperset<span class="symbol">\s</span>tatic<span class="symbol">\a</span>ssets&quot; &quot;D:<span class="symbol">\i</span>ncubator-superset<span class="symbol">\s</span>uperset</span><br><span class="line">需要管理员模式运行</span><br></pre></td></tr></table></figure></li>
 <li><p>安装。进入下载好的前端目录 <code>incubator-superset</code> 中</p>
 <p><code>pip install -e .</code></p>
 <p>(新版的superset最外层目录下已经没有requirement.txt了，直接安装就可以)</p>
@@ -425,10 +478,10 @@
 </li>
 <li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
 <p>报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR in .&#x2F;src&#x2F;visualizations&#x2F;TimeTable&#x2F;TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997" >https://github.com/apache/superset/issues/10997<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>in ./src/visualizations/TimeTable/TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvMTA5OTc=">https://github.com/apache/superset/issues/10997<i class="fa fa-external-link-alt"></i></span></p>
 <p>修改目录下 webpack.config.js 文件：</p>
-<p><img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918" alt="img"></p>
+<p><img data-src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918" alt="img"></p>
 <p>成功！</p>
 </li>
 <li><p>进入前端开发者模式 <code>npm run dev</code></p>
@@ -440,16 +493,16 @@
 <p><strong>1）提前下载源码和docker镜像</strong></p>
 <p>源码直接在github下载</p>
 <p>需要提前下载的镜像：apache/superset, redis, node, post和postgress</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在有网络的机器上进行镜像拉取</span><br><span class="line">docker pull xxx(镜像名)</span><br><span class="line">docker save -o xxx.tar(要保存的压缩包名) xxx(镜像名)</span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在有网络的机器上进行镜像拉取</span><br><span class="line"><span class="selector-tag">docker</span> <span class="selector-tag">pull</span> <span class="selector-tag">xxx</span>(镜像名)</span><br><span class="line"><span class="selector-tag">docker</span> <span class="selector-tag">save</span> <span class="selector-tag">-o</span> <span class="selector-tag">xxx</span><span class="selector-class">.tar</span>(要保存的压缩包名) <span class="selector-tag">xxx</span>(镜像名)</span><br></pre></td></tr></table></figure>
 <p><strong>2）在目标机器上安装</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将压缩包拷贝到目标机器上</span><br><span class="line">docker load -i xxx.tar(压缩包名)</span><br><span class="line"># 在目标机器上的源码目录下运行，等待容器创建和运行</span><br><span class="line">docker-compose up</span><br><span class="line">或 docker-compose -f docker-compose.yml up</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 将压缩包拷贝到目标机器上</span></span><br><span class="line">docker load -i xxx.tar(压缩包名)</span><br><span class="line"><span class="meta"># 在目标机器上的源码目录下运行，等待容器创建和运行</span></span><br><span class="line">docker-compose up</span><br><span class="line">或 docker-compose -f docker-compose.yml up</span><br></pre></td></tr></table></figure>
 
 
 
 
 <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ul>
 <li><p>安装client_driver时报错 OSError: mysql_config not found</p>
-<p>解决：<a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found" >https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fas fa-external-link-alt"></i></a></p>
+<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMjU0NTkzODYvbWFjLW9zLXgtZW52aXJvbm1lbnRlcnJvci1teXNxbC1jb25maWctbm90LWZvdW5k">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
 <p>Ok, well, first of all, let me check if I am on the same page as you:</p>
 <ul>
@@ -465,275 +518,275 @@
 <li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
 <li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
 </ul>
-<p>终于在<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A" >https://github.com/apache/superset/issues/9719找到解决办法：<i class="fas fa-external-link-alt"></i></a></p>
+<p>终于在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvOTcxOSVFNiU4OSVCRSVFNSU4OCVCMCVFOCVBNyVBMyVFNSU4NiVCMyVFNSU4QSU5RSVFNiVCMyU5NSVFRiVCQyU5QQ==">https://github.com/apache/superset/issues/9719找到解决办法：<i class="fa fa-external-link-alt"></i></span></p>
 <p>这位朋友和我的情况也一样</p>
-<p><img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918" alt="image-20210415104252896"></p>
+<p><img data-src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918" alt="image-20210415104252896"></p>
 <p>解决：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall infi.clickhouse_orm</span><br><span class="line">pip install infi.clickhouse_orm&#x3D;&#x3D;1.0.4</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">pip</span> uninstall infi.clickhouse_orm</span><br><span class="line"><span class="attribute">pip</span> install infi.clickhouse_orm==<span class="number">1</span>.<span class="number">0</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure></li>
 <li><p>如果出现pip install 安装过程中build wheel失败，直接下载对应库的wheel包进行单独pip install 即可。</p>
 </li>
 </ul>
-<h1 id="2-性能优化"><a href="#2-性能优化" class="headerlink" title="2. 性能优化"></a>2. 性能优化</h1><h3 id="Caching配置"><a href="#Caching配置" class="headerlink" title="Caching配置"></a>Caching配置</h3><p>官方文档：<a class="link"   target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/cache" >https://superset.apache.org/docs/installation/cache<i class="fas fa-external-link-alt"></i></a></p>
-<p>参考：<a class="link"   target="_blank" rel="noopener" href="https://yorke.gitbooks.io/superset-note/content/chapter1.html" >https://yorke.gitbooks.io/superset-note/content/chapter1.html<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="2-性能优化"><a href="#2-性能优化" class="headerlink" title="2. 性能优化"></a>2. 性能优化</h1><h3 id="Caching配置"><a href="#Caching配置" class="headerlink" title="Caching配置"></a>Caching配置</h3><p>官方文档：<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnNldC5hcGFjaGUub3JnL2RvY3MvaW5zdGFsbGF0aW9uL2NhY2hl">https://superset.apache.org/docs/installation/cache<i class="fa fa-external-link-alt"></i></span></p>
+<p>参考：<span class="exturl" data-url="aHR0cHM6Ly95b3JrZS5naXRib29rcy5pby9zdXBlcnNldC1ub3RlL2NvbnRlbnQvY2hhcHRlcjEuaHRtbA==">https://yorke.gitbooks.io/superset-note/content/chapter1.html<i class="fa fa-external-link-alt"></i></span></p>
 <h4 id="使用-Redis-做-Superset-的缓存"><a href="#使用-Redis-做-Superset-的缓存" class="headerlink" title="使用 Redis 做 Superset 的缓存"></a>使用 Redis 做 Superset 的缓存</h4><p>配置 Superset 的缓存后端，只需在其配置文件中提供一个 <code>CACHE_CONFIG</code> 常量即可。</p>
 <p>而对于 Redis，我们还需要一个运行一个 Redis 服务，以及安装一个 redis-py 库（Redis 的 Python 接口）。</p>
 <h5 id="安装-Redis"><a href="#安装-Redis" class="headerlink" title="安装 Redis"></a>安装 Redis</h5><p>当前 Redis 最新版为 3.2.8，在 <code>/opt/</code> 目录下安装并启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;</span><br><span class="line">wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-3.2.8.tar.gz</span><br><span class="line">tar xzvf redis-3.2.8.tar.gz</span><br><span class="line">cd redis-3.2.8&#x2F;</span><br><span class="line">make</span><br><span class="line">cd src&#x2F;</span><br><span class="line">.&#x2F;redis-server</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/opt/</span></span><br><span class="line">wget http:<span class="regexp">//</span>download.redis.io<span class="regexp">/releases/</span>redis-<span class="number">3.2</span>.<span class="number">8</span>.tar.gz</span><br><span class="line">tar xzvf redis-<span class="number">3.2</span>.<span class="number">8</span>.tar.gz</span><br><span class="line">cd redis-<span class="number">3.2</span>.<span class="number">8</span>/</span><br><span class="line">make</span><br><span class="line">cd src/</span><br><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
 <p>make时报错：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">……</span><br><span class="line">server.c: 在函数‘hasActiveChildProcess’中:</span><br><span class="line">server.c:1476:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘allPersistenceDisabled’中:</span><br><span class="line">server.c:1482:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘writeCommandsDeniedByDiskError’中:</span><br><span class="line">server.c:3747:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘iAmMaster’中:</span><br><span class="line">server.c:4914:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">make[1]: *** [server.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis/redis-6.0.0/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
-<p> 解决： <a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242" >https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242<i class="fas fa-external-link-alt"></i></a></p>
+<p> 解决： <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTYyNzAzMS9hcnRpY2xlL2RldGFpbHMvMTA3MTY2ODY3P3V0bV9tZWRpdW09ZGlzdHJpYnV0ZS5wY19yZWxldmFudC5ub25lLXRhc2stYmxvZy1iYWlkdWpzX3RpdGxlLTAmYW1wO3NwbT0xMDAxLjIxMDEuMzAwMS40MjQy">https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242<i class="fa fa-external-link-alt"></i></span></p>
 <p>升级gcc版本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 redis-6.0.5]# gcc -v                             # 查看gcc版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install centos-release-scl  # 升级到9.1版本</span><br><span class="line">[root@hadoop01 redis-6.0.5]# yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils</span><br><span class="line">[root@hadoop01 redis-6.0.5]# scl enable devtoolset-9 bash</span><br><span class="line">以上为临时启用，如果要长期使用gcc 9.1的话：</span><br><span class="line">[root@hadoop01 redis-6.0.5]# echo &quot;source &#x2F;opt&#x2F;rh&#x2F;devtoolset-9&#x2F;enable&quot; &gt;&gt;&#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
-<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-12 redis-6.0.0]# redis-cli</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># gcc -v                             # 查看gcc版本</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># yum -y install centos-release-scl  # 升级到9.1版本</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># scl enable devtoolset-9 bash</span></span><br><span class="line">以上为临时启用，如果要长期使用gcc <span class="number">9.1</span>的话：</span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># echo <span class="string">&quot;source /opt/rh/devtoolset-9/enable&quot;</span> &gt;&gt;/etc/profile</span></span><br></pre></td></tr></table></figure>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) <span class="string">[root@bigdata-12 redis-6.0.0]</span># redis-cli</span><br><span class="line"><span class="number">127.0.0.1:6379</span>&gt;</span><br></pre></td></tr></table></figure>
 <p>启动成功，查看进程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-12 redis-6.0.0]# ps -ef | grep redis</span><br><span class="line">root     17215 11601  0 16:14 pts&#x2F;5    00:00:00 .&#x2F;src&#x2F;redis-server *:6379 [cluster]</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) [root@bigdata-<span class="number">12</span> redis-<span class="number">6.0</span>.<span class="number">0</span>]<span class="comment"># ps -ef | grep redis</span></span><br><span class="line">root     <span class="number">17215</span> <span class="number">11601</span>  <span class="number">0</span> <span class="number">16</span>:<span class="number">14</span> pts<span class="regexp">/5    00:00:00 ./</span>src/redis-server *:<span class="number">6379</span> [cluster]</span><br></pre></td></tr></table></figure>
 <p>这里主机号应该是*而不是127.0.0.1，否则外部机器无法连接redis服务。</p>
 <p>如果为127.0.0.1，修改redis.conf文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1&gt;注释掉bind</span><br><span class="line">#bind 127.0.0.1</span><br><span class="line">2&gt;默认不是守护进程方式运行，这里可以修改</span><br><span class="line">daemonize no</span><br><span class="line">3&gt;禁用保护模式</span><br><span class="line">protected-mode no</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">1&gt;</span><span class="bash">注释掉<span class="built_in">bind</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">bind</span> 127.0.0.1</span></span><br><span class="line"><span class="meta">2&gt;</span><span class="bash">默认不是守护进程方式运行，这里可以修改</span></span><br><span class="line">daemonize no</span><br><span class="line"><span class="meta">3&gt;</span><span class="bash">禁用保护模式</span></span><br><span class="line">protected-mode no</span><br></pre></td></tr></table></figure>
 <p>启动Redis时指明配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server ..&#x2F;redis.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">redis</span></span>-server ../redis.conf</span><br></pre></td></tr></table></figure>
 <h5 id="安装-redis-py"><a href="#安装-redis-py" class="headerlink" title="安装 redis-py"></a>安装 redis-py</h5><p>在 Superset 所在虚拟环境中安装 redis-py：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install redis</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> redis</span><br></pre></td></tr></table></figure>
 <h5 id="配置使用-Redis-做缓存"><a href="#配置使用-Redis-做缓存" class="headerlink" title="配置使用 Redis 做缓存"></a>配置使用 Redis 做缓存</h5><p>在 Superset 的 config.py 中，做如下配置：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line">...</span><br><span class="line">CACHE_DEFAULT_TIMEOUT = <span class="number">500</span> <span class="comment"># 默认超时时间</span></span><br><span class="line">CACHE_CONFIG = &#123;</span><br><span class="line">    <span class="string">&#x27;CACHE_TYPE&#x27;</span>: <span class="string">&#x27;redis&#x27;</span>, <span class="comment"># 使用 Redis</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_HOST&#x27;</span>: <span class="string">&#x27;localhost&#x27;</span>, <span class="comment"># 配置域名</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_PORT&#x27;</span>: <span class="number">6379</span>, <span class="comment"># 配置端口号</span></span><br><span class="line">    <span class="string">&#x27;CACHE_REDIS_URL&#x27;</span>: <span class="string">&#x27;redis://localhost:6379&#x27;</span> <span class="comment"># 配置 URL</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>重新启动 Superset</p>
 <p>打开任意 Dashboard，观察后台打印情况</p>
 <p>配置成功！</p>
 <h5 id="其他问题-1"><a href="#其他问题-1" class="headerlink" title="其他问题"></a>其他问题</h5>
-        </div>
-
-        
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>本文标题：Superset 上手记录</li>
-        <li>本文作者：可爱的小富婆</li>
-        <li>创建时间：2021-04-21 10:56:56</li>
-        <li>
-            本文链接：yinjiangyi.git.io2021/04/21/Superset上手记录/
-        </li>
-        <li>
-            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
-        </li>
-    </ul>
-</div>
-
-            </div>
-        
-
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">不学废之——git篇</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Linux服务器安装Python3</span>
-                                <span class="post-nav-item">下一篇</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2020</span>&nbsp;-&nbsp;
-            
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
-        </div>
-        
-
-    </div>
-</footer>
-
-        </div>
     </div>
 
     
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/superset/" rel="tag"><i class="fa fa-tag"></i> superset</a>
+          </div>
+
         
 
-        <!-- go comment -->
+
         
-    </ul>
-</div>
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/20/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85Python3/" rel="prev" title="Linux服务器安装Python3">
+      <i class="fa fa-chevron-left"></i> Linux服务器安装Python3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/17/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/" rel="next" title="Git介绍及常用操作">
+      Git介绍及常用操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
-    
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
 
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
         </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
+        <li class="sidebar-nav-overview">
+          Overview
         </li>
+      </ul>
 
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1. 关于安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac%E7%B3%BB%E7%BB%9F%E8%B8%A9%E5%9D%91"><span class="nav-number">1.1.</span> <span class="nav-text">Mac系统踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">基于docker安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Epip%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">基于pip安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Window-%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%AE%89%E8%A3%85%E5%AE%8C%E5%85%A8%E8%A7%A3%E5%86%B3"><span class="nav-number">1.2.</span> <span class="nav-text">Window 系统下安装完全解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">二次开发环境安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">最终版解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">二次开发环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85%E5%92%8CDashboard%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">无网络环境下基于docker安装和Dashboard迁移</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.3.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2. 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching%E9%85%8D%E7%BD%AE"><span class="nav-number">2.0.1.</span> <span class="nav-text">Caching配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A-Superset-%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">使用 Redis 做 Superset 的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Redis"><span class="nav-number">2.0.1.1.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">2.0.1.1.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-redis-py"><span class="nav-number">2.0.1.1.3.</span> <span class="nav-text">安装 redis-py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.1.4.</span> <span class="nav-text">配置使用 Redis 做缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98-1"><span class="nav-number">2.0.1.1.5.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
 
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-    </ul>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yin"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yin</p>
+  <div class="site-description" itemprop="description">盐于律己，甜以待人</div>
 </div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%85%B3%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1. 关于安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac%E7%B3%BB%E7%BB%9F%E8%B8%A9%E5%9D%91"><span class="nav-number">1.1.</span> <span class="nav-text">Mac系统踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">基于docker安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Epip%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">基于pip安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Window-%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%AE%89%E8%A3%85%E5%AE%8C%E5%85%A8%E8%A7%A3%E5%86%B3"><span class="nav-number">1.2.</span> <span class="nav-text">Window 系统下安装完全解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">二次开发环境安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">最终版解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pip%E6%96%B9%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">pip方式快速安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">二次开发环境安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85%E5%92%8CDashboard%E8%BF%81%E7%A7%BB"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">无网络环境下基于docker安装和Dashboard迁移</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.3.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2. 性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caching%E9%85%8D%E7%BD%AE"><span class="nav-number">2.0.1.</span> <span class="nav-text">Caching配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A-Superset-%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">使用 Redis 做 Superset 的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Redis"><span class="nav-number">2.0.1.1.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">2.0.1.1.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-redis-py"><span class="nav-number">2.0.1.1.3.</span> <span class="nav-text">安装 redis-py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-Redis-%E5%81%9A%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.1.4.</span> <span class="nav-text">配置使用 Redis 做缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98-1"><span class="nav-number">2.0.1.1.5.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
 </div>
 
 
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fas fa-times"></i>
-            </span>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
+
     </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yin</span>
 </div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  </div>
 
-    
-
-</main>
-
-
-
-<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
-
-
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+        
 
 
 
 
 
 
-<div class="post-scripts">
-    
-        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
-    
-</div>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
 
 
 
-</body>
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

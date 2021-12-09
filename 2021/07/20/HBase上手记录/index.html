@@ -1,216 +1,275 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en-US">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="计算机网络,编程,算法">
-    <meta name="description" content="盐于律己，甜以待人">
-    <meta name="author" content="可爱的小富婆">
-    
-    <title>
-        
-            HBase上手记录 |
-        
-        JOY&#39;s Blog
-    </title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="shortcut icon" href="/images/logo.jpg">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/css/font-awesome.min.css">
-    <script id="hexo-configurations">
-    let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"yinjiangyi.github.io","root":"/","language":"zh-CN","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#CC9999","avatar":"/images/avatar.jpg","favicon":"/images/logo.jpg","img_position":"center","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/gb1.jpg","description":"有所为，有所爱，有所期待"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.0"};
-    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"};
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
+  <link rel="manifest" href="/images/avatar.jpg">
+  <meta name="msapplication-config" content="/images/avatar.jpg">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yinjiangyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":320,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+
+  <meta name="description" content="HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的分布式存储系统”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HBase上手记录">
+<meta property="og:url" content="https://yinjiangyi.github.io/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Joy&#39;s blog">
+<meta property="og:description" content="HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的分布式存储系统”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-58697c09af0a80f04af4b2231e6a0813_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-8b4c896c9decec36b89e6b2fee968c6a_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-fac481c6ec3efacce0ec3f3c7d127db0_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-de19abe0e27b1660e3474bd11aaf8d61_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-433053cc5a4dfe5a9d26f9231cdaca5e_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a08e56a695e366a580c12514ffe09a21_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-5c2c05489dc0c4af823d26641dc0e477_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-f9029a2beaf2b07d9ae949013ddca351_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w.jpg">
+<meta property="og:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/726151-20170227162331001-824551785.png">
+<meta property="article:published_time" content="2021-07-20T02:16:47.000Z">
+<meta property="article:modified_time" content="2021-12-09T02:37:50.947Z">
+<meta property="article:author" content="Yin">
+<meta property="article:tag" content="HBase">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yinjiangyi.github.io/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-58697c09af0a80f04af4b2231e6a0813_720w.jpg">
+
+<link rel="canonical" href="https://yinjiangyi.github.io/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
 
 
-<body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en-US'
+  };
+</script>
 
-    
+  <title>HBase上手记录 | Joy's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Joy's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">有趣有盼，无灾无难</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
 
 
-<main class="page-container">
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
 
     
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
-    <div class="page-main-content">
 
-        <div class="page-main-content-top">
-            <header class="header-wrapper">
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="header-content">
-        <div class="left">
-            <a class="logo-title" href="/">
-                JOY&#39;s Blog
-            </a>
-        </div>
-
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                分类
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
+          <div class="content post posts-expand">
             
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">分类</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-        </ul>
-    </div>
 
-    <div class="window-mask"></div>
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
+    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/07/20/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
 
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle">
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <span class="title-hover-animation">HBase上手记录</span>
-        </div>
-
-        
-            <div class="article-header">
-                <div class="avatar">
-                    <img src="/images/avatar.jpg">
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <span class="name">可爱的小富婆</span>
-                        
-                            <span class="author-label">Lv2</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2021-07-20 10:16:47
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Yin">
+      <meta itemprop="description" content="盐于律己，甜以待人">
     </span>
-    
-        <span class="article-categories article-meta-item">
-            <i class="fas fa-folder"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/HBase/">HBase</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Joy's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HBase上手记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-20 10:16:47" itemprop="dateCreated datePublished" datetime="2021-07-20T10:16:47+08:00">2021-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-09 10:37:50" itemprop="dateModified" datetime="2021-12-09T10:37:50+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bigdata/" itemprop="url" rel="index"><span itemprop="name">bigdata</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
 
     
     
     
-    
-        <span class="article-pv article-meta-item">
-            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
-</div>
+    <div class="post-body" itemprop="articleBody">
 
-                    </div>
-                </div>
-            </div>
-        
+      
+        <p>HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTUlODglODYlRTUlQjglODMlRTUlQkMlOEYlRTUlQUQlOTglRTUlODIlQTglRTclQjMlQkIlRTclQkIlOUYvNjYwODg3NQ==">分布式存储系统<i class="fa fa-external-link-alt"></i></span>”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。另一个不同的是HBase基于列的而不是基于行的模式。</p>
+<a id="more"></a>
 
-        <div class="article-content markdown-body">
-            <p><a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145551967" >https://zhuanlan.zhihu.com/p/145551967<i class="fas fa-external-link-alt"></i></a></p>
 <h1 id="一、HBase是什么"><a href="#一、HBase是什么" class="headerlink" title="一、HBase是什么"></a>一、HBase是什么</h1><blockquote>
-<p><a class="link"   href="https://link.zhihu.com/?target=https://www.apache.org/" >Apache<i class="fas fa-external-link-alt"></i></a> HBase™ is the <a class="link"   href="https://link.zhihu.com/?target=https://hadoop.apache.org/" >Hadoop<i class="fas fa-external-link-alt"></i></a> database, a distributed, scalable, big data store.<br>HBase is a type of “NoSQL” database.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9saW5rLnpoaWh1LmNvbS8/dGFyZ2V0PWh0dHBzOi8vd3d3LmFwYWNoZS5vcmcv">Apache<i class="fa fa-external-link-alt"></i></span> HBase™ is the <span class="exturl" data-url="aHR0cHM6Ly9saW5rLnpoaWh1LmNvbS8/dGFyZ2V0PWh0dHBzOi8vaGFkb29wLmFwYWNoZS5vcmcv">Hadoop<i class="fa fa-external-link-alt"></i></span> database, a distributed, scalable, big data store.<br>HBase is a type of “NoSQL” database.</p>
 </blockquote>
 <p>Apache HBase 是 Hadoop 数据库，一个分布式、可伸缩的<strong>大数据存储</strong>。</p>
 <p>HBase是依赖Hadoop的。为什么HBase能存储海量的数据？<strong>因为HBase是在HDFS的基础之上构建的，HDFS是分布式文件系统</strong>。</p>
@@ -225,10 +284,10 @@
 <p>HBase的数据其实也是存储在HDFS上的。HDFS是文件系统，而HBase是数据库，其实也没啥可比性。「<strong>你可以把HBase当做是MySQL，把HDFS当做是硬盘。HBase只是一个NoSQL数据库，把数据存在HDFS上</strong>」。HBase在HDFS之上提供了<strong>高并发的随机写和支持实时查询</strong>，这是HDFS不具备的。HBase还有一个特点就是：<strong>存储数据的”结构“可以地非常灵活</strong>。</p>
 <h1 id="三、入门HBase"><a href="#三、入门HBase" class="headerlink" title="三、入门HBase"></a>三、入门HBase</h1><h2 id="1-列式存储"><a href="#1-列式存储" class="headerlink" title="1. 列式存储"></a>1. 列式存储</h2><p><strong>什么是列式存储？</strong></p>
 <p>MySQL存储的结构是典型的关系型数据库，数据是一行一行的形式。</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-58697c09af0a80f04af4b2231e6a0813_720w.jpg" alt="v2-58697c09af0a80f04af4b2231e6a0813_720w" style="zoom:25%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-58697c09af0a80f04af4b2231e6a0813_720w.jpg" alt="v2-58697c09af0a80f04af4b2231e6a0813_720w" style="zoom:25%;" />
 
 <p>换成列式存储</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-8b4c896c9decec36b89e6b2fee968c6a_720w.jpg" alt="v2-8b4c896c9decec36b89e6b2fee968c6a_720w" style="zoom:25%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-8b4c896c9decec36b89e6b2fee968c6a_720w.jpg" alt="v2-8b4c896c9decec36b89e6b2fee968c6a_720w" style="zoom:25%;" />
 
 <p>也就是把每列抽出来，关联上行ID。<strong>这样做的好处是，省空间</strong>。 以前我们一行记录多个属性(列)，有部分的列是空缺的，但是我们还是需要空间去存储。现在把这些列全部拆开，有什么我们就存什么，这样空间就能被我们充分利用。</p>
 <p>这种形式更像<strong>Key-value</strong>。</p>
@@ -237,30 +296,30 @@
 <p><strong>在HBase里边，先有列族，后有列</strong>。</p>
 <p>什么是列族？可以简单理解为：列的属性类别</p>
 <p>什么是列修饰符？先有列族后有列，在列族下用列修饰符来标识一列。</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w.jpg" alt="v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w" style="zoom: 50%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w.jpg" alt="v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w" style="zoom: 50%;" />
 
 <p>HBase表的每一行中，列的组成都是<strong>灵活</strong>的，<strong>行与行之间的列不需要相同</strong>。如图下：</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-fac481c6ec3efacce0ec3f3c7d127db0_720w.jpg" alt="img" style="zoom:33%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-fac481c6ec3efacce0ec3f3c7d127db0_720w.jpg" alt="img" style="zoom:33%;" />
 
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-de19abe0e27b1660e3474bd11aaf8d61_720w.jpg" alt="img" style="zoom: 50%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-de19abe0e27b1660e3474bd11aaf8d61_720w.jpg" alt="img" style="zoom: 50%;" />
 
 <p>换句话说：<strong>一个列族下可以任意添加列，不受任何限制</strong></p>
 <p><strong>数据写到HBase的时候都会被记录一个时间戳，这个时间戳被我们当做一个版本。比如说，我们修改或者删除某一条的时候，本质上是往里边新增一条数据，记录的版本加一了而已。</strong></p>
 <p>比如现在我们有一条记录：</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-433053cc5a4dfe5a9d26f9231cdaca5e_720w.jpg" alt="img" style="zoom: 50%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-433053cc5a4dfe5a9d26f9231cdaca5e_720w.jpg" alt="img" style="zoom: 50%;" />
 
 <p>现在要把这条记录的值改为40，实际上就是多添加一条记录，在读的时候按照时间戳<strong>读最新</strong>的记录。在外界「看起来」就是把这条记录改了。</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a08e56a695e366a580c12514ffe09a21_720w.jpg" alt="img" style="zoom:50%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a08e56a695e366a580c12514ffe09a21_720w.jpg" alt="img" style="zoom:50%;" />
 
 <h2 id="3-HBase的Key-Value结构"><a href="#3-HBase的Key-Value结构" class="headerlink" title="3. HBase的Key-Value结构"></a>3. HBase的Key-Value结构</h2><p>HBase的Key-Value结构图：</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-5c2c05489dc0c4af823d26641dc0e477_720w.jpg" alt="v2-5c2c05489dc0c4af823d26641dc0e477_720w" style="zoom: 50%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-5c2c05489dc0c4af823d26641dc0e477_720w.jpg" alt="v2-5c2c05489dc0c4af823d26641dc0e477_720w" style="zoom: 50%;" />
 
 <blockquote>
 <p>Key = Row Key + Column Family + Column Qualifier + Time stamp + Key Type</p>
 <p>Value是实际的字段值</p>
 </blockquote>
 <h2 id="4-HBase架构"><a href="#4-HBase架构" class="headerlink" title="4. HBase架构"></a>4. HBase架构</h2><p>架构图：</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-f9029a2beaf2b07d9ae949013ddca351_720w.jpg" alt="v2-f9029a2beaf2b07d9ae949013ddca351_720w" style="zoom: 67%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-f9029a2beaf2b07d9ae949013ddca351_720w.jpg" alt="v2-f9029a2beaf2b07d9ae949013ddca351_720w" style="zoom: 67%;" />
 
 <p>1、<strong>Client</strong>客户端，它提供了访问HBase的接口，并且维护了对应的cache来加速HBase的访问。</p>
 <p>2、<strong>Zookeeper</strong>存储HBase的元数据（meta表），无论是读还是写数据，都是去Zookeeper里边拿到meta元数据<strong>告诉给客户端去哪台机器读写数据</strong></p>
@@ -268,7 +327,7 @@
 <p>4、HMaster处理 HRegion 的分配或转移。如果我们HRegion的数据量太大的话，HMaster会对拆分后的Region<strong>重新分配RegionServer</strong>。HMaster会处理元数据的变更和监控RegionServer的状态。</p>
 <p>总结大致的流程就是：<strong>client请求到Zookeeper，然后Zookeeper返回HRegionServer地址给client，client得到Zookeeper返回的地址去请求HRegionServer，HRegionServer读写数据后返回给client。</strong></p>
 <p>HRegionServer内部结构图：</p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w.jpg" alt="v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w" style="zoom:80%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w.jpg" alt="v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w" style="zoom:80%;" />
 
 <ul>
 <li>一张hbase表按照RowKey进行横向切割，每个HRegionServer中包含多个<code>HRegion</code>，每个HRegion存储横向切割后的一部分数据。</li>
@@ -281,257 +340,257 @@
 <h2 id="1-HBase-shell操作"><a href="#1-HBase-shell操作" class="headerlink" title="1. HBase shell操作"></a>1. HBase shell操作</h2><p><code>hbase shell</code> 命令进入命令行，查看表格:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt; list</span><br><span class="line">TABLE</span><br><span class="line">aaa</span><br><span class="line">bucket-0915</span><br><span class="line">entity_cert_serial</span><br><span class="line">entity_client_ip</span><br><span class="line">entity_file</span><br><span class="line">entity_fqdn</span><br><span class="line">entity_mail</span><br><span class="line">entity_qq_account</span><br><span class="line">entity_server_ip</span><br><span class="line">entity_user_id</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 <p>创建表，表名hbase_1102，HBase表是由Key-Value组成的，此表中Key为NAME </p>
-<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/726151-20170227162331001-824551785.png" alt="img" style="zoom:75%;" />
+<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/726151-20170227162331001-824551785.png" alt="img" style="zoom:75%;" />
 
 <p>此表有两个列族，CF1和CF2，其中CF1和CF2下分别有两个列name和gender，Chinese和Math<br>创建表hbase_1102有两个列族CF1和CF2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):041:0&gt; create &#39;hbase_1102&#39;,  &#123;NAME&#x3D;&gt;&#39;cf1&#39;&#125;, &#123;NAME&#x3D;&gt;&#39;cf2&#39;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):<span class="number">041</span>:<span class="number">0</span>&gt; <span class="keyword">create</span> <span class="string">&#x27;hbase_1102&#x27;</span>,  &#123;<span class="type">NAME</span>=&gt;<span class="string">&#x27;cf1&#x27;</span>&#125;, &#123;<span class="type">NAME</span>=&gt;<span class="string">&#x27;cf2&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
 <p>向表中添加数据，在想HBase的表中添加数据的时候，只能一列一列的添加，不能同时添加多列。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):042:0&gt; put&#39;hbase_1102&#39;, &#39;001&#39;,&#39;cf1:name&#39;,&#39;Tom&#39;</span><br><span class="line">hbase(main):043:0&gt; put&#39;hbase_1102&#39;, &#39;001&#39;,&#39;cf1:gender&#39;,&#39;man&#39;</span><br><span class="line">hbase(main):044:0&gt; put&#39;hbase_1102&#39;, &#39;001&#39;,&#39;cf2:chinese&#39;,&#39;90&#39;</span><br><span class="line">hbase(main):045:0&gt; put&#39;hbase_1102&#39;, &#39;001&#39;,&#39;cf2:math&#39;,&#39;91&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">hbase</span><span class="params">(main)</span></span>:<span class="number">042</span>:<span class="number">0</span>&gt; put<span class="string">&#x27;hbase_1102&#x27;</span>, <span class="string">&#x27;001&#x27;</span>,<span class="string">&#x27;cf1:name&#x27;</span>,<span class="string">&#x27;Tom&#x27;</span></span><br><span class="line"><span class="function"><span class="title">hbase</span><span class="params">(main)</span></span>:<span class="number">043</span>:<span class="number">0</span>&gt; put<span class="string">&#x27;hbase_1102&#x27;</span>, <span class="string">&#x27;001&#x27;</span>,<span class="string">&#x27;cf1:gender&#x27;</span>,<span class="string">&#x27;man&#x27;</span></span><br><span class="line"><span class="function"><span class="title">hbase</span><span class="params">(main)</span></span>:<span class="number">044</span>:<span class="number">0</span>&gt; put<span class="string">&#x27;hbase_1102&#x27;</span>, <span class="string">&#x27;001&#x27;</span>,<span class="string">&#x27;cf2:chinese&#x27;</span>,<span class="string">&#x27;90&#x27;</span></span><br><span class="line"><span class="function"><span class="title">hbase</span><span class="params">(main)</span></span>:<span class="number">045</span>:<span class="number">0</span>&gt; put<span class="string">&#x27;hbase_1102&#x27;</span>, <span class="string">&#x27;001&#x27;</span>,<span class="string">&#x27;cf2:math&#x27;</span>,<span class="string">&#x27;91&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>这样表结构就起来了，其实比较自由，列族里边可以自由添加子列很方便。如果列族下没有子列，加不加冒号都是可以的。</p>
 <p>如果在添加数据的时候，需要手动的设置时间戳，则在put命令的最后加上相应的时间戳，时间戳是long类型的，所以不需要加引号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):045:0&gt; put&#39;hbase_1102&#39;, &#39;001&#39;,&#39;cf2:math&#39;,&#39;91&#39;，1478053832459</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">hbase</span>(main):<span class="number">045</span>:<span class="number">0</span>&gt; put&#x27;hbase_<span class="number">1102</span>&#x27;, &#x27;<span class="number">001</span>&#x27;,&#x27;cf<span class="number">2</span>:math&#x27;,&#x27;<span class="number">91</span>&#x27;，<span class="number">1478053832459</span></span><br></pre></td></tr></table></figure>
 <p>查看表中的所有数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):046:0&gt; scan &#39;hbase_1102&#39;</span><br><span class="line">ROW   COLUMN+CELL                                                             </span><br><span class="line"> 001  column&#x3D;cf1:gender, timestamp&#x3D;1478053832459, value&#x3D;man                   </span><br><span class="line"> 001  column&#x3D;cf1:name, timestamp&#x3D;1478053787178, value&#x3D;Tom                     </span><br><span class="line"> 001  column&#x3D;cf2:chinese, timestamp&#x3D;1478053848225, value&#x3D;90001  column&#x3D;cf2:math, timestamp&#x3D;1478053858144, value&#x3D;911 row(s) in0.0140seconds</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):046:0&gt; scan <span class="string">&#x27;hbase_1102&#x27;</span></span><br><span class="line">ROW   COLUMN+CELL                                                             </span><br><span class="line"> 001  <span class="attribute">column</span>=cf1:gender, <span class="attribute">timestamp</span>=1478053832459, <span class="attribute">value</span>=man                   </span><br><span class="line"> 001  <span class="attribute">column</span>=cf1:name, <span class="attribute">timestamp</span>=1478053787178, <span class="attribute">value</span>=Tom                     </span><br><span class="line"> 001  <span class="attribute">column</span>=cf2:chinese, <span class="attribute">timestamp</span>=1478053848225, <span class="attribute">value</span>=90001  <span class="attribute">column</span>=cf2:math, <span class="attribute">timestamp</span>=1478053858144, <span class="attribute">value</span>=911 row(s) in0.0140seconds</span><br></pre></td></tr></table></figure>
 <p>查看其中某一个Key的数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):048:0&gt; get&#39;hbase_1102&#39;,&#39;001&#39;</span><br><span class="line">COLUMN                    CELL                                                                    </span><br><span class="line"> cf1:gender               timestamp&#x3D;1478053832459, value&#x3D;man                                      </span><br><span class="line"> cf1:name                 timestamp&#x3D;1478053787178, value&#x3D;Tom                                      </span><br><span class="line"> cf2:chinese              timestamp&#x3D;1478053848225, value&#x3D;90                                       </span><br><span class="line"> cf2:math                 timestamp&#x3D;1478053858144, value&#x3D;914 row(s) in0.0290seconds</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):048:0&gt; get<span class="string">&#x27;hbase_1102&#x27;</span>,<span class="string">&#x27;001&#x27;</span></span><br><span class="line">COLUMN                    CELL                                                                    </span><br><span class="line"> cf1:gender               <span class="attribute">timestamp</span>=1478053832459, <span class="attribute">value</span>=man                                      </span><br><span class="line"> cf1:name                 <span class="attribute">timestamp</span>=1478053787178, <span class="attribute">value</span>=Tom                                      </span><br><span class="line"> cf2:chinese              <span class="attribute">timestamp</span>=1478053848225, <span class="attribute">value</span>=90                                       </span><br><span class="line"> cf2:math                 <span class="attribute">timestamp</span>=1478053858144, <span class="attribute">value</span>=914 row(s) in0.0290seconds</span><br></pre></td></tr></table></figure>
 <p>添加一个列族</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter &#x27;member&#x27;, &#x27;id&#x27;</span><br></pre></td></tr></table></figure>
 <p>删除一个列族</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter &#x27;member&#x27;, &#123;NAME =&gt; &#x27;member_id&#x27;, METHOD =&gt; &#x27;delete’&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-
-        
-            <div class="post-copyright-info">
-                <div class="article-copyright-info-container">
-    <ul>
-        <li>本文标题：HBase上手记录</li>
-        <li>本文作者：可爱的小富婆</li>
-        <li>创建时间：2021-07-20 10:16:47</li>
-        <li>
-            本文链接：yinjiangyi.git.io2021/07/20/HBase上手记录/
-        </li>
-        <li>
-            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
-        </li>
-    </ul>
-</div>
-
-            </div>
-        
-
-        
-            <div class="article-nav">
-                
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Flink从入门到放弃01——Flink简介</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next">
-                        <a class="next"
-                           rel="next"
-                           href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/"
-                        >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">DDos攻击与保护</span>
-                                <span class="post-nav-item">下一篇</span>
-                            </span>
-                            <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-        
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-              <span>2020</span>&nbsp;-&nbsp;
-            
-            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">可爱的小富婆</a>
-        </div>
-        
-            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv">
-                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv">
-                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.0</a>
-        </div>
-        
-
-    </div>
-</footer>
-
-        </div>
     </div>
 
     
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item page-aside-toggle">
-                <i class="fas fa-outdent"></i>
-            </li>
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/HBase/" rel="tag"><i class="fa fa-tag"></i> HBase</a>
+          </div>
+
         
 
-        <!-- go comment -->
+
         
-    </ul>
-</div>
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" rel="prev" title="DDos攻击与保护">
+      <i class="fa fa-chevron-left"></i> DDos攻击与保护
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/08/Flink%E4%BB%8E0%E5%88%B01%EF%BC%9A01-Flink%E7%AE%80%E4%BB%8B/" rel="next" title="Flink从入门到放弃01——Flink简介">
+      Flink从入门到放弃01——Flink简介 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
-    
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
 
-    <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
         </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
+        <li class="sidebar-nav-overview">
+          Overview
         </li>
+      </ul>
 
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81HBase%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">一、HBase是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8HBase"><span class="nav-number">2.</span> <span class="nav-text">二、为什么用HBase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%A5%E9%97%A8HBase"><span class="nav-number">3.</span> <span class="nav-text">三、入门HBase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="nav-number">3.1.</span> <span class="nav-text">1. 列式存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HBase%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">2. HBase的数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-HBase%E7%9A%84Key-Value%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">3. HBase的Key-Value结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-HBase%E6%9E%B6%E6%9E%84"><span class="nav-number">3.4.</span> <span class="nav-text">4. HBase架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81HBase%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">四、HBase实际操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HBase-shell%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">1. HBase shell操作</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
 
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-    </ul>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Yin"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Yin</p>
+  <div class="site-description" itemprop="description">盐于律己，甜以待人</div>
 </div>
-
-    </div>
-
-    
-        <aside class="page-aside">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81HBase%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">一、HBase是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8HBase"><span class="nav-number">2.</span> <span class="nav-text">二、为什么用HBase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%A5%E9%97%A8HBase"><span class="nav-number">3.</span> <span class="nav-text">三、入门HBase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="nav-number">3.1.</span> <span class="nav-text">1. 列式存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HBase%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">2. HBase的数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-HBase%E7%9A%84Key-Value%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">3. HBase的Key-Value结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-HBase%E6%9E%B6%E6%9E%84"><span class="nav-number">3.4.</span> <span class="nav-text">4. HBase架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81HBase%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">四、HBase实际操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HBase-shell%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">1. HBase shell操作</span></a></li></ol></li></ol>
-    </div>
-</div>
-        </aside>
-    
-
-    <div class="image-viewer-container">
-    <img src="">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
 </div>
 
 
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fas fa-times"></i>
-            </span>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
+
     </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yin</span>
 </div>
+  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  </div>
 
-    
-
-</main>
-
-
-
-<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/dark-light-toggle.js"></script>
-
-
-    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/local-search.js"></script>
+        
 
 
 
 
 
 
-<div class="post-scripts">
-    
-        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.0/source/js/toc.js"></script>
-    
-</div>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
 
 
 
-</body>
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
