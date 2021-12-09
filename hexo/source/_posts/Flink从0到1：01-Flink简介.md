@@ -7,11 +7,17 @@ categories: BigData
 sticky:
 ---
 
+Apache Flink是一个面向数据流处理和批量数据处理的可分布式的开源计算框架，它基于同一个Flink流式执行模型（streaming execution model），能够支持流处理和批处理两种应用类型。由于流处理和批处理所提供的SLA(服务等级协议)是完全不相同， 流处理一般需要支持低延迟、Exactly-once保证，而批处理需要支持高吞吐、高效处理，所以在实现的时候通常是分别给出两套实现方法，或者通过一个独立的开源框架来实现其中每一种处理方案。
+
+<!-- more -->
+
 # Flink是什么
 
 Apache flink前身是柏林理工大学一个研究性项目， 在 2014 被 Apache 孵化器接收，然后迅速地成为了Apache Software Foundation的顶级项目之一。
 
 > Apache Flink is a framework and ***distributed*** processing engine for ***stateful*** computations over ***unbounded and bounded*** data ***streams***.
+
+
 
 # 为什么选择Flink
 

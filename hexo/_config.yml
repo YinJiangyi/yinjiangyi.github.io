@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: yinjiangyi's blog
-subtitle: '再不学人就要废了'
+title: Joy's blog
+subtitle: '有趣有盼，无灾无难'
 description: '盐于律己，甜以待人'
 keywords: 计算机网络,编程,算法
 author: Yin
-language: zh-CN
+language: en-US
 timezone: 'Asia/Shanghai'
 
 # URL
@@ -47,7 +47,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
   wrap: true
   hljs: false
@@ -98,7 +98,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: keep
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -106,3 +106,10 @@ deploy:
   type: git
   repo: https://github.com/YinJiangyi/yinjiangyi.github.io.git
   branch: master
+
+# Search
+search:
+  path: ./public/public/search.xml
+  field: post
+  format: html
+  limit: 10000

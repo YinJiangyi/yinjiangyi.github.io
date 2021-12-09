@@ -5,6 +5,10 @@ tags: 操作系统
 categories: 操作系统
 ---
 
+Linux常用命令备忘
+
+<!-- more -->
+
 - wget
 
   使用wget下载单个文件

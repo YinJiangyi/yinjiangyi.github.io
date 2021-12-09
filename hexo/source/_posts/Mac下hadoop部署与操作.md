@@ -2,10 +2,14 @@
 title: Mac下hadoop部署与操作
 typora-root-url: ../../source
 date: 2021-03-30 18:41:13
-tags:
-categories:
+tags: hadoop
+categories: bigdata
 sticky:
 ---
+
+由于课程需要和工具限制，需要在mac上安装Hadoop，参考了网上的教程，默认mac的terminal已经安装了homebrew软件管理工具、JDK环境，如果没安装homebrew、JDK环境的小伙伴请自行搜索mac终端安装homebrew、JDK教程。下面是部署与操作记录。
+
+<!-- more -->
 
 部署：
 

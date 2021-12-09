@@ -8,10 +8,9 @@ categories:
 typora-root-url: ../../source
 ---
 
-参考：
-https://www.cnblogs.com/wcwnina/p/8728391.html
+使用maltego产品，用公司数据做关系探索演示。服务部署在内网环境中，和产品云服务平台交互需要实现内网穿透。简单了解下相关流程。
 
-
+<!-- more -->
 
 # Nginx介绍
 
@@ -188,12 +187,6 @@ Nginx由俄罗斯工程师采用C语言开发，具有以下**特点**：
 
 
 
-
-
-
-
-
-
 ------
 
 以下记录我在服务器上做了什么，以防后续产生问题有迹可循：：
@@ -203,3 +196,7 @@ Nginx由俄罗斯工程师采用C语言开发，具有以下**特点**：
   - home目录下新建yjy目录
   - 安装目录/usr/local/python3  **没有动现有的python2环境**
 
+
+
+参考：
+https://www.cnblogs.com/wcwnina/p/8728391.html

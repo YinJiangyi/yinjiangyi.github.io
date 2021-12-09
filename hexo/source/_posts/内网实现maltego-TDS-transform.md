@@ -8,6 +8,10 @@ categories: 计算机网络
 typora-root-url: ../../source
 ---
 
+将本地数据库中实体关系通过maltego产品界面进行画布探索展示。maltego产品支持自定义local transform（基于给定节点进行关联节点的探索过程），但是local方式的实现需要用户根据设备的具体情况，对python编译器等进行配置，不方便功能共享和展示。TDS-transform结合内网穿透可以解决分布式操作需求。
+
+<!-- more -->
+
 ## 背景
 
 工作任务：

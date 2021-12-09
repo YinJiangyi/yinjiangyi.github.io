@@ -7,9 +7,9 @@ categories: 安全
 sticky:
 ---
 
-参考：
+DoS是Denial of Service的简称，即拒绝服务，造成DoS的攻击行为被称为DoS攻击，其目的是使计算机或网络无法提供正常的服务。最常见的DoS攻击有计算机网络宽带攻击和连通性攻击。 DoS攻击是指故意的攻击网络协议实现的缺陷或直接通过野蛮手段残忍地耗尽被攻击对象的资源，目的是让使目标系统服务系统停止响应甚至崩溃。这些服务资源包括网络带宽，文件系统空间容量，开放的进程或者允许的连接。这种攻击会导致资源的匮乏，无论计算机的处理速度多快、内存容量多大、网络带宽的速度多快都无法避免这种攻击带来的后果。 
 
-https://www.cloudflare.com/learning/
+<!-- more -->
 
 ## 1. 什么是DDos攻击
 
@@ -206,3 +206,9 @@ Cloudflare 通过隔离目标服务器与 SYN 洪水攻击来缓解此类攻击�
 ICMP Flood（即ICMP 洪水攻击）：当 ICMP ping 产生的大量回应请求超出了系统的最大限度，以至于系统耗费所有资源来进行响应直至再也无法处理有效 的网络信息流，这就是 ICMP 洪水攻击。简单说攻击者向一个子网的广播地址发送多个ICMP Echo请求数据包。并将源地址伪装成想要攻击的目标主机的地址。然后该子网上的所有主机均会对此ICMP Echo请求包作出答复，向被攻击的目标主机发送数据包，使此主机受到攻击，导致网络阻塞。ICMP Flood攻击主要的目的使网络瘫痪。
 
 Ping Flood 的破坏性影响与向目标服务器发出的请求数量成正比。与[NTP放大](https://www.cloudflare.com/learning/ddos/ntp-amplification-ddos-attack/)、[DNS放大](https://www.cloudflare.com/learning/ddos/dns-amplification-ddos-attack/)等基于反射的DDoS攻击不同，Ping Flood攻击流量是对称的；目标设备接收的带宽量只是从每个机器人发送的总流量的总和。
+
+
+
+参考：
+
+https://www.cloudflare.com/learning/

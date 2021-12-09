@@ -2,12 +2,14 @@
 title: Linux服务器安装Python3
 typora-root-url: ../../source
 date: 2021-04-20 09:35:02
-tags: python安装
-categories: 环境部署
+tags: python
+categories: 
 sticky:
 ---
 
-参考：https://blog.csdn.net/a2099948768/article/details/81531774
+服务器Linux下默认系统自带python2.6的版本，这个版本被系统很多程序所依赖，所以不建议删除。如果使用最新的Python3那么我们知道编译安装源码包和系统默认包之间是没有任何影响的。根据工作需要在服务器上安装python3环境，相关操作步骤记录。
+
+<!-- more -->
 
 ### 步骤
 
@@ -106,3 +108,7 @@ ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
   - _lzma:
 
     https://github.com/ultralytics/yolov5/issues/1298
+
+
+
+参考：https://blog.csdn.net/a2099948768/article/details/81531774

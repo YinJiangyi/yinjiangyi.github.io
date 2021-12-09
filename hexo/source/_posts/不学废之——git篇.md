@@ -1,14 +1,15 @@
 ---
-title: 不学废之——git篇
+title: Git介绍及常用操作
 typora-root-url: ../../source
 date: 2021-05-17 14:41:52
-tags:
-categories:
+tags: git
+categories: git
 sticky:
 ---
 
-参考：
-https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008
+Git 是用于 [Linux内核](https://baike.baidu.com/item/Linux内核/10142820)开发的[版本控制](https://baike.baidu.com/item/版本控制)工具。与常用的版本控制工具 CVS, Subversion 等不同，它采用了分布式版本库的方式，不必服务器端软件支持（wingeddevil注：这得分是用什么样的服务端，使用http协议或者git协议等不太一样。并且在push和pull的时候和服务器端还是有交互的。），使[源代码](https://baike.baidu.com/item/源代码)的发布和交流极其方便。 Git 的速度很快，这对于诸如 Linux kernel 这样的大项目来说自然很重要。 Git 最为出色的是它的合并跟踪（merge tracing）能力。
+
+<!-- more -->
 
 # 1 简介
 
@@ -1373,3 +1374,5 @@ Deleted branch feature1 (was 14096d0).
 
 ### 【待续】
 
+参考：
+https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008
