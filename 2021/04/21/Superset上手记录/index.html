@@ -25,18 +25,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yinjiangyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
+    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
 
   <meta name="description" content="Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户&#x2F;角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用doc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Superset 上手记录">
-<meta property="og:url" content="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:url" content="https://www.goodjoy.xyz/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="Joy&#39;s blog">
 <meta property="og:description" content="Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户&#x2F;角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用doc">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://yinjiangyi.github.io/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png">
-<meta property="og:image" content="https://yinjiangyi.github.io/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png">
 <meta property="og:image" content="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918">
 <meta property="og:image" content="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918">
 <meta property="article:published_time" content="2021-04-21T02:56:56.000Z">
@@ -44,9 +44,9 @@
 <meta property="article:author" content="Joy">
 <meta property="article:tag" content="superset">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yinjiangyi.github.io/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png">
+<meta name="twitter:image" content="https://www.goodjoy.xyz/2021/04/21/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png">
 
-<link rel="canonical" href="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
+<link rel="canonical" href="https://www.goodjoy.xyz/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
 
 
 <script id="page-configurations">
@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
-    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
+    <link itemprop="mainEntityOfPage" href="https://www.goodjoy.xyz/2021/04/21/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">

@@ -25,31 +25,31 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yinjiangyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
+    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
 
   <meta name="description" content="DoS是Denial of Service的简称，即拒绝服务，造成DoS的攻击行为被称为DoS攻击，其目的是使计算机或网络无法提供正常的服务。最常见的DoS攻击有计算机网络宽带攻击和连通性攻击。 DoS攻击是指故意的攻击网络协议实现的缺陷或直接通过野蛮手段残忍地耗尽被攻击对象的资源，目的是让使目标系统服务系统停止响应甚至崩溃。这些服务资源包括网络带宽，文件系统空间容量，开放的进程或者允许的连接。这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DDos攻击与保护">
-<meta property="og:url" content="https://yinjiangyi.github.io/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/index.html">
+<meta property="og:url" content="https://www.goodjoy.xyz/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/index.html">
 <meta property="og:site_name" content="Joy&#39;s blog">
 <meta property="og:description" content="DoS是Denial of Service的简称，即拒绝服务，造成DoS的攻击行为被称为DoS攻击，其目的是使计算机或网络无法提供正常的服务。最常见的DoS攻击有计算机网络宽带攻击和连通性攻击。 DoS攻击是指故意的攻击网络协议实现的缺陷或直接通过野蛮手段残忍地耗尽被攻击对象的资源，目的是让使目标系统服务系统停止响应甚至崩溃。这些服务资源包括网络带宽，文件系统空间容量，开放的进程或者允许的连接。这">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/image-20210712180840976.png">
-<meta property="og:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/http-flood-ddos-attack.png">
-<meta property="og:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-ddos-attack.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/image-20210712180840976.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/http-flood-ddos-attack.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-ddos-attack.png">
 <meta property="og:image" content="https://cloudflare.com/img/learning/ddos/what-is-a-ddos-attack/ntp-amplification-botnet-ddos-attack.png">
-<meta property="og:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-attack-ddos-attack-diagram-1.png">
-<meta property="og:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-attack-ddos-attack-diagram-2.png">
-<meta property="og:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-attack-ddos-attack-diagram-3.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-attack-ddos-attack-diagram-1.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-attack-ddos-attack-diagram-2.png">
+<meta property="og:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/syn-flood-attack-ddos-attack-diagram-3.png">
 <meta property="article:published_time" content="2021-07-12T06:21:43.000Z">
 <meta property="article:modified_time" content="2021-12-09T02:39:53.367Z">
 <meta property="article:author" content="Joy">
 <meta property="article:tag" content="DDos">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yinjiangyi.github.io/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/image-20210712180840976.png">
+<meta name="twitter:image" content="https://www.goodjoy.xyz/images/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/image-20210712180840976.png">
 
-<link rel="canonical" href="https://yinjiangyi.github.io/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">
+<link rel="canonical" href="https://www.goodjoy.xyz/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">
 
 
 <script id="page-configurations">
@@ -209,7 +209,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en-US">
-    <link itemprop="mainEntityOfPage" href="https://yinjiangyi.github.io/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">
+    <link itemprop="mainEntityOfPage" href="https://www.goodjoy.xyz/2021/07/12/DDos%E6%94%BB%E5%87%BB%E4%B8%8E%E4%BF%9D%E6%8A%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
