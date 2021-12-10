@@ -11,21 +11,15 @@
   <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
   <link rel="manifest" href="/images/avatar.jpg">
   <meta name="msapplication-config" content="/images/avatar.jpg">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="google-site-verification" content="bfLOBb5A0wCR6jDd8D1nCAt4hjwqHW1kQy5YQEey7kE">
-  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
+    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":"20%","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
 
   <meta name="description" content="Git 是用于 Linux内核开发的版本控制工具。与常用的版本控制工具 CVS, Subversion 等不同，它采用了分布式版本库的方式，不必服务器端软件支持（wingeddevil注：这得分是用什么样的服务端，使用http协议或者git协议等不太一样。并且在push和pull的时候和服务器端还是有交互的。），使源代码的发布和交流极其方便。 Git 的速度很快，这对于诸如 Linux kerne">
@@ -59,7 +53,7 @@
 <meta property="og:image" content="https://www.liaoxuefeng.com/files/attachments/919023000423040/0">
 <meta property="og:image" content="https://www.goodjoy.xyz/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125453421.png">
 <meta property="article:published_time" content="2021-05-17T06:41:52.000Z">
-<meta property="article:modified_time" content="2021-12-09T07:41:29.891Z">
+<meta property="article:modified_time" content="2021-12-10T06:30:18.320Z">
 <meta property="article:author" content="Joy">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
@@ -137,7 +131,6 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -172,45 +165,17 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">12</span></a>
 
   </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
   </ul>
 </nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
     </header>
 
     
   <div class="reading-progress-bar"></div>
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
     <main class="main">
@@ -255,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-09 15:41:29" itemprop="dateModified" datetime="2021-12-09T15:41:29+08:00">2021-12-09</time>
+                <time title="Modified: 2021-12-10 14:30:18" itemprop="dateModified" datetime="2021-12-10T14:30:18+08:00">2021-12-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,7 +243,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Git 是用于 <span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9MaW51eCVFNSU4NiU4NSVFNiVBMCVCOC8xMDE0MjgyMA==">Linux内核<i class="fa fa-external-link-alt"></i></span>开发的<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTclODklODglRTYlOUMlQUMlRTYlOEUlQTclRTUlODglQjY=">版本控制<i class="fa fa-external-link-alt"></i></span>工具。与常用的版本控制工具 CVS, Subversion 等不同，它采用了分布式版本库的方式，不必服务器端软件支持（wingeddevil注：这得分是用什么样的服务端，使用http协议或者git协议等不太一样。并且在push和pull的时候和服务器端还是有交互的。），使<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTYlQkElOTAlRTQlQkIlQTMlRTclQTAlODE=">源代码<i class="fa fa-external-link-alt"></i></span>的发布和交流极其方便。 Git 的速度很快，这对于诸如 Linux kernel 这样的大项目来说自然很重要。 Git 最为出色的是它的合并跟踪（merge tracing）能力。</p>
+        <p>Git 是用于 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Linux%E5%86%85%E6%A0%B8/10142820">Linux内核</a>开发的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">版本控制</a>工具。与常用的版本控制工具 CVS, Subversion 等不同，它采用了分布式版本库的方式，不必服务器端软件支持（wingeddevil注：这得分是用什么样的服务端，使用http协议或者git协议等不太一样。并且在push和pull的时候和服务器端还是有交互的。），使<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81">源代码</a>的发布和交流极其方便。 Git 的速度很快，这对于诸如 Linux kernel 这样的大项目来说自然很重要。 Git 最为出色的是它的合并跟踪（merge tracing）能力。</p>
 <a id="more"></a>
 
 <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h1><h3 id="GIT是什么"><a href="#GIT是什么" class="headerlink" title="GIT是什么"></a>GIT是什么</h3><p>git是目前世界上最先进的分布式版本控制系统。</p>
@@ -302,13 +267,13 @@
 <p>老一点的Debian或Ubuntu Linux，要把命令改为<code>sudo apt-get install git-core</code>，因为以前有个软件也叫GIT（GNU Interactive Tools），结果Git就只能叫<code>git-core</code>了。由于Git名气实在太大，后来就把GNU Interactive Tools改成<code>gnuit</code>，<code>git-core</code>正式改为<code>git</code>。</p>
 <p>如果是其他Linux版本，可以直接通过源码安装。先从Git官网下载源码，然后解压，依次输入：<code>./config</code>，<code>make</code>，<code>sudo make install</code>这几个命令安装就好了。</p>
 <h3 id="在Mac-OS-X上安装Git"><a href="#在Mac-OS-X上安装Git" class="headerlink" title="在Mac OS X上安装Git"></a>在Mac OS X上安装Git</h3><p>如果你正在使用Mac做开发，有两种安装Git的方法。</p>
-<p>一是安装homebrew，然后通过homebrew安装Git，具体方法请参考homebrew的文档：<span class="exturl" data-url="aHR0cDovL2JyZXcuc2gvJUUzJTgwJTgy">http://brew.sh/。<i class="fa fa-external-link-alt"></i></span></p>
+<p>一是安装homebrew，然后通过homebrew安装Git，具体方法请参考homebrew的文档：<a target="_blank" rel="noopener" href="http://brew.sh/%E3%80%82">http://brew.sh/。</a></p>
 <p>第二种方法更简单，也是推荐的方法，就是直接从AppStore安装Xcode，Xcode集成了Git，不过默认没有安装，你需要运行Xcode，选择菜单“Xcode”-&gt;“Preferences”，在弹出窗口中找到“Downloads”，选择“Command Line Tools”，点“Install”就可以完成安装了。</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0.jpeg" alt="install-git-by-xcode"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0.jpeg" alt="install-git-by-xcode"></p>
 <p>Xcode是Apple官方IDE，功能非常强大，是开发Mac和iOS App的必选装备，而且是免费的！</p>
-<h3 id="在Windows上安装Git"><a href="#在Windows上安装Git" class="headerlink" title="在Windows上安装Git"></a>在Windows上安装Git</h3><p>在Windows上使用Git，可以从Git官网直接<span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9kb3dubG9hZHM=">下载安装程序<i class="fa fa-external-link-alt"></i></span>，然后按默认选项安装即可。</p>
+<h3 id="在Windows上安装Git"><a href="#在Windows上安装Git" class="headerlink" title="在Windows上安装Git"></a>在Windows上安装Git</h3><p>在Windows上使用Git，可以从Git官网直接<a target="_blank" rel="noopener" href="https://git-scm.com/downloads">下载安装程序</a>，然后按默认选项安装即可。</p>
 <p>安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash”，蹦出一个类似命令行窗口的东西，就说明Git安装成功！</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210517152155022.jpeg" alt="install-git-on-windows"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210517152155022.jpeg" alt="install-git-on-windows"></p>
 <p>安装完成后，还需要最后一步设置，在命令行输入：</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">config</span> --<span class="keyword">global</span> user<span class="variable">.name</span> <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">$ git <span class="keyword">config</span> --<span class="keyword">global</span> user<span class="variable">.email</span> <span class="string">&quot;email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
 <p>因为Git是分布式版本控制系统，所以，每个机器都必须自报家门：你的名字和Email地址。你也许会担心，如果有人故意冒充别人怎么办？这个不必担心，首先我们相信大家都是善良无知的群众，其次，真的有冒充的也是有办法可查的。</p>
@@ -325,8 +290,8 @@
 <p>不幸的是，Microsoft的<strong>Word格式是二进制格式</strong>，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
 <p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
 <p>使用Windows的童鞋要特别注意：</p>
-<p>千万不要使用<strong>Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，</strong>他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载<span class="exturl" data-url="aHR0cDovL25vdGVwYWQtcGx1cy1wbHVzLm9yZy8=">Notepad++<i class="fa fa-external-link-alt"></i></span>代替记事本，不但功能强大，而且免费！记得把Notepad++的默认编码设置为UTF-8 without BOM即可：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210517152819217.jpeg" alt="set-utf8-notepad++"></p>
+<p>千万不要使用<strong>Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，</strong>他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载<a target="_blank" rel="noopener" href="http://notepad-plus-plus.org/">Notepad++</a>代替记事本，不但功能强大，而且免费！记得把Notepad++的默认编码设置为UTF-8 without BOM即可：</p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210517152819217.jpeg" alt="set-utf8-notepad++"></p>
 <p>言归正传，现在我们编写一个<code>readme.txt</code>文件，内容如下：</p>
 <figure class="highlight mercury"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git <span class="keyword">is</span> a version control system.</span><br><span class="line">Git <span class="keyword">is</span> free software.</span><br></pre></td></tr></table></figure>
 <p>一定要放到<code>learngit</code>目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git再厉害也找不到这个文件。</p>
@@ -384,7 +349,7 @@
 <figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git log --pretty<span class="operator">=</span>oneline</span><br><span class="line"><span class="number">1094</span>adb<span class="number">7</span>b<span class="number">9</span>b<span class="number">3807259</span>d<span class="number">8</span>cb<span class="number">349e7</span>df<span class="number">1</span>d<span class="number">4</span>d<span class="number">6477073</span> (HEAD -&gt; master) append GPL</span><br><span class="line">e<span class="number">475</span>afc<span class="number">93</span><span class="keyword">c</span><span class="number">209</span>a<span class="number">690</span><span class="keyword">c</span><span class="number">39</span><span class="keyword">c</span><span class="number">13</span>a<span class="number">46716e8</span>fa<span class="number">000</span><span class="keyword">c</span><span class="number">366</span> <span class="keyword">add</span> distributed</span><br><span class="line">eaadf<span class="number">4e385</span>e<span class="number">865</span>d<span class="number">25</span><span class="keyword">c</span><span class="number">48e7</span>ca<span class="number">9</span><span class="keyword">c</span><span class="number">8395</span><span class="keyword">c</span><span class="number">3</span>f<span class="number">7</span>dfaef<span class="number">0</span> wrote a readme file</span><br></pre></td></tr></table></figure>
 <p>需要友情提示的是，你看到的一大串类似<code>1094adb...</code>的是<code>commit id</code>（版本号），和SVN不一样，Git的<code>commit id</code>不是1，2，3……递增的数字，而是一个SHA1计算出来的一个非常大的数字，用十六进制表示，而且你看到的<code>commit id</code>和我的肯定不一样，以你自己的为准。为什么<code>commit id</code>需要用这么一大串数字表示呢？因为Git是分布式的版本控制系统，后面我们还要研究多人在同一个版本库里工作，如果大家都用1，2，3……作为版本号，那肯定就冲突了。</p>
 <p>每提交一个新版本，实际上Git就会把它们自动串成一条时间线。如果使用可视化工具查看Git历史，就可以更清楚地看到提交历史的时间线：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-1395634.jpeg" alt="git-log-timeline"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-1395634.jpeg" alt="git-log-timeline"></p>
 <p>好了，现在我们启动时光穿梭机，准备把<code>readme.txt</code>回退到上一个版本，也就是<code>add distributed</code>的那个版本，怎么做呢？</p>
 <p>首先，Git必须知道当前版本是哪个版本，在Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交<code>1094adb...</code>（注意我的提交ID和你的肯定不一样），上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，当然往上100个版本写100个<code>^</code>比较容易数不过来，所以写成<code>HEAD~100</code>。</p>
 <p>现在，我们要把当前版本<code>append GPL</code>回退到上一个版本<code>add distributed</code>，就可以使用<code>git reset</code>命令：</p>
@@ -421,10 +386,10 @@
 <h3 id="工作区和暂存区"><a href="#工作区和暂存区" class="headerlink" title="工作区和暂存区"></a>工作区和暂存区</h3><p>Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的概念。</p>
 <p>先来看名词解释。</p>
 <h4 id="工作区（Working-Directory）"><a href="#工作区（Working-Directory）" class="headerlink" title="工作区（Working Directory）"></a>工作区（Working Directory）</h4><p>就是你在电脑里能看到的目录，比如我的<code>learngit</code>文件夹就是一个工作区：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0.png" alt="working-dir"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0.png" alt="working-dir"></p>
 <h4 id="版本库（Repository）"><a href="#版本库（Repository）" class="headerlink" title="版本库（Repository）"></a>版本库（Repository）</h4><p>工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。</p>
 <p>Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支<code>master</code>，以及指向<code>master</code>的一个指针叫<code>HEAD</code>。</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519114125658.jpeg" alt="git-repo"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519114125658.jpeg" alt="git-repo"></p>
 <p>分支和<code>HEAD</code>的概念我们以后再讲。</p>
 <p>前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：</p>
 <p>第一步是用<code>git add</code>把文件添加进去，实际上就是把文件修改添加到暂存区；</p>
@@ -440,13 +405,13 @@
 <p>现在，使用两次命令<code>git add</code>，把<code>readme.txt</code>和<code>LICENSE</code>都添加后，用<code>git status</code>再查看一下：</p>
 <figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"><span class="keyword">On</span> branch master</span><br><span class="line">Changes <span class="keyword">to</span> be committed:</span><br><span class="line">  (<span class="keyword">use</span> <span class="string">&quot;git reset HEAD &lt;file&gt;...&quot;</span> <span class="keyword">to</span> unstage)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">new</span> <span class="keyword">file</span>:   LICENSE</span><br><span class="line">	modified:   readme.txt</span><br></pre></td></tr></table></figure>
 <p>现在，暂存区的状态就变成这样了：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519114125893.jpeg" alt="git-stage"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519114125893.jpeg" alt="git-stage"></p>
 <p>所以，<code>git add</code>命令实际上就是把要提交的所有修改放到暂存区（Stage），然后，执行<code>git commit</code>就可以一次性把暂存区的所有修改提交到分支。</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">&quot;understand how stage works&quot;</span></span><br><span class="line">[<span class="keyword">master</span> <span class="title">e43a48b</span>] understand how stage works</span><br><span class="line"> <span class="number">2</span> files changed, <span class="number">2</span> insertions(+)</span><br><span class="line"> create mode <span class="number">100644</span> LICENSE</span><br></pre></td></tr></table></figure>
 <p>一旦提交后，如果你又没有对工作区做任何修改，那么工作区就是“干净”的：</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"><span class="keyword">On</span> branch master</span><br><span class="line"><span class="keyword">nothing</span> <span class="keyword">to</span> <span class="keyword">commit</span>, working tree clean</span><br></pre></td></tr></table></figure>
 <p>现在版本库变成了这样，暂存区就没有任何内容了：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519114125641.jpeg" alt="git-stage-after-commit"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519114125641.jpeg" alt="git-stage-after-commit"></p>
 <p><strong>小结</strong></p>
 <p>暂存区是Git非常重要的概念，弄明白了暂存区，就弄明白了Git的很多操作到底干了什么。</p>
 <p>没弄明白暂存区是怎么回事的童鞋，请向上滚动页面，再看一次。</p>
@@ -501,12 +466,12 @@
 <p>还记得如何丢弃工作区的修改吗？</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout <span class="comment">-- readme.txt</span></span><br><span class="line"></span><br><span class="line">$ git status</span><br><span class="line"><span class="keyword">On</span> branch master</span><br><span class="line"><span class="keyword">nothing</span> <span class="keyword">to</span> <span class="keyword">commit</span>, working tree clean</span><br></pre></td></tr></table></figure>
 <p>整个世界终于清静了！</p>
-<p>现在，假设你不但改错了东西，还从暂存区提交到了版本库，怎么办呢？还记得<span class="exturl" data-url="aHR0cHM6Ly93d3cubGlhb3h1ZWZlbmcuY29tL3dpa2kvODk2MDQzNDg4MDI5NjAwLzg5NzAxMzU3MzUxMjE5Mg==">版本回退<i class="fa fa-external-link-alt"></i></span>一节吗？可以回退到上一个版本。不过，这是有条件的，就是你还没有把自己的本地版本库推送到远程。还记得Git是分布式版本控制系统吗？我们后面会讲到远程版本库，一旦你把<code>stupid boss</code>提交推送到远程版本库，你就真的惨了……</p>
+<p>现在，假设你不但改错了东西，还从暂存区提交到了版本库，怎么办呢？还记得<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/897013573512192">版本回退</a>一节吗？可以回退到上一个版本。不过，这是有条件的，就是你还没有把自己的本地版本库推送到远程。还记得Git是分布式版本控制系统吗？我们后面会讲到远程版本库，一旦你把<code>stupid boss</code>提交推送到远程版本库，你就真的惨了……</p>
 <p><strong>小结</strong></p>
 <p>又到了小结时间。</p>
 <p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- file</code>。</p>
 <p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了场景1，第二步按场景1操作。</p>
-<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考<span class="exturl" data-url="aHR0cHM6Ly93d3cubGlhb3h1ZWZlbmcuY29tL3dpa2kvODk2MDQzNDg4MDI5NjAwLzg5NzAxMzU3MzUxMjE5Mg==">版本回退<i class="fa fa-external-link-alt"></i></span>一节，不过前提是没有推送到远程库。</p>
+<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/897013573512192">版本回退</a>一节，不过前提是没有推送到远程库。</p>
 <h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><p>在Git中，删除也是一个修改操作，我们实战一下，先添加一个新文件<code>test.txt</code>到Git并且提交：</p>
 <figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="meta">add</span> test.txt</span><br><span class="line"></span><br><span class="line">$ git commit -m <span class="string">&quot;add test.txt&quot;</span></span><br><span class="line">[master b84166e] <span class="meta">add</span> test.txt</span><br><span class="line"> 1 <span class="meta">file</span> changed, 1 inserti<span class="meta">on(</span>+)</span><br><span class="line"> <span class="meta">create</span> mode 100644 test.txt</span><br></pre></td></tr></table></figure>
 <p>一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用<code>rm</code>命令删了：</p>
@@ -530,7 +495,7 @@
 <p>你肯定会想，至少需要两台机器才能玩远程库不是？但是我只有一台电脑，怎么玩？</p>
 <p>其实一台电脑上也是可以克隆多个版本库的，只要不在同一个目录下。不过，现实生活中是不会有人这么傻的在一台电脑上搞几个远程库玩，因为一台电脑上搞几个远程库完全没有意义，而且硬盘挂了会导致所有库都挂掉，所以我也不告诉你在一台电脑上怎么克隆多个仓库。</p>
 <p>实际情况往往是这样，找一台电脑充当服务器的角色，每天24小时开机，其他每个人都从这个“服务器”仓库克隆一份到自己的电脑上，并且各自把各自的提交推送到服务器仓库里，也从服务器仓库中拉取别人的提交。</p>
-<p>完全可以自己搭建一台运行Git的服务器，不过现阶段，为了学Git先搭个服务器绝对是小题大作。好在这个世界上有个叫<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==">GitHub<i class="fa fa-external-link-alt"></i></span>的神奇的网站，从名字就可以看出，这个网站就是提供Git仓库托管服务的，所以，只要注册一个GitHub账号，就可以免费获得Git远程仓库。</p>
+<p>完全可以自己搭建一台运行Git的服务器，不过现阶段，为了学Git先搭个服务器绝对是小题大作。好在这个世界上有个叫<a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>的神奇的网站，从名字就可以看出，这个网站就是提供Git仓库托管服务的，所以，只要注册一个GitHub账号，就可以免费获得Git远程仓库。</p>
 <p>在继续阅读后续内容前，请自行注册GitHub账号。由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置：</p>
 <p>第1步：创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有<code>id_rsa</code>和<code>id_rsa.pub</code>这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>ssh-keygen -t rsa -C <span class="string">&quot;youremail@example.com&quot;</span></span><br></pre></td></tr></table></figure>
@@ -542,9 +507,9 @@
 <p>如果一切顺利的话，可以在用户主目录里找到<code>.ssh</code>目录，里面有<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，这两个就是SSH Key的秘钥对，<code>id_rsa</code>是私钥，不能泄露出去，<code>id_rsa.pub</code>是公钥，可以放心地告诉任何人。</p>
 <p>第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面：</p>
 <p>然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴<code>id_rsa.pub</code>文件的内容：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123527159.png" alt="github-addkey-1"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123527159.png" alt="github-addkey-1"></p>
 <p>点“Add Key”，你就应该看到已经添加的Key：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123527611.png" alt="github-addkey-2"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123527611.png" alt="github-addkey-2"></p>
 <p>为什么GitHub需要SSH Key呢？因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。</p>
 <p>当然，GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。</p>
 <p>最后友情提示，在GitHub上免费托管的Git仓库，任何人都可以看到喔（但只有你自己才能改）。所以，不要把敏感信息放进去。</p>
@@ -552,9 +517,9 @@
 <p>确保你拥有一个GitHub账号后，我们就即将开始远程仓库的学习。</p>
 <h3 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h3><p>现在的情景是，你已经在本地创建了一个Git仓库后，又想在GitHub创建一个Git仓库，并且让这两个仓库进行远程同步，这样，GitHub上的仓库既可以作为备份，又可以让其他人通过该仓库来协作，真是一举多得。</p>
 <p>首先，登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123605857.png" alt="github-create-repo-1"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123605857.png" alt="github-create-repo-1"></p>
 <p>在Repository name填入<code>learngit</code>，其他保持默认设置，点击“Create repository”按钮，就成功地创建了一个新的Git仓库：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123605858.png" alt="github-create-repo-2"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123605858.png" alt="github-create-repo-2"></p>
 <p>目前，在GitHub上的这个<code>learngit</code>仓库还是空的，GitHub告诉我们，可以从这个仓库克隆出新的仓库，也可以把一个已有的本地仓库与之关联，然后，把本地仓库的内容推送到GitHub仓库。</p>
 <p>现在，我们根据GitHub的提示，在本地的<code>learngit</code>仓库下运行命令：</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote <span class="keyword">add</span><span class="bash"> origin git@github.com:michaelliao/learngit.git</span></span><br></pre></td></tr></table></figure>
@@ -565,7 +530,7 @@
 <p>把本地库的内容推送到远程，用<code>git push</code>命令，实际上是把当前分支<code>master</code>推送到远程。</p>
 <p>由于远程库是空的，我们第一次推送<code>master</code>分支时，加上了<code>-u</code>参数，Git不但会把本地的<code>master</code>分支内容推送的远程新的<code>master</code>分支，还会把本地的<code>master</code>分支和远程的<code>master</code>分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
 <p>推送成功后，可以立刻在GitHub页面中看到远程库的内容已经和本地一模一样：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123606377.png" alt="github-repo"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123606377.png" alt="github-repo"></p>
 <p>从现在起，只要本地作了提交，就可以通过命令：</p>
 <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">push</span> <span class="built_in">origin</span> master</span><br></pre></td></tr></table></figure>
 <p>把本地<code>master</code>分支的最新修改推送至GitHub，现在，你就拥有了真正的分布式版本库！</p>
@@ -576,7 +541,7 @@
 <p>Git会输出一个警告，告诉你已经把GitHub的Key添加到本机的一个信任列表里了：</p>
 <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: Permanently added <span class="string">&#x27;github.com&#x27;</span> (RSA) <span class="built_in">to</span> <span class="keyword">the</span> list <span class="keyword">of</span> known hosts.</span><br></pre></td></tr></table></figure>
 <p>这个警告只会出现一次，后面的操作就不会有任何警告了。</p>
-<p>如果你实在担心有人冒充GitHub服务器，输入<code>yes</code>前可以对照<span class="exturl" data-url="aHR0cHM6Ly9oZWxwLmdpdGh1Yi5jb20vYXJ0aWNsZXMvd2hhdC1hcmUtZ2l0aHViLXMtc3NoLWtleS1maW5nZXJwcmludHMv">GitHub的RSA Key的指纹信息<i class="fa fa-external-link-alt"></i></span>是否与SSH连接给出的一致。</p>
+<p>如果你实在担心有人冒充GitHub服务器，输入<code>yes</code>前可以对照<a target="_blank" rel="noopener" href="https://help.github.com/articles/what-are-github-s-ssh-key-fingerprints/">GitHub的RSA Key的指纹信息</a>是否与SSH连接给出的一致。</p>
 <h3 id="删除远程库"><a href="#删除远程库" class="headerlink" title="删除远程库"></a>删除远程库</h3><p>如果添加的时候地址写错了，或者就是想删除远程库，可以用<code>git remote rm &lt;name&gt;</code>命令。使用前，建议先用<code>git remote -v</code>查看远程库信息：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">origin  git@github<span class="selector-class">.com</span>:michaelliao/learn-git<span class="selector-class">.git</span> (fetch)</span><br><span class="line">origin  git@github<span class="selector-class">.com</span>:michaelliao/learn-git<span class="selector-class">.git</span> (push)</span><br></pre></td></tr></table></figure>
 <p>然后，根据名字删除，比如删除<code>origin</code>：</p>
@@ -591,9 +556,9 @@
 <h3 id="从远程仓库克隆"><a href="#从远程仓库克隆" class="headerlink" title="从远程仓库克隆"></a>从远程仓库克隆</h3><p>上次我们讲了先有本地库，后有远程库的时候，如何关联远程库。</p>
 <p>现在，假设我们从零开发，那么最好的方式是先创建远程库，然后，从远程库克隆。</p>
 <p>首先，登陆GitHub，创建一个新的仓库，名字叫<code>gitskills</code>：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123712308.png" alt="github-init-repo"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123712308.png" alt="github-init-repo"></p>
 <p>我们勾选<code>Initialize this repository with a README</code>，这样GitHub会自动为我们创建一个<code>README.md</code>文件。创建完毕后，可以看到<code>README.md</code>文件：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123712133.png" alt="github-init-repo-2"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519123712133.png" alt="github-init-repo-2"></p>
 <p>现在，远程库已经准备好了，下一步是用命令<code>git clone</code>克隆一个本地库：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git<span class="meta">@github</span>.<span class="attr">com:</span>michaelliao/gitskills.git</span><br><span class="line">Cloning into <span class="string">&#x27;gitskills&#x27;</span>...</span><br><span class="line"><span class="attr">remote:</span> Counting <span class="attr">objects:</span> <span class="number">3</span>, done.</span><br><span class="line"><span class="attr">remote:</span> Total <span class="number">3</span> (delta <span class="number">0</span>), reused <span class="number">0</span> (delta <span class="number">0</span>), pack-reused <span class="number">3</span></span><br><span class="line">Receiving <span class="attr">objects:</span> <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), done.</span><br></pre></td></tr></table></figure>
 <p>注意把Git库的地址换成你自己的，然后进入<code>gitskills</code>目录看看，已经有<code>README.md</code>文件了：</p>
@@ -606,20 +571,20 @@
 <p><strong>小结</strong></p>
 <p>要克隆一个仓库，首先必须知道仓库的地址，然后使用<code>git clone</code>命令克隆。</p>
 <p>Git支持多种协议，包括<code>https</code>，但<code>ssh</code>协议速度最快。</p>
-<h1 id="6-分支管理"><a href="#6-分支管理" class="headerlink" title="6 分支管理"></a>6 分支管理</h1><h3 id="创建与合并分支"><a href="#创建与合并分支" class="headerlink" title="创建与合并分支"></a>创建与合并分支</h3><p>在<span class="exturl" data-url="aHR0cHM6Ly93d3cubGlhb3h1ZWZlbmcuY29tL3dpa2kvODk2MDQzNDg4MDI5NjAwLzg5NzAxMzU3MzUxMjE5Mg==">版本回退<i class="fa fa-external-link-alt"></i></span>里，你已经知道，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即<code>master</code>分支。<code>HEAD</code>严格来说不是指向提交，而是指向<code>master</code>，<code>master</code>才是指向提交的，所以，<code>HEAD</code>指向的就是当前分支。</p>
+<h1 id="6-分支管理"><a href="#6-分支管理" class="headerlink" title="6 分支管理"></a>6 分支管理</h1><h3 id="创建与合并分支"><a href="#创建与合并分支" class="headerlink" title="创建与合并分支"></a>创建与合并分支</h3><p>在<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/897013573512192">版本回退</a>里，你已经知道，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即<code>master</code>分支。<code>HEAD</code>严格来说不是指向提交，而是指向<code>master</code>，<code>master</code>才是指向提交的，所以，<code>HEAD</code>指向的就是当前分支。</p>
 <p>一开始的时候，<code>master</code>分支是一条线，Git用<code>master</code>指向最新的提交，再用<code>HEAD</code>指向<code>master</code>，就能确定当前分支，以及当前分支的提交点：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411586.png" alt="git-br-initial"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411586.png" alt="git-br-initial"></p>
 <p>每次提交，<code>master</code>分支都会向前移动一步，这样，随着你不断提交，<code>master</code>分支的线也越来越长。</p>
 <p>当我们创建新的分支，例如<code>dev</code>时，Git新建了一个指针叫<code>dev</code>，指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/l.png" alt="git-br-create"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/l.png" alt="git-br-create"></p>
 <p>你看，Git创建一个分支很快，因为除了增加一个<code>dev</code>指针，改改<code>HEAD</code>的指向，工作区的文件都没有任何变化！</p>
 <p>不过，从现在开始，对工作区的修改和提交就是针对<code>dev</code>分支了，比如新提交一次后，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/l-20210519125411582.png" alt="git-br-dev-fd"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/l-20210519125411582.png" alt="git-br-dev-fd"></p>
 <p>假如我们在<code>dev</code>上的工作完成了，就可以把<code>dev</code>合并到<code>master</code>上。Git怎么合并呢？最简单的方法，就是直接把<code>master</code>指向<code>dev</code>的当前提交，就完成了合并：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411594.png" alt="git-br-ff-merge"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411594.png" alt="git-br-ff-merge"></p>
 <p>所以Git合并分支也很快！就改改指针，工作区内容也不变！</p>
 <p>合并完分支后，甚至可以删除<code>dev</code>分支。删除<code>dev</code>分支就是把<code>dev</code>指针给删掉，删掉后，我们就剩下了一条<code>master</code>分支：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411595-1400051.png" alt="git-br-rm"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411595-1400051.png" alt="git-br-rm"></p>
 <p>真是太神奇了，你看得出来有些提交是通过分支完成的吗？</p>
 <p>下面开始实战。</p>
 <p>首先，我们创建<code>dev</code>分支，然后切换到<code>dev</code>分支：</p>
@@ -636,7 +601,7 @@
 <p>现在，<code>dev</code>分支的工作完成，我们就可以切换回<code>master</code>分支：</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout <span class="literal">master</span></span><br><span class="line">Switched to branch &#x27;<span class="literal">master</span>&#x27;</span><br></pre></td></tr></table></figure>
 <p>切换回<code>master</code>分支后，再查看一个<code>readme.txt</code>文件，刚才添加的内容不见了！因为那个提交是在<code>dev</code>分支上，而<code>master</code>分支此刻的提交点并没有变：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411595.png" alt="git-br-on-master"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125411595.png" alt="git-br-on-master"></p>
 <p>现在，我们把<code>dev</code>分支的工作成果合并到<code>master</code>分支上：</p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> git merge dev</span><br><span class="line"><span class="function"><span class="title">Updating</span></span> d46f35e..b17d20e</span><br><span class="line">Fast-forward</span><br><span class="line"> readme.txt | <span class="number">1</span> +</span><br><span class="line"> <span class="number">1</span> <span class="keyword">file</span> changed, <span class="number">1</span> insertion(+)</span><br></pre></td></tr></table></figure>
 <p><code>git merge</code>命令用于合并指定分支到当前分支。合并后，再查看<code>readme.txt</code>的内容，就可以看到，和<code>dev</code>分支的最新提交是完全一样的。</p>
@@ -678,7 +643,7 @@
 <p>提交：</p>
 <figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="meta">add</span> readme.txt </span><br><span class="line">$ git commit -m <span class="string">&quot;&amp; simple&quot;</span></span><br><span class="line">[master 5dc6824] &amp; simple</span><br><span class="line"> 1 <span class="meta">file</span> changed, 1 inserti<span class="meta">on(</span>+), 1 deleti<span class="meta">on(</span>-)</span><br></pre></td></tr></table></figure>
 <p>现在，<code>master</code>分支和<code>feature1</code>分支各自都分别有新的提交，变成了这样：</p>
-<p><img data-src="https://www.liaoxuefeng.com/files/attachments/919023000423040/0" alt="git-br-feature1"></p>
+<p><img src="https://www.liaoxuefeng.com/files/attachments/919023000423040/0" alt="git-br-feature1"></p>
 <p>这种情况下，Git无法执行“快速合并”，只能试图把各自的修改合并起来，但这种合并就可能会有冲突，我们试试看：</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git merge feature1</span><br><span class="line">Auto-merging readme.txt</span><br><span class="line"><span class="keyword">CONFLICT</span> (content): Merge <span class="keyword">conflict</span> <span class="keyword">in</span> readme.txt</span><br><span class="line">Automatic merge failed; fix conflicts <span class="keyword">and</span> <span class="keyword">then</span> <span class="keyword">commit</span> the result.</span><br></pre></td></tr></table></figure>
 <p>果然冲突了！Git告诉我们，<code>readme.txt</code>文件存在冲突，必须手动解决冲突后再提交。<code>git status</code>也可以告诉我们冲突的文件：</p>
@@ -690,7 +655,7 @@
 <p>再提交：</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">add</span> readme.txt </span><br><span class="line">$ git <span class="keyword">commit</span> -m &quot;conflict fixed&quot;</span><br><span class="line">[master cf810e4] <span class="keyword">conflict</span> fixed</span><br></pre></td></tr></table></figure>
 <p>现在，<code>master</code>分支和<code>feature1</code>分支变成了下图所示：</p>
-<p><img data-src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125453421.png" alt="git-br-conflict-merged"></p>
+<p><img src="/images/%E4%B8%8D%E5%AD%A6%E5%BA%9F%E4%B9%8B%E2%80%94%E2%80%94git%E7%AF%87/0-20210519125453421.png" alt="git-br-conflict-merged"></p>
 <p>用带参数的<code>git log</code>也可以看到分支的合并情况：</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">log</span> <span class="comment">--graph --pretty=oneline --abbrev-commit</span></span><br><span class="line">*   cf810e4 (HEAD -&gt; master) <span class="keyword">conflict</span> fixed</span><br><span class="line">|\  </span><br><span class="line">| * <span class="number">14096</span>d0 (feature1) <span class="keyword">AND</span> simple</span><br><span class="line">* | <span class="number">5</span>dc6824 &amp; simple</span><br><span class="line">|/  </span><br><span class="line">* b17d20e branch test</span><br><span class="line">* d46f35e (origin/master) remove test.txt</span><br><span class="line">* b84166e <span class="keyword">add</span> test.txt</span><br><span class="line">* <span class="number">519219</span>b git tracks changes</span><br><span class="line">* e43a48b understand how stage works</span><br><span class="line">* <span class="number">1094</span>adb append GPL</span><br><span class="line">* e475afc <span class="keyword">add</span> distributed</span><br><span class="line">* eaadf4e wrote a readme file</span><br></pre></td></tr></table></figure>
 <p>最后，删除<code>feature1</code>分支：</p>
@@ -700,7 +665,7 @@
 <p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。</p>
 <p>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。</p>
 <p>用<code>git log --graph</code>命令可以看到分支合并图。</p>
-<h3 id="【待续】"><a href="#【待续】" class="headerlink" title="【待续】"></a>【待续】</h3><p>参考：<br><span class="exturl" data-url="aHR0cHM6Ly93d3cubGlhb3h1ZWZlbmcuY29tL3dpa2kvODk2MDQzNDg4MDI5NjAwLzg5Njk1NDA3NDY1OTAwOA==">https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="【待续】"><a href="#【待续】" class="headerlink" title="【待续】"></a>【待续】</h3><p>参考：<br><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008">https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008</a></p>
 
     </div>
 
@@ -821,10 +786,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lpbmppYW5neWk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <a href="https://github.com/yinjiangyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOnlpbmppYW5neWlAZ21haWwuY29t" title="E-Mail → mailto:yinjiangyi@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+        <a href="mailto:yinjiangyi1996@gmail.com" title="E-Mail → mailto:yinjiangyi1996@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -859,7 +824,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Joy</span>
 </div>
-  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -876,9 +841,7 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -892,43 +855,12 @@
 
 <script src="/js/next-boot.js"></script>
 
-<script src="/js/bookmark.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
-  </script>
-
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
 
 
 

@@ -11,21 +11,15 @@
   <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
   <link rel="manifest" href="/images/avatar.jpg">
   <meta name="msapplication-config" content="/images/avatar.jpg">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="google-site-verification" content="bfLOBb5A0wCR6jDd8D1nCAt4hjwqHW1kQy5YQEey7kE">
-  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
+    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":"20%","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
 
   <meta name="description" content="虚拟机技术在最近的几年中得到了广泛的发展，一些大型网络服务商都开始采用虚拟机技术，不仅节省了投资成本，更节约了能源的消耗。我们知道VMware也分几种版本，普通用户最常用的就是Workstation，但是不管使用哪种版本，我们都能发现在安装过程中让我们选择网络模式。在默认情况下会选中桥接模式，但有用户会问其他模式是干什么用的？有时候选择了其他模式之后就不能上网了。学习spark的standalon">
@@ -45,7 +39,7 @@
 <meta property="og:image" content="https://www.goodjoy.xyz/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png">
 <meta property="og:image" content="https://www.goodjoy.xyz/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png">
 <meta property="article:published_time" content="2021-07-03T01:49:05.000Z">
-<meta property="article:modified_time" content="2021-12-09T07:41:29.890Z">
+<meta property="article:modified_time" content="2021-12-10T06:30:18.319Z">
 <meta property="article:author" content="Joy">
 <meta property="article:tag" content="虚拟机">
 <meta name="twitter:card" content="summary">
@@ -123,7 +117,6 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -158,45 +151,17 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">12</span></a>
 
   </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
   </ul>
 </nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
     </header>
 
     
   <div class="reading-progress-bar"></div>
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
     <main class="main">
@@ -241,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-09 15:41:29" itemprop="dateModified" datetime="2021-12-09T15:41:29+08:00">2021-12-09</time>
+                <time title="Modified: 2021-12-10 14:30:18" itemprop="dateModified" datetime="2021-12-10T14:30:18+08:00">2021-12-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,29 +249,29 @@
 </li>
 </ul>
 <h2 id="2-不同方式的设置及其他操作"><a href="#2-不同方式的设置及其他操作" class="headerlink" title="2. 不同方式的设置及其他操作"></a>2. 不同方式的设置及其他操作</h2><p>安装完虚拟机之后，会在控制面板-&gt; 网络和共享中心 -&gt; 更改适配器设置 中，新增两块虚拟网卡：</p>
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png" alt="image-20210703102545051" style="zoom:50%;" />
+<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703102545051.png" alt="image-20210703102545051" style="zoom:50%;" />
 
 <p>VMware Network Adepter VMnet1：Host用于与Host-Only虚拟网络进行通信的虚拟网卡<br>VMware Network Adepter VMnet8：Host用于与NAT虚拟网络进行通信的虚拟网卡</p>
 <h3 id="桥接模式设置"><a href="#桥接模式设置" class="headerlink" title="桥接模式设置"></a>桥接模式设置</h3><p>这种模式下，需要手工设置虚拟机的IP地址、子网掩码，必须保持和宿主机处于同一个网段，这样虚拟机才能和宿主机通信（我理解相当于通过设置为同一网段，使具备桥设备的桥接功能）</p>
 <ul>
 <li><p>首先确定主机ip设置，ipconfig</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png" alt="image-20210703110322533"></p>
+<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110322533.png" alt="image-20210703110322533"></p>
 <p>将自动获取IP地址修改为指定ip</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png" alt="image-20210703110405014"></p>
+<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703110405014.png" alt="image-20210703110405014"></p>
 </li>
 <li><p>在VMware-&gt;edit-&gt;虚拟网络编辑器中修改设置VMnet</p>
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256" alt="img" style="zoom:50%;" />
+<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183840256" alt="img" style="zoom:50%;" />
 
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429" alt="img" style="zoom:50%;" />
+<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183903429" alt="img" style="zoom:50%;" />
 
 <p>选择 桥接模式，然后点击 还原默认设置，然后再重新进来，不打开虚拟机，进入设置项，设置为桥接模式。</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794" alt="img"></p>
+<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/20180415183958794" alt="img"></p>
 <p>打开虚拟机，进入settings，然后设置ipv4网络</p>
-<img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png" alt="image-20210703115033366" style="zoom:50%;" />
+<img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703115033366.png" alt="image-20210703115033366" style="zoom:50%;" />
 
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png" alt="image-20210703213335139"></p>
+<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213335139.png" alt="image-20210703213335139"></p>
 <p>这里的192.168.124.7是和主机ip在统一网段的。重新开启网络就可以看到配置已经成功。</p>
-<p><img data-src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png" alt="image-20210703213435546"></p>
+<p><img src="/images/Vmware%E4%B8%89%E7%A7%8D%E8%81%94%E7%BD%91%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86/image-20210703213435546.png" alt="image-20210703213435546"></p>
 </li>
 </ul>
 
@@ -429,10 +394,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lpbmppYW5neWk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <a href="https://github.com/yinjiangyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOnlpbmppYW5neWlAZ21haWwuY29t" title="E-Mail → mailto:yinjiangyi@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+        <a href="mailto:yinjiangyi1996@gmail.com" title="E-Mail → mailto:yinjiangyi1996@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -467,7 +432,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Joy</span>
 </div>
-  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -484,9 +449,7 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -500,43 +463,12 @@
 
 <script src="/js/next-boot.js"></script>
 
-<script src="/js/bookmark.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
-  </script>
-
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
 
 
 

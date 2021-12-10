@@ -11,21 +11,15 @@
   <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
   <link rel="manifest" href="/images/avatar.jpg">
   <meta name="msapplication-config" content="/images/avatar.jpg">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="google-site-verification" content="bfLOBb5A0wCR6jDd8D1nCAt4hjwqHW1kQy5YQEey7kE">
-  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
+    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":"20%","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
 
   <meta name="description" content="Apache Superset是Airbnb开源的数据挖掘平台。支持丰富的数据源连接，多种可视化方式，并能够对用户实现细粒度的权限控制。该工具主要特点是可自助分析、自定义仪表盘、分析结果可视化（导出）、用户&#x2F;角色权限控制，还集成了一个SQL编辑器，可以进行SQL编辑查询等。最近工作中遇到一个需求，需要基于开源superset实现一个面板。但是安装环境是内网离线环境，踩了不少坑，虽然最后还是用doc">
@@ -40,7 +34,7 @@
 <meta property="og:image" content="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918">
 <meta property="og:image" content="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918">
 <meta property="article:published_time" content="2021-04-21T02:56:56.000Z">
-<meta property="article:modified_time" content="2021-12-09T07:41:29.889Z">
+<meta property="article:modified_time" content="2021-12-10T06:30:18.318Z">
 <meta property="article:author" content="Joy">
 <meta property="article:tag" content="superset">
 <meta name="twitter:card" content="summary">
@@ -118,7 +112,6 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -153,45 +146,17 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">12</span></a>
 
   </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
   </ul>
 </nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
     </header>
 
     
   <div class="reading-progress-bar"></div>
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
     <main class="main">
@@ -236,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-09 15:41:29" itemprop="dateModified" datetime="2021-12-09T15:41:29+08:00">2021-12-09</time>
+                <time title="Modified: 2021-12-10 14:30:18" itemprop="dateModified" datetime="2021-12-10T14:30:18+08:00">2021-12-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,14 +248,14 @@
 <p>等待容器下载。下载完毕后找不到文件，未解决……转至install from scratch</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">superset_tests_worker exited with code 127</span><br><span class="line">superset_init exited with code 127</span><br><span class="line">superset_node exited with code 1</span><br><span class="line">superset_worker exited with code 127</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app exited with code 127</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker exited with code 127</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker          | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app exited with code 127</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_app             | /usr/bin/docker-entrypoint.sh: line 21: /app/docker/docker-bootstrap.sh: No such file or directory</span><br><span class="line">superset_worker exited with code 127</span><br></pre></td></tr></table></figure>
 <p>错误原因：官网步骤不详细，需要下载superset镜像，创建superset容器，启动容器</p>
-<p>参考<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25pa2V5bGVlL2FydGljbGUvZGV0YWlscy8xMTUyNjQ4MTglRTglQTclQTMlRTUlODYlQjMlRUYlQkMlOEMlRTQlQjglQkIlRTglQTYlODElRTYlQUQlQTUlRTklQUElQTQlRUYlQkMlOUE=">https://blog.csdn.net/nikeylee/article/details/115264818解决，主要步骤：<i class="fa fa-external-link-alt"></i></span></p>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/nikeylee/article/details/115264818%E8%A7%A3%E5%86%B3%EF%BC%8C%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%EF%BC%9A">https://blog.csdn.net/nikeylee/article/details/115264818解决，主要步骤：</a></p>
 <figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="string">search</span> <span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 可以自选版本</span></span><br><span class="line"><span class="string">docker</span> <span class="string">pull</span> <span class="string">amancevice</span>/<span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 查看镜像是否下载成功：</span></span><br><span class="line"><span class="string">docker</span> <span class="string">images</span></span><br><span class="line"><span class="string"></span><span class="comment"># 创建Superset容器</span></span><br><span class="line"><span class="comment"># 创建挂载的目录：</span></span><br><span class="line"><span class="string">mkdir</span> /<span class="string">opt</span>/<span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 创建容器</span></span><br><span class="line"><span class="string">docker</span> <span class="string">run</span> <span class="built_in">--name</span> <span class="string">my_superset</span> -<span class="string">d</span> -<span class="string">p</span> <span class="string">8088:8088 </span>-<span class="string">v</span> /<span class="string">opt</span>/<span class="string">superset</span>:/<span class="string">home</span>/<span class="string">superset</span> <span class="string">amancevice</span>/<span class="string">superset</span></span><br><span class="line"><span class="string"></span><span class="comment"># 进入docker镜像</span></span><br><span class="line"><span class="string">docker</span> <span class="string">exec</span> -<span class="string">it</span> <span class="string">my_superset</span> /<span class="string">bin</span>/<span class="string">bash</span></span><br><span class="line"><span class="string"></span><span class="comment"># superset 配置</span></span><br><span class="line"><span class="string">superset</span> <span class="string">db</span> <span class="string">upgrade</span></span><br><span class="line"><span class="string">superset</span> <span class="string">init</span></span><br><span class="line"><span class="string">export</span> <span class="string">FLASK_APP</span>=<span class="string">superset</span></span><br><span class="line"><span class="string">flask</span> <span class="string">fab</span> <span class="built_in">create-admin</span></span><br><span class="line"><span class="built_in">superset</span> <span class="string">load_examples</span></span><br><span class="line"><span class="string"></span><span class="comment"># 启动superset命令</span></span><br><span class="line"><span class="string">superset</span> <span class="string">run</span> -<span class="string">p</span> <span class="string">8088</span></span><br></pre></td></tr></table></figure>
 
 
-<h4 id="基于pip安装"><a href="#基于pip安装" class="headerlink" title="基于pip安装"></a>基于pip安装</h4><p>参考<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnNldC5hcGFjaGUub3JnL2RvY3MvaW5zdGFsbGF0aW9uL2luc3RhbGxpbmctc3VwZXJzZXQtZnJvbS1zY3JhdGNo">https://superset.apache.org/docs/installation/installing-superset-from-scratch<i class="fa fa-external-link-alt"></i></span></p>
+<h4 id="基于pip安装"><a href="#基于pip安装" class="headerlink" title="基于pip安装"></a>基于pip安装</h4><p>参考<a target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/installing-superset-from-scratch">https://superset.apache.org/docs/installation/installing-superset-from-scratch</a></p>
 <p>遇到问题：</p>
 <p>1） 安装client_driver时报错 OSError: mysql_config not found</p>
-<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMjU0NTkzODYvbWFjLW9zLXgtZW52aXJvbm1lbnRlcnJvci1teXNxbC1jb25maWctbm90LWZvdW5k">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fa fa-external-link-alt"></i></span></p>
+<p>解决：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found</a></p>
 <blockquote>
 <p>Ok, well, first of all, let me check if I am on the same page as you:</p>
 <ul>
@@ -300,7 +265,7 @@
 <li>And finally, you did <code>pip install MySQL-Python</code> (or <code>pip3 install mysqlclient</code> if using python 3)</li>
 </ul>
 </blockquote>
-<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p>参考：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmVyaWM3LnNpdGUvMjAyMC8wMi8yMy9zdXBlcnNldC8=">https://blog.eric7.site/2020/02/23/superset/<i class="fa fa-external-link-alt"></i></span></p>
+<h4 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h4><p>参考：<a target="_blank" rel="noopener" href="https://blog.eric7.site/2020/02/23/superset/">https://blog.eric7.site/2020/02/23/superset/</a></p>
 <p><strong>Anaconda 创建python环境</strong></p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">conda</span> create -n superset python=<span class="number">3</span>.<span class="number">7</span></span><br></pre></td></tr></table></figure>
 <p>激活环境</p>
@@ -359,7 +324,7 @@
 <li><p>安装nodejs：解压，建立软连接</p>
 <p>然后node -v 查看版本，查看正常即可</p>
 </li>
-<li><p>设置npm为淘宝镜像（原始地址：<span class="exturl" data-url="aHR0cHM6Ly9yZWdpc3RyeS5ucG1qcy5vcmcpLw==">https://registry.npmjs.org）<i class="fa fa-external-link-alt"></i></span></p>
+<li><p>设置npm为淘宝镜像（原始地址：<a target="_blank" rel="noopener" href="https://registry.npmjs.org)/">https://registry.npmjs.org）</a></p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="built_in">config</span> <span class="built_in">set</span> registry https:<span class="comment">//registry.npm.taobao.org</span></span><br><span class="line">验证 `npm <span class="built_in">config</span> <span class="built_in">get</span> registry`</span><br></pre></td></tr></table></figure></li>
 <li><p>进入superset/assets目录下（新版目录incubator-superset/superset-frontend/）,安装编译所需模块</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -d</span><br></pre></td></tr></table></figure></li>
@@ -377,9 +342,9 @@
 <li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
 <li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
 </ul>
-<p>终于在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvOTcxOSVFNiU4OSVCRSVFNSU4OCVCMCVFOCVBNyVBMyVFNSU4NiVCMyVFNSU4QSU5RSVFNiVCMyU5NSVFRiVCQyU5QQ==">https://github.com/apache/superset/issues/9719找到解决办法：<i class="fa fa-external-link-alt"></i></span></p>
+<p>终于在<a target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A">https://github.com/apache/superset/issues/9719找到解决办法：</a></p>
 <p>这位朋友和我的情况也一样</p>
-<img data-src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png" alt="image-20210415104252896" style="zoom:80%;" />
+<img src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png" alt="image-20210415104252896" style="zoom:80%;" />
 
 <p>解决：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">pip</span> uninstall infi.clickhouse_orm</span><br><span class="line"><span class="attribute">pip</span> install infi.clickhouse_orm==<span class="number">1</span>.<span class="number">0</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure>
@@ -410,7 +375,7 @@
 <li><p>从github上下载源码 </p>
 <p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
 </li>
-<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2Rpc3QvdjEyLjQuMC9ub2RlLXYxMi40LjAteDY0Lm1zaQ==">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fa fa-external-link-alt"></i></span></p>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi</a></p>
 <p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
 </li>
 <li><p>（这一步不确定什么用）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
@@ -426,9 +391,9 @@
 <li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
 <p>报错：</p>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>in ./src/visualizations/TimeTable/TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvMTA5OTc=">https://github.com/apache/superset/issues/10997<i class="fa fa-external-link-alt"></i></span></p>
+<p>解决：<a target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997">https://github.com/apache/superset/issues/10997</a></p>
 <p>修改目录下 webpack.config.js 文件：</p>
-<img data-src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png" alt="img" style="zoom:67%;" />
+<img src="../images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png" alt="img" style="zoom:67%;" />
 
 <p>成功！</p>
 </li>
@@ -464,7 +429,7 @@
 <li><p>从github上下载源码 </p>
 <p><code>git clone https://github.com/apache/incubator-superset.git</code></p>
 </li>
-<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2Rpc3QvdjEyLjQuMC9ub2RlLXYxMi40LjAteDY0Lm1zaQ==">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi<i class="fa fa-external-link-alt"></i></span></p>
+<li><p>安装 nodejs（这一步不需要在虚拟环境中），下载地址为 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi">https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi</a></p>
 <p>测试安装是否成功：<code>node -v</code>  <code>npm -v</code></p>
 </li>
 <li><p>（这一步不确定什么用，mac 不需要）制作软连接（因为下载下来的源代码是superset\static\assets这个软连接可以在linux或者Mac上正常工作，但是在windows下不能正常工作）</p>
@@ -480,9 +445,9 @@
 <li><p>编译前端文件，进入superset-fronted 目录，<code>npm install -d</code></p>
 <p>报错：</p>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>in ./src/visualizations/TimeTable/TimeTable.jsx 101:10</span><br><span class="line">Module parse failed: Unexpected token (101:10)</span><br><span class="line">You may need an appropriate loader to handle this file type, currently no loader</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvMTA5OTc=">https://github.com/apache/superset/issues/10997<i class="fa fa-external-link-alt"></i></span></p>
+<p>解决：<a target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/10997">https://github.com/apache/superset/issues/10997</a></p>
 <p>修改目录下 webpack.config.js 文件：</p>
-<p><img data-src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918" alt="img"></p>
+<p><img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/106452635-2493d300-64c3-11eb-9e7c-69c6d03bf426.png?lastModify=1626061918" alt="img"></p>
 <p>成功！</p>
 </li>
 <li><p>进入前端开发者模式 <code>npm run dev</code></p>
@@ -503,7 +468,7 @@
 
 <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ul>
 <li><p>安装client_driver时报错 OSError: mysql_config not found</p>
-<p>解决：<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMjU0NTkzODYvbWFjLW9zLXgtZW52aXJvbm1lbnRlcnJvci1teXNxbC1jb25maWctbm90LWZvdW5k">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found<i class="fa fa-external-link-alt"></i></span></p>
+<p>解决：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found">https://stackoverflow.com/questions/25459386/mac-os-x-environmenterror-mysql-config-not-found</a></p>
 <blockquote>
 <p>Ok, well, first of all, let me check if I am on the same page as you:</p>
 <ul>
@@ -519,23 +484,23 @@
 <li>按照官网要求安装sqlalchemy-clickhouse后，test连接是出现 Error: Unexpected error occured</li>
 <li>然后发现安装clickhouse-sqlalchemy之后可以解决连接问题，但是查询出来的数据没有表头</li>
 </ul>
-<p>终于在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9zdXBlcnNldC9pc3N1ZXMvOTcxOSVFNiU4OSVCRSVFNSU4OCVCMCVFOCVBNyVBMyVFNSU4NiVCMyVFNSU4QSU5RSVFNiVCMyU5NSVFRiVCQyU5QQ==">https://github.com/apache/superset/issues/9719找到解决办法：<i class="fa fa-external-link-alt"></i></span></p>
+<p>终于在<a target="_blank" rel="noopener" href="https://github.com/apache/superset/issues/9719%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%EF%BC%9A">https://github.com/apache/superset/issues/9719找到解决办法：</a></p>
 <p>这位朋友和我的情况也一样</p>
-<p><img data-src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918" alt="image-20210415104252896"></p>
+<p><img src="file:///Users/joy/MYBLOG/yinjiangyi.github.io/hexo/source/images/Superset%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/image-20210415104252896.png?lastModify=1626061918" alt="image-20210415104252896"></p>
 <p>解决：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">pip</span> uninstall infi.clickhouse_orm</span><br><span class="line"><span class="attribute">pip</span> install infi.clickhouse_orm==<span class="number">1</span>.<span class="number">0</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure></li>
 <li><p>如果出现pip install 安装过程中build wheel失败，直接下载对应库的wheel包进行单独pip install 即可。</p>
 </li>
 </ul>
-<h1 id="2-性能优化"><a href="#2-性能优化" class="headerlink" title="2. 性能优化"></a>2. 性能优化</h1><h3 id="Caching配置"><a href="#Caching配置" class="headerlink" title="Caching配置"></a>Caching配置</h3><p>官方文档：<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnNldC5hcGFjaGUub3JnL2RvY3MvaW5zdGFsbGF0aW9uL2NhY2hl">https://superset.apache.org/docs/installation/cache<i class="fa fa-external-link-alt"></i></span></p>
-<p>参考：<span class="exturl" data-url="aHR0cHM6Ly95b3JrZS5naXRib29rcy5pby9zdXBlcnNldC1ub3RlL2NvbnRlbnQvY2hhcHRlcjEuaHRtbA==">https://yorke.gitbooks.io/superset-note/content/chapter1.html<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="2-性能优化"><a href="#2-性能优化" class="headerlink" title="2. 性能优化"></a>2. 性能优化</h1><h3 id="Caching配置"><a href="#Caching配置" class="headerlink" title="Caching配置"></a>Caching配置</h3><p>官方文档：<a target="_blank" rel="noopener" href="https://superset.apache.org/docs/installation/cache">https://superset.apache.org/docs/installation/cache</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://yorke.gitbooks.io/superset-note/content/chapter1.html">https://yorke.gitbooks.io/superset-note/content/chapter1.html</a></p>
 <h4 id="使用-Redis-做-Superset-的缓存"><a href="#使用-Redis-做-Superset-的缓存" class="headerlink" title="使用 Redis 做 Superset 的缓存"></a>使用 Redis 做 Superset 的缓存</h4><p>配置 Superset 的缓存后端，只需在其配置文件中提供一个 <code>CACHE_CONFIG</code> 常量即可。</p>
 <p>而对于 Redis，我们还需要一个运行一个 Redis 服务，以及安装一个 redis-py 库（Redis 的 Python 接口）。</p>
 <h5 id="安装-Redis"><a href="#安装-Redis" class="headerlink" title="安装 Redis"></a>安装 Redis</h5><p>当前 Redis 最新版为 3.2.8，在 <code>/opt/</code> 目录下安装并启动：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/opt/</span></span><br><span class="line">wget http:<span class="regexp">//</span>download.redis.io<span class="regexp">/releases/</span>redis-<span class="number">3.2</span>.<span class="number">8</span>.tar.gz</span><br><span class="line">tar xzvf redis-<span class="number">3.2</span>.<span class="number">8</span>.tar.gz</span><br><span class="line">cd redis-<span class="number">3.2</span>.<span class="number">8</span>/</span><br><span class="line">make</span><br><span class="line">cd src/</span><br><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
 <p>make时报错：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">……</span><br><span class="line">server.c: 在函数‘hasActiveChildProcess’中:</span><br><span class="line">server.c:1476:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘allPersistenceDisabled’中:</span><br><span class="line">server.c:1482:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘writeCommandsDeniedByDiskError’中:</span><br><span class="line">server.c:3747:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">server.c: 在函数‘iAmMaster’中:</span><br><span class="line">server.c:4914:1: 警告：在有返回值的函数中，控制流程到达函数尾 [-Wreturn-type]</span><br><span class="line"> &#125;</span><br><span class="line"> ^</span><br><span class="line">make[1]: *** [server.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis/redis-6.0.0/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
-<p> 解决： <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTYyNzAzMS9hcnRpY2xlL2RldGFpbHMvMTA3MTY2ODY3P3V0bV9tZWRpdW09ZGlzdHJpYnV0ZS5wY19yZWxldmFudC5ub25lLXRhc2stYmxvZy1iYWlkdWpzX3RpdGxlLTAmYW1wO3NwbT0xMDAxLjIxMDEuMzAwMS40MjQy">https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242<i class="fa fa-external-link-alt"></i></span></p>
+<p> 解决： <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242">https://blog.csdn.net/weixin_45627031/article/details/107166867?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242</a></p>
 <p>升级gcc版本：</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># gcc -v                             # 查看gcc版本</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># yum -y install centos-release-scl  # 升级到9.1版本</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># scl enable devtoolset-9 bash</span></span><br><span class="line">以上为临时启用，如果要长期使用gcc <span class="number">9.1</span>的话：</span><br><span class="line">[root<span class="symbol">@hadoop01</span> redis<span class="number">-6.0</span><span class="number">.5</span>]<span class="meta"># echo <span class="string">&quot;source /opt/rh/devtoolset-9/enable&quot;</span> &gt;&gt;/etc/profile</span></span><br></pre></td></tr></table></figure>
 <h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(superset) <span class="string">[root@bigdata-12 redis-6.0.0]</span># redis-cli</span><br><span class="line"><span class="number">127.0.0.1:6379</span>&gt;</span><br></pre></td></tr></table></figure>
@@ -673,10 +638,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lpbmppYW5neWk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <a href="https://github.com/yinjiangyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOnlpbmppYW5neWlAZ21haWwuY29t" title="E-Mail → mailto:yinjiangyi@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+        <a href="mailto:yinjiangyi1996@gmail.com" title="E-Mail → mailto:yinjiangyi1996@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -711,7 +676,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Joy</span>
 </div>
-  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -728,9 +693,7 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -744,43 +707,12 @@
 
 <script src="/js/next-boot.js"></script>
 
-<script src="/js/bookmark.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
-  </script>
-
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
 
 
 

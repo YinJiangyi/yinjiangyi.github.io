@@ -11,21 +11,15 @@
   <link rel="mask-icon" href="/images/avatar.jpg" color="#222">
   <link rel="manifest" href="/images/avatar.jpg">
   <meta name="msapplication-config" content="/images/avatar.jpg">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="google-site-verification" content="bfLOBb5A0wCR6jDd8D1nCAt4hjwqHW1kQy5YQEey7kE">
-  <meta name="baidu-site-verification" content="code-acZ1ZTtiLj">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":true,"sidebar":{"position":"left","Muse | Mist":250,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
+    var CONFIG = {"hostname":"www.goodjoy.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":"20%","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/public/search.xml"};
   </script>
 
   <meta name="description" content="HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的分布式存储系统”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系">
@@ -47,7 +41,7 @@
 <meta property="og:image" content="https://www.goodjoy.xyz/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w.jpg">
 <meta property="og:image" content="https://www.goodjoy.xyz/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/726151-20170227162331001-824551785.png">
 <meta property="article:published_time" content="2021-07-20T02:16:47.000Z">
-<meta property="article:modified_time" content="2021-12-09T07:41:29.887Z">
+<meta property="article:modified_time" content="2021-12-10T06:30:18.317Z">
 <meta property="article:author" content="Joy">
 <meta property="article:tag" content="HBase">
 <meta name="twitter:card" content="summary">
@@ -125,7 +119,6 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -160,45 +153,17 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">12</span></a>
 
   </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
   </ul>
 </nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
     </header>
 
     
   <div class="reading-progress-bar"></div>
-  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
     <main class="main">
@@ -243,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-09 15:41:29" itemprop="dateModified" datetime="2021-12-09T15:41:29+08:00">2021-12-09</time>
+                <time title="Modified: 2021-12-10 14:30:18" itemprop="dateModified" datetime="2021-12-10T14:30:18+08:00">2021-12-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,11 +231,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的<span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTUlODglODYlRTUlQjglODMlRTUlQkMlOEYlRTUlQUQlOTglRTUlODIlQTglRTclQjMlQkIlRTclQkIlOUYvNjYwODg3NQ==">分布式存储系统<i class="fa fa-external-link-alt"></i></span>”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。另一个不同的是HBase基于列的而不是基于行的模式。</p>
+        <p>HBase是一个分布式的、面向列的开源数据库，该技术来源于 Fay Chang 所撰写的Google论文“Bigtable：一个结构化数据的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/6608875">分布式存储系统</a>”。就像Bigtable利用了Google文件系统（File System）所提供的分布式数据存储一样，HBase在Hadoop之上提供了类似于Bigtable的能力。HBase是Apache的Hadoop项目的子项目。HBase不同于一般的关系数据库，它是一个适合于非结构化数据存储的数据库。另一个不同的是HBase基于列的而不是基于行的模式。</p>
 <a id="more"></a>
 
 <h1 id="一、HBase是什么"><a href="#一、HBase是什么" class="headerlink" title="一、HBase是什么"></a>一、HBase是什么</h1><blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9saW5rLnpoaWh1LmNvbS8/dGFyZ2V0PWh0dHBzOi8vd3d3LmFwYWNoZS5vcmcv">Apache<i class="fa fa-external-link-alt"></i></span> HBase™ is the <span class="exturl" data-url="aHR0cHM6Ly9saW5rLnpoaWh1LmNvbS8/dGFyZ2V0PWh0dHBzOi8vaGFkb29wLmFwYWNoZS5vcmcv">Hadoop<i class="fa fa-external-link-alt"></i></span> database, a distributed, scalable, big data store.<br>HBase is a type of “NoSQL” database.</p>
+<p><a href="https://link.zhihu.com/?target=https://www.apache.org/">Apache</a> HBase™ is the <a href="https://link.zhihu.com/?target=https://hadoop.apache.org/">Hadoop</a> database, a distributed, scalable, big data store.<br>HBase is a type of “NoSQL” database.</p>
 </blockquote>
 <p>Apache HBase 是 Hadoop 数据库，一个分布式、可伸缩的<strong>大数据存储</strong>。</p>
 <p>HBase是依赖Hadoop的。为什么HBase能存储海量的数据？<strong>因为HBase是在HDFS的基础之上构建的，HDFS是分布式文件系统</strong>。</p>
@@ -285,10 +250,10 @@
 <p>HBase的数据其实也是存储在HDFS上的。HDFS是文件系统，而HBase是数据库，其实也没啥可比性。「<strong>你可以把HBase当做是MySQL，把HDFS当做是硬盘。HBase只是一个NoSQL数据库，把数据存在HDFS上</strong>」。HBase在HDFS之上提供了<strong>高并发的随机写和支持实时查询</strong>，这是HDFS不具备的。HBase还有一个特点就是：<strong>存储数据的”结构“可以地非常灵活</strong>。</p>
 <h1 id="三、入门HBase"><a href="#三、入门HBase" class="headerlink" title="三、入门HBase"></a>三、入门HBase</h1><h2 id="1-列式存储"><a href="#1-列式存储" class="headerlink" title="1. 列式存储"></a>1. 列式存储</h2><p><strong>什么是列式存储？</strong></p>
 <p>MySQL存储的结构是典型的关系型数据库，数据是一行一行的形式。</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-58697c09af0a80f04af4b2231e6a0813_720w.jpg" alt="v2-58697c09af0a80f04af4b2231e6a0813_720w" style="zoom:25%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-58697c09af0a80f04af4b2231e6a0813_720w.jpg" alt="v2-58697c09af0a80f04af4b2231e6a0813_720w" style="zoom:25%;" />
 
 <p>换成列式存储</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-8b4c896c9decec36b89e6b2fee968c6a_720w.jpg" alt="v2-8b4c896c9decec36b89e6b2fee968c6a_720w" style="zoom:25%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-8b4c896c9decec36b89e6b2fee968c6a_720w.jpg" alt="v2-8b4c896c9decec36b89e6b2fee968c6a_720w" style="zoom:25%;" />
 
 <p>也就是把每列抽出来，关联上行ID。<strong>这样做的好处是，省空间</strong>。 以前我们一行记录多个属性(列)，有部分的列是空缺的，但是我们还是需要空间去存储。现在把这些列全部拆开，有什么我们就存什么，这样空间就能被我们充分利用。</p>
 <p>这种形式更像<strong>Key-value</strong>。</p>
@@ -297,30 +262,30 @@
 <p><strong>在HBase里边，先有列族，后有列</strong>。</p>
 <p>什么是列族？可以简单理解为：列的属性类别</p>
 <p>什么是列修饰符？先有列族后有列，在列族下用列修饰符来标识一列。</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w.jpg" alt="v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w" style="zoom: 50%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w.jpg" alt="v2-1f69aa3a03c9666d5b613e5a0a5e70c4_720w" style="zoom: 50%;" />
 
 <p>HBase表的每一行中，列的组成都是<strong>灵活</strong>的，<strong>行与行之间的列不需要相同</strong>。如图下：</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-fac481c6ec3efacce0ec3f3c7d127db0_720w.jpg" alt="img" style="zoom:33%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-fac481c6ec3efacce0ec3f3c7d127db0_720w.jpg" alt="img" style="zoom:33%;" />
 
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-de19abe0e27b1660e3474bd11aaf8d61_720w.jpg" alt="img" style="zoom: 50%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-de19abe0e27b1660e3474bd11aaf8d61_720w.jpg" alt="img" style="zoom: 50%;" />
 
 <p>换句话说：<strong>一个列族下可以任意添加列，不受任何限制</strong></p>
 <p><strong>数据写到HBase的时候都会被记录一个时间戳，这个时间戳被我们当做一个版本。比如说，我们修改或者删除某一条的时候，本质上是往里边新增一条数据，记录的版本加一了而已。</strong></p>
 <p>比如现在我们有一条记录：</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-433053cc5a4dfe5a9d26f9231cdaca5e_720w.jpg" alt="img" style="zoom: 50%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-433053cc5a4dfe5a9d26f9231cdaca5e_720w.jpg" alt="img" style="zoom: 50%;" />
 
 <p>现在要把这条记录的值改为40，实际上就是多添加一条记录，在读的时候按照时间戳<strong>读最新</strong>的记录。在外界「看起来」就是把这条记录改了。</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a08e56a695e366a580c12514ffe09a21_720w.jpg" alt="img" style="zoom:50%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a08e56a695e366a580c12514ffe09a21_720w.jpg" alt="img" style="zoom:50%;" />
 
 <h2 id="3-HBase的Key-Value结构"><a href="#3-HBase的Key-Value结构" class="headerlink" title="3. HBase的Key-Value结构"></a>3. HBase的Key-Value结构</h2><p>HBase的Key-Value结构图：</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-5c2c05489dc0c4af823d26641dc0e477_720w.jpg" alt="v2-5c2c05489dc0c4af823d26641dc0e477_720w" style="zoom: 50%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-5c2c05489dc0c4af823d26641dc0e477_720w.jpg" alt="v2-5c2c05489dc0c4af823d26641dc0e477_720w" style="zoom: 50%;" />
 
 <blockquote>
 <p>Key = Row Key + Column Family + Column Qualifier + Time stamp + Key Type</p>
 <p>Value是实际的字段值</p>
 </blockquote>
 <h2 id="4-HBase架构"><a href="#4-HBase架构" class="headerlink" title="4. HBase架构"></a>4. HBase架构</h2><p>架构图：</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-f9029a2beaf2b07d9ae949013ddca351_720w.jpg" alt="v2-f9029a2beaf2b07d9ae949013ddca351_720w" style="zoom: 67%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-f9029a2beaf2b07d9ae949013ddca351_720w.jpg" alt="v2-f9029a2beaf2b07d9ae949013ddca351_720w" style="zoom: 67%;" />
 
 <p>1、<strong>Client</strong>客户端，它提供了访问HBase的接口，并且维护了对应的cache来加速HBase的访问。</p>
 <p>2、<strong>Zookeeper</strong>存储HBase的元数据（meta表），无论是读还是写数据，都是去Zookeeper里边拿到meta元数据<strong>告诉给客户端去哪台机器读写数据</strong></p>
@@ -328,7 +293,7 @@
 <p>4、HMaster处理 HRegion 的分配或转移。如果我们HRegion的数据量太大的话，HMaster会对拆分后的Region<strong>重新分配RegionServer</strong>。HMaster会处理元数据的变更和监控RegionServer的状态。</p>
 <p>总结大致的流程就是：<strong>client请求到Zookeeper，然后Zookeeper返回HRegionServer地址给client，client得到Zookeeper返回的地址去请求HRegionServer，HRegionServer读写数据后返回给client。</strong></p>
 <p>HRegionServer内部结构图：</p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w.jpg" alt="v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w" style="zoom:80%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w.jpg" alt="v2-a2bb5cd2216cb2b98d181d5eac1ca87f_720w" style="zoom:80%;" />
 
 <ul>
 <li>一张hbase表按照RowKey进行横向切割，每个HRegionServer中包含多个<code>HRegion</code>，每个HRegion存储横向切割后的一部分数据。</li>
@@ -341,7 +306,7 @@
 <h2 id="1-HBase-shell操作"><a href="#1-HBase-shell操作" class="headerlink" title="1. HBase shell操作"></a>1. HBase shell操作</h2><p><code>hbase shell</code> 命令进入命令行，查看表格:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt; list</span><br><span class="line">TABLE</span><br><span class="line">aaa</span><br><span class="line">bucket-0915</span><br><span class="line">entity_cert_serial</span><br><span class="line">entity_client_ip</span><br><span class="line">entity_file</span><br><span class="line">entity_fqdn</span><br><span class="line">entity_mail</span><br><span class="line">entity_qq_account</span><br><span class="line">entity_server_ip</span><br><span class="line">entity_user_id</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 <p>创建表，表名hbase_1102，HBase表是由Key-Value组成的，此表中Key为NAME </p>
-<img data-src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/726151-20170227162331001-824551785.png" alt="img" style="zoom:75%;" />
+<img src="/images/HBase%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/726151-20170227162331001-824551785.png" alt="img" style="zoom:75%;" />
 
 <p>此表有两个列族，CF1和CF2，其中CF1和CF2下分别有两个列name和gender，Chinese和Math<br>创建表hbase_1102有两个列族CF1和CF2</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):<span class="number">041</span>:<span class="number">0</span>&gt; <span class="keyword">create</span> <span class="string">&#x27;hbase_1102&#x27;</span>,  &#123;<span class="type">NAME</span>=&gt;<span class="string">&#x27;cf1&#x27;</span>&#125;, &#123;<span class="type">NAME</span>=&gt;<span class="string">&#x27;cf2&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
@@ -477,10 +442,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lpbmppYW5neWk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <a href="https://github.com/yinjiangyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yinjiangyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOnlpbmppYW5neWlAZ21haWwuY29t" title="E-Mail → mailto:yinjiangyi@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+        <a href="mailto:yinjiangyi1996@gmail.com" title="E-Mail → mailto:yinjiangyi1996@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -515,7 +480,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Joy</span>
 </div>
-  <div class="powered-by">Powered by <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly9tdXNlLnRoZW1lLW5leHQub3Jn">NexT.Muse</span>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -532,9 +497,7 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -548,43 +511,12 @@
 
 <script src="/js/next-boot.js"></script>
 
-<script src="/js/bookmark.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var canonicalURL, curProtocol;
-      //Get the <link> tag
-      var x=document.getElementsByTagName("link");
-		//Find the last canonical URL
-		if(x.length > 0){
-			for (i=0;i<x.length;i++){
-				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
-					canonicalURL=x[i].href;
-				}
-			}
-		}
-    //Get protocol
-	    if (!canonicalURL){
-	    	curProtocol = window.location.protocol.split(':')[0];
-	    }
-	    else{
-	    	curProtocol = canonicalURL.split(':')[0];
-	    }
-      //Get current URL if the canonical URL does not exist
-	    if (!canonicalURL) canonicalURL = window.location.href;
-	    //Assign script content. Replace current URL with the canonical URL
-      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
-  </script>
-
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
 
 
 
